@@ -1,0 +1,31 @@
+/* dice game looks nicest with some padding around the edges */
+body {
+    padding: 0 1em;
+}
+
+game-header .button[name="help"] {
+    background: url(./assets/help.svg);
+}
+
+game-header .button[name="settings"] {
+    background: url(./assets/settings.svg);
+}
+
+game-header .button[name="stats"]{
+    background: url(./assets/stats.svg);
+}
+
+game-header .button {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+game-header h2 {
+    margin: 0;
+}
+
+/* prefer center text alignment in our game design */
+screen-router > * {
+    text-align: center;
+}

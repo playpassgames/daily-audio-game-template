@@ -1,0 +1,43 @@
+@import "https://cdn.jsdelivr.net/npm/water.css@2/out/light.min.css";
+
+/* full screen the app view */
+body {
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  width: 100vw;
+  max-width: 940px;
+  min-height: 100vh;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+body.isLoggedIn .showIfLoggedOut {
+    display: none;
+}
+
+body:not(.isLoggedIn) .showIfLoggedIn {
+    display: none;
+}
+
+button {
+    background: #1095c1;
+    color: white;
+}
+
+button:hover {
+    background: #20a5d1;
+}
+
+.fork-ribbon {
+    position: fixed;
+    bottom: 55px;
+    right: -135px;
+    width: 400px;
+    text-align: center;
+    background: #ed7118;
+    padding: 0.25em;
+    transform: rotate(-45deg);
+    font: bold 15px sans-serif;
+    color: white;
+}
