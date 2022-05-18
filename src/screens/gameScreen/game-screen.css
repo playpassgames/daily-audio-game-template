@@ -1,0 +1,64 @@
+#game-screen[active] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#controls {
+    width: 100%;
+}
+
+.progress {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 16px;
+    border: 1px solid var(--text-main);
+    margin: 8px 0;
+}
+
+.progress > .fill {
+    position: absolute;
+    display: block;
+    width: 0px;
+    height: 100%;
+    background: var(--text-bright);
+}
+
+form input, form button {
+    display: inline;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 500px;
+}
+
+.results .result {
+    display: block;
+    border: 1px solid var(--text-bright);
+    padding: 8px;
+    line-height: 1.2em;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+    flex: 1;
+    flex-grow: 1;
+}
+
+.results .result::before {
+    content: "";
+    display: inline;
+}
+
+.results .result[s="c"]::before {
+    content: "❌";
+}
+
+.results .result[s="b"]::before {
+    content: "✔️";   
+}

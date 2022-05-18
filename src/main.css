@@ -29,3 +29,29 @@ game-header h2 {
 screen-router > * {
     text-align: center;
 }
+
+.splash h1 {
+    border: 2px solid white;
+    padding: 8px;
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    line-height: 1.5em;
+    text-align: center;
+    vertical-align: middle;
+}
+
+audio-ext {
+    display: none;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+audio-ext iframe {
+    width: 100%;
+}
+
+screen-router[open="#results-screen"] audio-ext {
+    display: block;
+}

@@ -10,7 +10,8 @@ template.innerHTML = `
             flex: 1;
         }
 
-        :host(:not([loading])) ::slotted(*[active]) {
+        :host(:not([loading])) ::slotted(*[active]),
+        :host(:not([loading])) ::slotted([slot="shared"]) {
             display: block;
         }
 
@@ -19,6 +20,7 @@ template.innerHTML = `
         }
     </style>
     <slot name="load-spinner"></slot>
+    <slot name="shared"></slot>
     <slot name="screen"></slot>
 `;
 
@@ -65,4 +67,8 @@ export function asyncHandler(fn){
 
 export function showScreen(name) {
     document.querySelector(routerTagName).setAttribute("open", name);
+}
+
+export function readyGame() {
+    document.querySelector("body").setAttribute("ready", "");
 }

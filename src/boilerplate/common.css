@@ -41,3 +41,26 @@ button:hover {
     font: bold 15px sans-serif;
     color: white;
 }
+
+body:not([ready]) {
+    overflow: hidden;
+}
+
+body[ready] > .splash {
+    pointer-events: none;
+    opacity: 0;
+}
+
+body > .splash {
+    background-color: var(--background-body);
+    display: flex;
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    transition: opacity linear .3s;
+}

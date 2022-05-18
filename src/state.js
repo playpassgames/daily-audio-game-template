@@ -1,36 +1,52 @@
 import * as playpass from "playpass";
+import { State } from "./boilerplate/state";
+import UserModel from "./models/userModel";
+import DailyModel from "./models/dailyModel";
+
+import { songs, hints } from "../content/songs.json";
+
+const MAX_ATTEMPTS = 6;
+
+const state = new State(
+    "daily",
+    new UserModel(MAX_ATTEMPTS),
+    new DailyModel(Date.parse("2022-04-21T12:00:00")),
+); 
 
 // The dice the player rolled today
 export default {
-    rolledDice: [],
-
+    store: null,
+    currentGuess: "",
+    correctAnswer: null,
+    
     async init() {
-        if (await this.hasRolledDice()) {
-            this.rolledDice = await playpass.storage.get("lastDice");
-        } else {
-            this.rolledDice = [];
+        this.store = await state.loadObject();
+        this.correctAnswer = songs[this.store.day % songs.length];
+    },
+    get attempts() {
+        return (this.correctAnswer.hints ?? hints).length;
+    },
+    isSolved() {
+        return this.store.guesses[this.store.guesses.length - 1]?.toUpperCase() === this.getCurrentAnswer().toUpperCase();
+    },
+    isDone() {
+        return this.store.guesses.length >= this.attempts || this.isSolved();
+    },
+    getCurrentAnswer() {
+        const word = this.correctAnswer;
+        if (!word) {
+            return songs[0].name;
         }
+        return word.name;
     },
-    async hasRolledDice() {
-        const lastDay = playpass.storage.get("lastDay", this.getCurrentDay());
+    submit(currentGuess) {
+        this.store.guesses.push(currentGuess);
 
-        return lastDay === this.getCurrentDay();
-    },
-    // Gets the current day number
-    getCurrentDay () {
-        return Math.floor(Date.now() / (1000 * 60 * 60 * 24));
-    },
-    rollDice() {
-        // Generate 3 random dice
-        this.rolledDice = [
-            Math.floor(Math.random()*6),
-            Math.floor(Math.random()*6),
-            Math.floor(Math.random()*6),
-        ];
+        if (this.isSolved()) {
+            this.store.wins[this.store.guesses.length - 1] += 1;
+        }
 
-        // Save the current day
-        playpass.storage.set("lastDay", this.getCurrentDay());
-        playpass.storage.set("lastDice", this.rolledDice);
+        this.save();
     },
     async login() {
         if (await playpass.account.login()) {
@@ -41,5 +57,8 @@ export default {
         playpass.account.logout();
         document.body.classList.remove("isLoggedIn");
         this.rolledDice = [];
+    },
+    save() {
+        state.saveObject(this.store);
     }
 }

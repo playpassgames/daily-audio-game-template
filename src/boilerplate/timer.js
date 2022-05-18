@@ -12,3 +12,11 @@ export function getUntil (date) {
         seconds: Math.floor(((date - now) % (1000 * 60)) / 1000),
     };
 }
+
+export function getDay (date) {
+    return Math.floor(date / (1000 * 60 * 60 * 24));
+}
+
+export function getCurrentDay () {
+    return getDay (Date.now());
+}
