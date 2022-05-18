@@ -34,6 +34,11 @@ function onSettingsClick () {
 
     await state.init();
 
+    document.querySelector('audio-ext').setSong({
+        type: state.correctAnswer.type,
+        src: state.correctAnswer.src,
+    });
+
     showScreen("#game-screen");
 
     // Set the login state for our UI

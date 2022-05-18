@@ -3,16 +3,22 @@ template.innerHTML = `
     <style>
         ::slotted(*) {
             display: none;
+            flex: 0;
         }
 
         :host {
-            display: block;
+            display: flex;
+            flex-direction: column;
             flex: 1;
         }
 
         :host(:not([loading])) ::slotted(*[active]),
         :host(:not([loading])) ::slotted([slot="shared"]) {
             display: block;
+        }
+
+        :host(:not([loading])) ::slotted(*[active]) {
+            flex: 1;
         }
 
         :host([loading]) ::slotted([slot="load-spinner"]) {

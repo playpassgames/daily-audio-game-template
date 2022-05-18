@@ -12,7 +12,9 @@ const progressBar = template.querySelector('.progress .fill');
 let progressUpdateInterval;
 
 template.querySelector("button[name=play]").onclick = () => {
-    player.play();
+    player.play((state.correctAnswer.hints ?? hints)[
+        state.store.guesses.length
+    ]);
 };
 
 template.addEventListener(
@@ -34,6 +36,8 @@ template.addEventListener(
         guessInput.choices = songs.map(({ name }) => name);
 
         progressUpdateInterval = setInterval(() => {
+
+
             progressBar.style.width = `${(player.progress * 100) ?? 0}%`;
         }, 1000.0 / 60.0);
 
@@ -81,12 +85,4 @@ function updatePlayingScreen () {
         }
         results.appendChild(guess);
     }
-
-    player.setSong({
-        type: state.correctAnswer.type,
-        src: state.correctAnswer.src,
-        range: (state.correctAnswer.hints ?? hints)[
-            state.store.guesses.length
-        ],
-    });
 }

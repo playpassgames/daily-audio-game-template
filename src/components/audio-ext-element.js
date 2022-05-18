@@ -1,8 +1,5 @@
-import { ReactiveElement, attr } from "../boilerplate/reactive";
-
 export default class AudioExtElement extends HTMLElement {
     ref = 'youtube::'
-    range = [0.0, 1.0];
     done = false;
 
     constructor() {
@@ -17,8 +14,6 @@ export default class AudioExtElement extends HTMLElement {
     }
 
     setSong({ type, src, range }) {
-        this.range = range;
-
         if (`${type}::${src}` === this.ref) {
             return;
         }
@@ -52,12 +47,12 @@ export default class AudioExtElement extends HTMLElement {
             },
         });
 
-        this.play = () => {
+        this.play = (range) => {
             if (this.timeout) {
                 clearTimeout(this.timeout);
             }
 
-            const { begin, end } = this.range ?? { begin: 0.0, end: 1.0 };
+            const { begin, end } = range ?? { begin: 0.0, end: 1.0 };
 
             player.seekTo(begin, true);
 

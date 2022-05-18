@@ -8,7 +8,7 @@
     width: 100%;
 }
 
-.progress {
+#game-screen .progress {
     position: relative;
     display: block;
     width: 100%;
@@ -17,7 +17,7 @@
     margin: 8px 0;
 }
 
-.progress > .fill {
+#game-screen .progress > .fill {
     position: absolute;
     display: block;
     width: 0px;
@@ -25,11 +25,29 @@
     background: var(--text-bright);
 }
 
-form input, form button {
-    display: inline;
+#game-screen form {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
 }
 
-.results {
+#game-screen form auto-complete {
+    flex: 1;
+}
+
+#game-screen form auto-complete input {
+    flex: 1;
+}
+
+#game-screen form auto-complete, 
+#game-screen form button {
+    display: inline-block;
+    margin-bottom: 0;
+}
+
+#game-screen .results {
     display: flex;
     flex-direction: column;
     list-style: none;
@@ -37,28 +55,35 @@ form input, form button {
     padding: 0;
     width: 100%;
     max-width: 500px;
+    flex: 1;
 }
 
-.results .result {
+#game-screen .results .result {
     display: block;
     border: 1px solid var(--text-bright);
     padding: 8px;
     line-height: 1.2em;
     margin-bottom: 8px;
     box-sizing: border-box;
-    flex: 1;
-    flex-grow: 1;
+    text-align: left;
 }
 
-.results .result::before {
-    content: "";
-    display: inline;
+#game-screen .results .result::before {
+    content: '';
+    background-image: url(https://icons.getbootstrap.com/assets/icons/square.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: inline-block;
+    margin-right: .5em;
+    width: 1em;
+    height: 1em;
+    vertical-align: -.1em;
 }
 
-.results .result[s="c"]::before {
-    content: "❌";
+#game-screen .results .result[s="c"]::before {
+    background-image: url(https://icons.getbootstrap.com/assets/icons/x-square-fill.svg);
 }
 
-.results .result[s="b"]::before {
-    content: "✔️";   
+#game-screen .results .result[s="b"]::before {
+    background-image: url(https://icons.getbootstrap.com/icons/check-square-fill/);
 }
