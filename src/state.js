@@ -3,14 +3,14 @@ import { State } from "./boilerplate/state";
 import UserModel from "./models/userModel";
 import DailyModel from "./models/dailyModel";
 
-import { songs, hints } from "../content/songs.json";
+import { songs, hints, startDate } from "../content/songs.json";
 
 const MAX_ATTEMPTS = 6;
 
 const state = new State(
     "daily",
     new UserModel(MAX_ATTEMPTS),
-    new DailyModel(Date.parse("2022-04-21T12:00:00")),
+    new DailyModel(Date.parse(startDate)),
 ); 
 
 // The dice the player rolled today
@@ -38,6 +38,9 @@ export default {
             return songs[0].name;
         }
         return word.name;
+    },
+    getCurrentRange() {
+        return (this.correctAnswer.hints ?? hints)[this.store.guesses.length];
     },
     submit(currentGuess) {
         this.store.guesses.push(currentGuess);

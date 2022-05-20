@@ -1,15 +1,15 @@
-# Daily Dice project template
+# Daily Audio Game project template
 
-This is an example of how to use the Playpass SDK to build a simple daily level game.
+This is an example of how to use the Playpass SDK to build a simple daily level game that involves guessing a song title from various audio snippets.
 
-Preview: https://base--template.playpass.games
+Preview: https://audio--template.playpass.games
 
 ## Setup
 
 Clone this template by running:
 
 ```shell
-playpass create --template playpassgames/playpass-game-template
+playpass create --template playpassgames/daily-audio-game-template
 ```
 
 For more info about using Playpass, see the [quickstart guide](https://docs.playpass.games/).
@@ -26,6 +26,82 @@ Deploy the game by running:
 
 ```shell
 playpass deploy
+```
+
+## Configuration (content/songs.json)
+
+### Hints
+
+This controls the default hint parameters that players will hear per song.  This can be overridden on any songs where you want to make the challenge easier or harder if the defaults are not suitable.
+
+Times specificed are in seconds relative to the beginning of the song.
+
+```
+{
+    "hints": [
+        {
+            "begin": number,
+            "end": number
+        },
+        ...
+    ]
+}
+```
+
+### Songs
+
+List of possible songs that will be given as challenges for the game.  The names of the songs are also used for the autocomplete entry field.
+
+Currently supported for song sources are Youtube videos
+
+```
+{
+    "songs": [
+        {
+            "src": id,
+            "type": youtube,
+            "name": text,
+            "hints": Hint[] (optional),
+        },
+        ...
+    ]
+}
+```
+
+Example
+
+```
+{
+    "songs": [
+        {
+            "src": "aetXqd9B8WE",
+            "type": "youtube",
+            "name": "Q",
+            "hints": [
+                {
+                    "begin": 56.0,
+                    "end": 58.0
+                },
+                {
+                    "begin": 85.9,
+                    "end": 88.8
+                },
+                {
+                    "begin": 64.8,
+                    "end": 69.0
+                },
+                {
+                    "begin": 24.0,
+                    "end": 30.0
+                },
+                {
+                    "begin": 100.0,
+                    "end": 120.0
+                }
+            ]
+        }
+    ]
+}
 ```
 
 ## Links

@@ -1,6 +1,7 @@
 import * as playpass from "playpass";
 
 import "./boilerplate/header.js";
+import "./boilerplate/controls.js";
 import "./components/audio-ext-element";
 import "./components/autocomplete-element";
 
@@ -29,12 +30,12 @@ function onSettingsClick () {
 (async function () {
     // Initialize the Playpass SDK
     await playpass.init({
-        gameId: "YOUR_GAME_ID", // Do not edit!
+        gameId: "ecd663bc-2c2a-43cd-99b1-676ace4b4444", // Do not edit!
     });
 
     await state.init();
 
-    document.querySelector('audio-ext').setSong({
+    await document.querySelector('audio-ext').setSong({
         type: state.correctAnswer.type,
         src: state.correctAnswer.src,
     });

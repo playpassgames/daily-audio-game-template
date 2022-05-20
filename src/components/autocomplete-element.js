@@ -45,6 +45,16 @@ export class Autocomplete extends HTMLElement {
         },
       );
 
+      setTimeout(() => {
+        if (input.getBoundingClientRect().bottom + list.getBoundingClientRect().height >= window.innerHeight) {
+          list.style.bottom = '100%';
+          list.style.top = 'unset';
+        } else {
+          list.style.bottom = 'unset';
+          list.style.top = '100%';
+        }  
+      }, 0);
+      
       this.value = input.value;
     });
 

@@ -53,7 +53,7 @@ export class State {
             ...oldState
         };
         
-        this.models.forEach(m => m.onLoad(state));
+        this.models.forEach(m => Object.assign(state, m.onLoad(state)));
         
         return state;
     }

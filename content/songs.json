@@ -1,0 +1,49 @@
+{
+    "startDate": "2022-05-19T12:00:00",
+    "ranks": [
+        "Obsessed",
+        "Know it All",
+        "Fan",
+        "Casual Listener",
+        "Newbie"
+    ],
+    "hints": [
+        {
+            "begin": 0.0,
+            "end": 2.0
+        },
+        {
+            "begin": 0.0,
+            "end": 5.0
+        },
+        {
+            "begin": 0.0,
+            "end": 10.0
+        },
+        {
+            "begin": 0.0,
+            "end": 20.0
+        },
+        {
+            "begin": 0.0,
+            "end": 30.0
+        }
+    ],
+    "songs": [
+        {
+            "src": "VEe_yIbW64w",
+            "type": "youtube",
+            "name": "Stay With Me"
+        },
+        {
+            "src": "h3xLPvFpIzw",
+            "type": "youtube",
+            "name": "Wash"
+        },
+        {
+            "src": "pdPN9q5_log",
+            "type": "youtube",
+            "name": "Ride On Time"
+        }
+    ]
+}

@@ -21,8 +21,11 @@ game-header .button {
     cursor: pointer;
 }
 
-game-header h2 {
+game-header *[slot=brand] {
+    display: flex;
+    gap: .5em;
     margin: 0;
+    justify-content: center;
 }
 
 /* prefer center text alignment in our game design */

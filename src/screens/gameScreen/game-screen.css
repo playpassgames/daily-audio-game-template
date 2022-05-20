@@ -1,7 +1,16 @@
+:root {
+    --progress-range-color: black;
+    --progress-fill-color: red;
+}
+
 #game-screen[active] {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+#game-screen game-controls {
+    flex-direction: column;
 }
 
 #controls {
@@ -15,14 +24,27 @@
     height: 16px;
     border: 1px solid var(--text-main);
     margin: 8px 0;
+    box-sizing: border-box;
 }
 
 #game-screen .progress > .fill {
     position: absolute;
     display: block;
-    width: 0px;
-    height: 100%;
-    background: var(--text-bright);
+    left: 0;
+    right: 100%;
+    top: 0;
+    bottom: 0;
+    background: var(--progress-range-color);
+}
+
+#game-screen .progress > .fill[name=time] {
+    position: absolute;
+    display: block;
+    left: 0;
+    right: 100%;
+    top: 0;
+    bottom: 0;
+    background: var(--progress-fill-color);
 }
 
 #game-screen form {
@@ -31,10 +53,11 @@
     display: flex;
     justify-content: center;
     gap: 8px;
+    flex-wrap: wrap;
 }
 
 #game-screen form auto-complete {
-    flex: 1;
+    flex-grow: 3;
 }
 
 #game-screen form auto-complete input {
@@ -45,6 +68,7 @@
 #game-screen form button {
     display: inline-block;
     margin-bottom: 0;
+    flex-grow: 1;
 }
 
 #game-screen .results {
@@ -55,7 +79,7 @@
     padding: 0;
     width: 100%;
     max-width: 500px;
-    flex: 1;
+    flex-grow: 1;
 }
 
 #game-screen .results .result {
@@ -86,4 +110,22 @@
 
 #game-screen .results .result[s="b"]::before {
     background-image: url(https://icons.getbootstrap.com/icons/check-square-fill/);
+}
+
+#game-screen .results .result[s="_"]::before {
+    background-image: url(https://icons.getbootstrap.com/assets/icons/slash-square.svg);
+}
+
+#game-screen #controls {
+    display: flex;
+    align-items: center;
+}
+
+#game-screen #controls span {
+    flex: 1;
+    font-weight: bold;
+}
+
+#game-screen #controls button {
+    flex: 2;
 }

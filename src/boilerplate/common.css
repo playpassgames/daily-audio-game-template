@@ -1,5 +1,11 @@
 @import "https://cdn.jsdelivr.net/npm/water.css@2/out/light.min.css";
 
+:root {
+    --color-info: #cfcfcf;
+    --color-primary: #1095c1;
+    --color-danger: #e71f1f;
+}
+
 /* full screen the app view */
 body {
   margin: 0 auto;
@@ -21,12 +27,22 @@ body:not(.isLoggedIn) .showIfLoggedIn {
 }
 
 button {
-    background: #1095c1;
+    background: var(--color-info);
+    color: var(--text-bright);
+}
+
+button[color=primary] {
+    background: var(--color-primary);
+    color: white;
+}
+
+button[color=danger] {
+    background: var(--color-danger);
     color: white;
 }
 
 button:hover {
-    background: #20a5d1;
+    filter: brightness(0.9);
 }
 
 .fork-ribbon {
@@ -63,4 +79,12 @@ body > .splash {
     justify-content: center;
     align-items: center;
     transition: opacity linear .3s;
+}
+
+game-controls {
+    background: var(--background-body);
+}
+
+game-header {
+    background: var(--background-body);
 }

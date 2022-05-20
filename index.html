@@ -26,7 +26,7 @@
 
   <game-header>
     <div class="button" name="help" slot="buttons-left"></div>
-    <h2 slot="brand">🎵 Daily Song</h2>
+    <h2 slot="brand"><img src="/src/assets/hololive_logo.svg" height="30" /> Guesser</h2>
     <div class="button" name="stats" slot="buttons-right"></div>
     <div class="button" name="settings" slot="buttons-right"></div>
   </game-header>
@@ -47,17 +47,24 @@
         <li class="result"></li>
         <li class="result"></li>
       </ul>
-      <form>
-        <auto-complete placeholder="Song Title"></auto-complete>
-        <button name="submit" type="submit">Guess</button>
-      </form>
-      <div id="controls">
-        <div class="progress">
-          <div class="fill"></div>
+      
+      <game-controls>
+        <form>
+          <auto-complete placeholder="Song Title"></auto-complete>
+          <div style="display: flex; flex: 1">
+            <button name="submit" type="submit" color="primary">Guess</button>
+            <button name="skip" color="danger">
+              Skip
+            </button>
+          </div>
+        </form>
+        <div id="progress" class="progress">
+          <div class="fill" name="range"></div>
+          <div class="fill" name="time"></div>
         </div>
-        <div>
+        <div id="controls">
           <span name="now"></span>
-          <button name="play" state="paused">
+          <button name="play">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-play-circle" viewBox="0 0 16 16">
               <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
               <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z"/>
@@ -65,13 +72,13 @@
           </button>
           <span name="duration"></span>
         </div>
-      </div>
+      </game-controls>
     </div>
 
     <div id="results-screen" slot="screen">
       <h1 id="resultLine1">Song Title</h1>
       <h2 id="resultLine2">Lucky!</h2>
-      <button name="share">🗨️ Share</button>
+      <button name="share" color="primary">🗨️ Share</button>
       <p><span id="timeLeft"></span></p>
     </div>
 
@@ -86,15 +93,15 @@
 
     <div id="stats-screen" slot="screen">
       <h2>Stats</h2>
-      <p>You have won 999 times over 123 days.</p>
-      <button name="back">Back</button>
+      <p id="winStats"></p>
+      <button id="statsBackBtn" name="back">Back</button>
     </div>
 
     <div id="settings-screen" slot="screen">
       <h2>Settings</h2>
       <div class="showIfLoggedOut">
         <div>Login to save or transfer your game progress.</div>
-        <button name="login">📱 Login</button>
+        <button name="login" color="primary">📱 Login</button>
       </div>
       <div class="showIfLoggedIn">
         <div>You are logged in, your progress will be saved.</div>

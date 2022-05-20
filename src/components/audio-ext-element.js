@@ -13,7 +13,7 @@ export default class AudioExtElement extends HTMLElement {
         this.stop = () => {};
     }
 
-    setSong({ type, src, range }) {
+    async setSong({ type, src }) {
         if (`${type}::${src}` === this.ref) {
             return;
         }
@@ -25,7 +25,9 @@ export default class AudioExtElement extends HTMLElement {
                     return;
                 }
 
-                this._prepareYoutube(src, range);
+                await new Promise((resolve) => {
+                    this._prepareYoutube(src, resolve);
+                });
                 break;
             }
             default: {
@@ -34,7 +36,7 @@ export default class AudioExtElement extends HTMLElement {
         }
     }
 
-    _prepareYoutube(src) {
+    _prepareYoutube(src, cb) {
         const player = new YT.Player('player', {
             width: 600,
             height: 400,
@@ -43,33 +45,65 @@ export default class AudioExtElement extends HTMLElement {
                 playsinline: 1,
             },
             events: {
-                onReady: () => { this.ready = true; },
+                onReady: () => {
+                    this.duration = player.getDuration();
+                    cb();
+                },
+                onStateChange: (e) => {
+                    if (e.data === YT.PlayerState.PLAYING) {
+                        this.ready?.();
+                        this.loading = false;
+                    }
+                }
             },
         });
 
         this.play = (range) => {
             if (this.timeout) {
                 clearTimeout(this.timeout);
+                this.timeout = null;
             }
 
             const { begin, end } = range ?? { begin: 0.0, end: 1.0 };
 
-            player.seekTo(begin, true);
+            this.loading = true;
 
             this.done = false;
             const duration = (end - begin) * 1000;
-            this.start = Date.now();
-            this.end = this.start + duration;
-            this.timeout = setTimeout(() => {
-                player.stopVideo();
-                this.done = true;
-            }, duration);
+            
+            this.ready = () => {
+                this.start = Date.now();
+                this.end = this.start + duration;
+
+                this.timeout = setTimeout(() => this.stop(), duration);
+            }
+
+            player.seekTo(begin, true);
+            player.playVideo();
         };
 
+        this.reset = () => {
+            player.pauseVideo();
+            player.seekTo(0, true);
+
+            delete this.ready;
+        }
+
         this.stop = () => {
-            player.stopVideo();
+            player.pauseVideo();
             this.done = true;
         };
+    }
+
+    clear() {
+        this.start = null;
+        this.end = null;
+        this.done = false;
+
+        if (this.timeout) {
+            clearTimeout(this.timeout);
+            this.timeout = null;
+        }
     }
 
     get progress() {
@@ -78,6 +112,18 @@ export default class AudioExtElement extends HTMLElement {
         }
         const distance = (Date.now() - this.start) / (this.end - this.start);
         return Math.min(1.0, distance);
+    }
+
+    get time() {
+        if (this.done) {
+            return (this.end - this.start) / 1000.0;
+        }
+
+        if (!this.start || this.loading) {
+            return 0.0;
+        }
+
+        return Math.min( (this.end - this.start) / 1000.0, (Date.now() - this.start) / 1000.0 );
     }
 }
 

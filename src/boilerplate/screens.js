@@ -57,7 +57,11 @@ window.customElements.define(
                 const next = this.querySelector(newValue);
                 next.setAttribute("active", "");
 
-                next.dispatchEvent(new CustomEvent("active"));
+                next.dispatchEvent(new CustomEvent("active", { 
+                    detail: {
+                        previous: oldValue,
+                    }
+                }));
             }
         }
     }

@@ -5,21 +5,69 @@ import { songs, hints } from "../../../content/songs.json";
 
 import "./game-screen.css";
 
-const template = document.querySelector("#game-screen");
-
-const player = document.querySelector('audio-ext');
-const progressBar = template.querySelector('.progress .fill');
 let progressUpdateInterval;
 
+function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const sec = Math.floor(seconds % 60);
+    return `${String(minutes).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+}
+
+const template = document.querySelector("#game-screen");
+const player = document.querySelector('audio-ext');
+
+const timeline = template.querySelector('#progress .fill[name=range]');
+const progressBar = template.querySelector('#progress .fill[name=time]');
+const nowLabel = template.querySelector('span[name=now]');
+const durationLabel = template.querySelector('span[name=duration]');
+const guessInput = template.querySelector("auto-complete");
+
+guessInput.choices = songs.map(({ name }) => name);
+
+template.querySelector("form").onsubmit = event => {
+    event.preventDefault();
+
+    const guess = guessInput.value?.trim();
+    
+    // ignore empty forms
+    if (!guess) {
+        return;
+    }
+
+    state.submit(guess);
+
+    if (state.isDone()) {
+        showScreen("#results-screen");
+    } else {
+        guessInput.value = "";
+        updatePlayingScreen();
+    }
+};
+
+const playSong = () => {
+    player.play(state.getCurrentRange());
+}
+
 template.querySelector("button[name=play]").onclick = () => {
-    player.play((state.correctAnswer.hints ?? hints)[
-        state.store.guesses.length
-    ]);
+    playSong();
+};
+
+template.querySelector("button[name=skip]").onclick = (e) => {
+    e.preventDefault();
+
+    state.submit();
+
+    if (state.isDone()) {
+        showScreen("#results-screen");
+    } else {
+        guessInput.value = "";
+        updatePlayingScreen();
+    }
 };
 
 template.addEventListener(
     "active",
-    asyncHandler(async () => {
+    asyncHandler(async ({ detail: { previous } }) => {
         // Take new users to help screen first
         const sawTutorial = await playpass.storage.get("sawTutorial");
         if (!sawTutorial) {
@@ -27,41 +75,27 @@ template.addEventListener(
             return;
         }
 
-        if (state.isSolved()) {
+        if (state.isDone()) {
             showScreen("#results-screen");
             return;
         }
 
-        const guessInput = template.querySelector("auto-complete");
-        guessInput.choices = songs.map(({ name }) => name);
-
         progressUpdateInterval = setInterval(() => {
+            const { begin } = state.getCurrentRange();
+            const songDuration = player.duration;
+        
+            progressBar.style.left = `${(begin / songDuration) * 100}%`;
+            progressBar.style.right = `${(1 - ((begin + player.time) / songDuration)) * 100}%`;
 
+            nowLabel.textContent = formatTime(player.time);
 
-            progressBar.style.width = `${(player.progress * 100) ?? 0}%`;
         }, 1000.0 / 60.0);
 
-        template.querySelector("form").onsubmit = event => {
-            event.preventDefault();
-
-            const guess = guessInput.value?.trim();
-            
-            // ignore empty forms
-            if (!guess) {
-                return;
-            }
-
-            state.submit(guess);
-
-            if (state.isDone()) {
-                showScreen("#results-screen");
-            } else {
-                guessInput.value = "";
-                updatePlayingScreen();
-            }
-        };
-
         updatePlayingScreen();
+
+        if (previous === "#help-screen") {
+            playSong();
+        }
     }),
 );
 
@@ -73,6 +107,8 @@ template.addEventListener(
 );
 
 function updatePlayingScreen () {
+    player.clear();
+    
     const results = template.querySelector(`.results`);
     results.innerHTML = '';
 
@@ -80,9 +116,25 @@ function updatePlayingScreen () {
         const guess = document.createElement("li");
         guess.classList.add('result');
         if (ii < state.store.guesses.length) {
-            guess.setAttribute("s", state.isSolved() && i === state.store.guesses.length - 1 ? "b" : "c");
-            guess.textContent = state.store.guesses[ii];
+            if (state.isSolved() && i === state.store.guesses.length - 1) {
+                guess.setAttribute("s", "b");
+            } else if (!state.store.guesses[ii]) {
+                guess.setAttribute("s", "_");
+            } else {
+                guess.setAttribute("s", "c");
+            }
+            
+            guess.textContent = state.store.guesses[ii] ?? 'Skipped';
         }
         results.appendChild(guess);
     }
+
+    const { begin, end } = state.getCurrentRange();
+
+    const duration = end - begin;
+    const songDuration = player.duration;
+    durationLabel.textContent = formatTime(duration);
+
+    timeline.style.left = `${(begin / songDuration) * 100}%`;
+    timeline.style.right = `${(1 - end / songDuration) * 100}%`;
 }
