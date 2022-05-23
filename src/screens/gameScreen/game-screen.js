@@ -1,7 +1,7 @@
 import * as playpass from "playpass";
 import { asyncHandler, showScreen } from "../../boilerplate/screens";
 import state from "../../state";
-import { songs, hints } from "../../../content/songs.json";
+import { songs, autocomplete } from "../../../content/songs.json";
 
 import "./game-screen.css";
 
@@ -22,7 +22,12 @@ const nowLabel = template.querySelector('span[name=now]');
 const durationLabel = template.querySelector('span[name=duration]');
 const guessInput = template.querySelector("auto-complete");
 
-guessInput.choices = songs.map(({ name }) => name);
+guessInput.choices = [
+    // pad with extra song names to make the game more challenging
+    ...autocomplete,
+    // always include the actual songs that you can guess
+    ...songs.map(({ name }) => name),
+];
 
 template.querySelector("form").onsubmit = event => {
     event.preventDefault();
@@ -116,7 +121,7 @@ function updatePlayingScreen () {
         const guess = document.createElement("li");
         guess.classList.add('result');
         if (ii < state.store.guesses.length) {
-            if (state.isSolved() && i === state.store.guesses.length - 1) {
+            if (state.isSolved() && ii === state.store.guesses.length - 1) {
                 guess.setAttribute("s", "b");
             } else if (!state.store.guesses[ii]) {
                 guess.setAttribute("s", "_");

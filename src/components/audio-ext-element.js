@@ -1,3 +1,5 @@
+/* global YT */
+
 export default class AudioExtElement extends HTMLElement {
     ref = 'youtube::'
     done = false;
