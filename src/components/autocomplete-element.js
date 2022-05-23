@@ -18,6 +18,8 @@ export class Autocomplete extends HTMLElement {
 
     const list = this.querySelector("ul");
 
+    this._choices = [];
+
     input.addEventListener("input", () => {
       const val = input.value?.toUpperCase();
 
@@ -28,7 +30,7 @@ export class Autocomplete extends HTMLElement {
         return;
       }
 
-      this.choices.filter(
+      this._choices.filter(
         (word) => {
           const sanitized = word.toUpperCase();
 
@@ -94,6 +96,10 @@ export class Autocomplete extends HTMLElement {
   clearOptions() {
     const list = this.querySelector("ul");
     list.replaceChildren([]);
+  }
+
+  set choices(arr) {
+    this._choices = [...new Set(arr)];
   }
 }
 
