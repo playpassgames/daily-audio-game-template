@@ -52,14 +52,18 @@ Times specificed are in seconds relative to the beginning of the song.
 
 List of possible songs that will be given as challenges for the game.  The names of the songs are also used for the autocomplete entry field.
 
-Currently supported for song sources are Youtube videos
+Currently supported for song sources are [Youtube videos](https://developers.google.com/youtube/iframe_api_reference) and [Soundcloud audio](https://developers.soundcloud.com/docs/api/html5-widget) using each platforms respective Widget API.
+
+The IDs for each correspond to the APIs requirements.  When configuring your song list, you can find these IDs easily using the following methods
+  - Youtube IDs are visible in their URLs, just copy from there
+  - Soundcloud is a little more difficult.  When using the web interface, you can inspect your network traffic to `https://api-v2.soundcloud.com/me/play-history` after you play a song.  The ID is the numeric value as part of `soundcloud:tracks:<id>` in the payload
 
 ```
 {
     "songs": [
         {
             "src": id,
-            "type": youtube,
+            "type": youtube | soundcloud,
             "name": text,
             "hints": Hint[] (optional),
         },
@@ -99,6 +103,11 @@ Example
                     "end": 120.0
                 }
             ]
+        },
+        {
+            "src": "1230511906",
+            "type": "soundcloud",
+            "name": "Be With You"
         }
     ]
 }
