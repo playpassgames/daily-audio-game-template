@@ -5,7 +5,7 @@ import { songs, autocomplete } from "../../../content/songs.json";
 
 import "./game-screen.css";
 
-let progressUpdateInterval;
+let progressUpdateInterval, currentRange;
 
 function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
@@ -50,7 +50,7 @@ template.querySelector("form").onsubmit = event => {
 };
 
 const playSong = () => {
-    player.play(state.getCurrentRange());
+    player.play();
 }
 
 template.querySelector("button[name=play]").onclick = () => {
@@ -112,8 +112,6 @@ template.addEventListener(
 );
 
 function updatePlayingScreen () {
-    player.clear();
-    
     const results = template.querySelector(`.results`);
     results.innerHTML = '';
 
@@ -138,6 +136,10 @@ function updatePlayingScreen () {
 
     const duration = end - begin;
     const songDuration = player.duration;
+    
+    currentRange = { begin, end };
+    player.clear(currentRange);
+
     durationLabel.textContent = formatTime(duration);
 
     timeline.style.left = `${(begin / songDuration) * 100}%`;

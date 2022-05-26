@@ -40,7 +40,7 @@ template.addEventListener("active", () => {
         template.querySelector("#timeLeft").textContent = `${until.hours}h ${until.minutes}m ${until.seconds}s until next song`;
     }, 1000);
 
-    player.reset();
+    player.clear({ begin: 0, end: 0 });
 });
 
 template.addEventListener("inactive", () => {
