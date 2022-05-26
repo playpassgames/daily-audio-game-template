@@ -1,4 +1,2 @@
-# Built with Playpass:
-# https://playpass.games
-
-game_id = "template"
+# Your game's unique identifier. This should never change.
+game_id = "3e7645a1-c7e1-401b-a36f-cbdf7624d13d"

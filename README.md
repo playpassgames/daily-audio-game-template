@@ -2,7 +2,7 @@
 
 This is an example of how to use the Playpass SDK to build a simple daily level game that involves guessing a song title from various audio snippets.
 
-Preview: https://audio--template.playpass.games
+Preview: https://daily-audio-template.playpass.games
 
 ## Setup
 
