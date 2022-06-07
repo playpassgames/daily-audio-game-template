@@ -1,11 +1,16 @@
 @import "https://cdn.jsdelivr.net/npm/water.css@2/out/light.min.css";
 @import "./loading.css";
+
 :root {
     --color-info: #cfcfcf;
+    --color-info-text: #000;
     --color-primary: #1095c1;
+    --color-primary-text: #fff;
     --color-danger: #e71f1f;
+    --color-danger-text: #fff;
+    --input-border-radius: 6px;
+    --button-font: inherit;
 }
-
 
 /* full screen the app view */
 
@@ -30,27 +35,31 @@ body:not(.isLoggedIn) .showIfLoggedIn {
 
 button {
     background: var(--color-info);
-    color: var(--text-bright);
+    color: var(--color-info-text);
+    transition: filter .2s;
+    font-weight: bold;
+    font-family: var(--button-font);
 }
 
 button[color=primary] {
     background: var(--color-primary);
-    color: white;
+    color: var(--color-primary-text);
 }
 
 button[color=danger] {
     background: var(--color-danger);
-    color: white;
+    color: var(--color-danger-text);
 }
 
 button[color=clear] {
     background: transparent;
-    color: var(--text-bright);
+    color: var(--text-main);
 }
 
 button[outline] {
     background: transparent;
     border: 2px solid var(--color-info);
+    color: var(--text-main);
 }
 
 button[outline][color=primary] {
@@ -64,7 +73,11 @@ button[outline][color=danger] {
 }
 
 button:hover {
-    filter: brightness(0.9);
+    filter: brightness(0.8);
+}
+
+button, input, select, textarea {
+    border-radius: var(--input-border-radius);
 }
 
 .fork-ribbon {
@@ -105,6 +118,7 @@ body>.splash {
 
 game-controls {
     background: var(--background-body);
+    padding-bottom: 16px;
 }
 
 game-header {
@@ -126,4 +140,52 @@ game-header *[slot=brand] img {
 [toggle][open] *[open=false],
 [toggle]:not([open]) *[open=true] {
     display: none !important;
+}
+
+.fieldset {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.fieldset label {
+    display: inline-block;
+}
+
+.fieldset select,
+.fieldset input,
+.fieldset textarea {
+    display: block;
+    flex: 1;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex.center {
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-spacer {
+    flex: 1;
+}
+
+@media only screen and (max-width: 600px) {
+    .fieldset {
+      flex-direction: column;
+      flex: 1;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .fieldset select,
+    .fieldset input,
+    .fieldset textarea {
+        width: 100%;
+    }
 }

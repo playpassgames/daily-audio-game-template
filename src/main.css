@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;700&display=swap');
-:root {
-    --brand-color: #49C8F0;
-}
+@import url('/src/vars.css');
 
 
 /* dice game looks nicest with some padding around the edges */
@@ -19,6 +17,7 @@ game-header .button {
     width: 24px;
     height: 24px;
     cursor: pointer;
+    filter: var(--text-main-filter);
 }
 
 game-header *[slot=brand] {
@@ -26,8 +25,8 @@ game-header *[slot=brand] {
     gap: .5em;
     margin: 0;
     justify-content: center;
+    color: var(--text-main);
 }
-
 
 /* prefer center text alignment in our game design */
 
@@ -36,7 +35,6 @@ screen-router>* {
 }
 
 .splash h1 {
-    border: 2px solid white;
     padding: 8px;
     display: inline-block;
     width: 4em;
@@ -92,7 +90,7 @@ footer {
 
 .results .result {
     display: block;
-    border: 1px solid var(--text-bright);
+    border: 1px solid var(--text-main);
     padding: 8px;
     line-height: 1.2em;
     margin-bottom: 8px;
@@ -100,12 +98,15 @@ footer {
     text-align: left;
 }
 
-.results .result:not([s]) {
+.results .result {
     opacity: 1.0;
 }
 
+.results .result[s] {
+    opacity: 0.6;
+}
 .results .result:not([s]) ~ .result:not([s]) {
-    opacity: 0.3;
+    opacity: 0.2;
 }
 
 .results .result::before {
@@ -118,6 +119,7 @@ footer {
     width: 1em;
     height: 1em;
     vertical-align: -.1em;
+    filter: var(--text-main-filter);
 }
 
 .results .result[s="c"]::before {
@@ -134,16 +136,4 @@ footer {
 
 .lds-ring div {
     border-color: var(--brand-color) transparent transparent transparent;
-}
-
-#game-screen button[name=play] {
-    background-color: white;
-    border: 3px solid var(--brand-color);
-    color: var(--brand-color);
-}
-
-
-#game-screen button[name=play]:hover {
-    background-color: var(--brand-color);
-    color: white;
 }

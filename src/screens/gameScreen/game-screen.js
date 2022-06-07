@@ -46,7 +46,9 @@ const playSong = () => {
     player.play();
 }
 
-template.querySelector("button[name=play]").onclick = () => {
+template.querySelector("button[name=play]").onclick = (e) => {
+    e.preventDefault();
+    
     playSong();
 };
 

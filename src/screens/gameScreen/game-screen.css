@@ -13,8 +13,8 @@
     flex-direction: column;
 }
 
-#controls {
-    width: 100%;
+#controls > * {
+    flex: 1;
 }
 
 #game-screen .progress {
@@ -47,46 +47,22 @@
     background: var(--progress-fill-color);
 }
 
-#game-screen form {
+#game-screen .form {
     width: 100%;
     max-width: 600px;
     display: flex;
     justify-content: center;
     gap: 8px;
     flex-wrap: wrap;
+    flex-direction: column;
 }
 
-#game-screen form auto-complete {
-    flex-grow: 3;
-}
-
-#game-screen form auto-complete input {
-    flex: 1;
-}
-
-#game-screen form auto-complete,
-#game-screen form button {
+#game-screen .form button {
     display: inline-block;
-    margin-bottom: 0;
-    flex-grow: 1;
+    margin: 0;
 }
 
-#game-screen #controls {
-    display: flex;
-    align-items: center;
-}
-
-#game-screen #controls span {
-    flex: 1;
-    font-weight: bold;
-}
-
-#game-screen #controls button {
-    flex: 2;
-}
-
-@media screen and (min-width: 768px) {
-    #game-screen #controls {
-        padding-bottom: 20px;
-    }
+#game-screen auto-complete {
+    display: block;
+    margin-bottom: 8px;
 }

@@ -64,6 +64,7 @@ export default class AudioExtElement extends HTMLElement {
             videoId: src,
             playerVars: {
                 playsinline: 1,
+                autoplay: 1,
             },
             events: {
                 onReady: () => {

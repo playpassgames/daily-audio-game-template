@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="/src/main.css">
 
     <div class="splash">
-        <h1>
+        <h1 class="flex center">
             <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor"
                 class="bi bi-music-note-beamed" viewBox="0 0 16 16">
                 <path
@@ -67,30 +67,37 @@
             </ul>
 
             <game-controls>
-                <form>
-                    <auto-complete placeholder="Song Title"></auto-complete>
-                    <div style="display: flex; flex: 1; clear: both;">
-                        <button name="submit" type="submit" color="primary">Guess</button>
-                        <button name="skip" color="danger">
-                            Skip
-                        </button>
+                <div class="form">
+                    <div game-type="audio">
+                        <div id="progress" class="progress">
+                            <div class="fill" name="range"></div>
+                            <div class="fill" name="time"></div>
+                        </div>
+                        <div id="controls" class="flex center">
+                            <span name="now"></span>
+                            <div></div>
+                            <button name="play" color="clear" type="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor"
+                                    class="bi bi-play-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                    <path
+                                        d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z" />
+                                </svg>
+                            </button>
+                            <div></div>
+                            <span name="duration"></span>
+                        </div>
                     </div>
-                </form>
-                <div id="progress" class="progress">
-                    <div class="fill" name="range"></div>
-                    <div class="fill" name="time"></div>
-                </div>
-                <div id="controls">
-                    <span name="now"></span>
-                    <button name="play">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor"
-                            class="bi bi-play-circle" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                            <path
-                                d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z" />
-                        </svg>
-                    </button>
-                    <span name="duration"></span>
+                    <form>
+                        <auto-complete placeholder="Song Title"></auto-complete>
+                        <div class="flex" style="clear: both;">
+                            <button name="skip">
+                                Skip
+                            </button>
+                            <div class="flex-spacer"></div>
+                            <button name="submit" type="submit" color="primary">Submit</button>
+                        </div>
+                    </form>
                 </div>
             </game-controls>
         </div>
@@ -133,13 +140,13 @@
             <p>This is an example of how to use the Playpass SDK to build a simple daily audio guessing game.</p>
             <p>Each day, you have the opportunity to listen to samples from a song and try to figure out the name. Share
                 your results with a friend and see if they can solve it!</p>
-            <button name="timedMode">Daily Play</button>
+            <button name="timedMode" color="primary">Daily Play</button>
 
             <p>
                 You may also test your complete knowledge by seeing how many in a row you can guess correctly!
                 <br>The starting time for each hint is random.<br>Memorizing just the intros won't be enough!
             </p>
-            <button name="freeMode">Free Play</button>
+            <button name="freeMode" color="primary">Free Play</button>
 
             <footer>
             </footer>
