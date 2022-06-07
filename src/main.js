@@ -1,5 +1,4 @@
 import * as playpass from "playpass";
-import { initGCInstant } from 'playpass/dist/esm/gcinstant';
 
 import "./boilerplate/header.js";
 import "./boilerplate/controls.js";
@@ -34,14 +33,6 @@ function onSettingsClick () {
     // Initialize the Playpass SDK
     await playpass.init({
         gameId: "YOUR_GAME_ID", // Do not edit!
-    });
-
-    await initGCInstant({
-        amplitude: import.meta.env.VITE_AMPLITUDE_KEY,
-    });
-
-    await initGCInstant({
-        amplitude: import.meta.env.VITE_AMPLITUDE_KEY,
     });
 
     await state.init();
