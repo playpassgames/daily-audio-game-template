@@ -1,8 +1,10 @@
 const template = document.createElement('template');
 template.innerHTML = `
     <style>
-        ::slotted(*) {
-            display: none;
+        :host([loading]) ::slotted(*),
+        :host(:not([loading])) ::slotted([slot="screen"]:not([active])),
+        :host(:not([loading])) ::slotted([slot="load-spinner"]) {
+            display: none !important;
             flex: 0;
         }
 
@@ -12,17 +14,17 @@ template.innerHTML = `
             flex: 1;
         }
 
-        :host(:not([loading])) ::slotted(*[active]),
+        :host(:not([loading])) ::slotted([slot="screen"][active]),
         :host(:not([loading])) ::slotted([slot="shared"]) {
             display: block;
         }
 
-        :host(:not([loading])) ::slotted(*[active]) {
+        :host(:not([loading])) ::slotted([slot="screen"][active]) {
             flex: 1;
         }
 
         :host([loading]) ::slotted([slot="load-spinner"]) {
-            display: block;
+            display: block !important;
         }
     </style>
     <slot name="load-spinner"></slot>

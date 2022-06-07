@@ -1,6 +1,8 @@
 import * as playpass from "playpass";
 
 export class Model {
+    name = 'model'; // override this name for any unique model you have
+
     /** 
      * Defines the base object for user state
      * 
@@ -28,6 +30,10 @@ export class State {
     constructor (name, ...models) {
         this.name = name;
         this.models = models;
+    }
+
+    getModel(name) {
+        return this.models.find((m) => m.name === name);
     }
 
     data() {

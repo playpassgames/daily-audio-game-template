@@ -1,3 +1,4 @@
+import share from "../../share";
 import { showScreen } from "../../boilerplate/screens";
 import state from "../../state";
 
@@ -7,6 +8,7 @@ function back() {
 
 const template = document.querySelector("#stats-screen");
 
+template.querySelector("button[name=share]").onclick = share;
 template.querySelector("button[name=back]").onclick = back;
 template.addEventListener("active", () => {
     const numWins = state.store.wins.reduce((cur, prev) => (cur + prev) || 0, 0);

@@ -1,15 +1,11 @@
 import { Model } from "../boilerplate/state";
 
 export default class extends Model {
-    constructor(maxAttempts) {
-        super();
-
-        this.attempts = maxAttempts;
-    }
+    name = 'user';
 
     data() {
         return {
-            wins: new Array(this.attempts).fill(0), // wins count for each successful attempt
+            wins: 0, // correct guess streak (daily)
         };
     }
 }

@@ -32,7 +32,7 @@ export class Autocomplete extends HTMLElement {
 
       this._choices.filter(
         (word) => {
-          const sanitized = word.toUpperCase();
+          const sanitized = (word?.key ?? word).toUpperCase();
 
           /* cut these strings into pieces, this is my last resort */
           var start = sanitized.indexOf(val.toUpperCase());
@@ -69,21 +69,24 @@ export class Autocomplete extends HTMLElement {
   createOption(word, matched) {
     const element = document.createElement('li');
     element.classList.add('option');
+    element.setAttribute("value", word?.value ?? word);
+
+    const text = word?.key ?? word;
 
     /* cut these strings into pieces, this is my last resort */
-    var start = word.toUpperCase().indexOf(matched.toUpperCase());
+    var start = text.toUpperCase().indexOf(matched.toUpperCase());
     if (start !== -1) {
       /*make the matching letters bold:*/
-      element.innerHTML += word.substr(0, start);
-      element.innerHTML += "<strong>" + word.substr(start, matched.length) + "</strong>";
-      element.innerHTML += word.substr(start + matched.length);
+      element.innerHTML += text.substr(0, start);
+      element.innerHTML += "<strong>" + text.substr(start, matched.length) + "</strong>";
+      element.innerHTML += text.substr(start + matched.length);
 
       element.addEventListener("click", (e) => {
         e.stopPropagation();
 
         const input = this.querySelector("input[name=text]");
 
-        input.value = word;
+        input.value = element.getAttribute("value");
         this.value = input.value;
 
         this.clearOptions();
@@ -96,6 +99,11 @@ export class Autocomplete extends HTMLElement {
   clearOptions() {
     const list = this.querySelector("ul");
     list.replaceChildren([]);
+  }
+
+  clear() {
+    const input = this.querySelector("input[name=text]");
+    input.value = '';
   }
 
   set choices(arr) {

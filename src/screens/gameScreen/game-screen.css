@@ -27,7 +27,7 @@
     box-sizing: border-box;
 }
 
-#game-screen .progress > .fill {
+#game-screen .progress>.fill {
     position: absolute;
     display: block;
     left: 0;
@@ -37,7 +37,7 @@
     background: var(--progress-range-color);
 }
 
-#game-screen .progress > .fill[name=time] {
+#game-screen .progress>.fill[name=time] {
     position: absolute;
     display: block;
     left: 0;
@@ -64,56 +64,11 @@
     flex: 1;
 }
 
-#game-screen form auto-complete, 
+#game-screen form auto-complete,
 #game-screen form button {
     display: inline-block;
     margin-bottom: 0;
     flex-grow: 1;
-}
-
-#game-screen .results {
-    display: flex;
-    flex-direction: column;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    max-width: 500px;
-    flex-grow: 1;
-}
-
-#game-screen .results .result {
-    display: block;
-    border: 1px solid var(--text-bright);
-    padding: 8px;
-    line-height: 1.2em;
-    margin-bottom: 8px;
-    box-sizing: border-box;
-    text-align: left;
-}
-
-#game-screen .results .result::before {
-    content: '';
-    background-image: url(https://icons.getbootstrap.com/assets/icons/square.svg);
-    background-size: contain;
-    background-repeat: no-repeat;
-    display: inline-block;
-    margin-right: .5em;
-    width: 1em;
-    height: 1em;
-    vertical-align: -.1em;
-}
-
-#game-screen .results .result[s="c"]::before {
-    background-image: url(https://icons.getbootstrap.com/assets/icons/x-square-fill.svg);
-}
-
-#game-screen .results .result[s="b"]::before {
-    background-image: url(https://icons.getbootstrap.com/icons/check-square-fill/);
-}
-
-#game-screen .results .result[s="_"]::before {
-    background-image: url(https://icons.getbootstrap.com/assets/icons/slash-square.svg);
 }
 
 #game-screen #controls {
@@ -128,4 +83,10 @@
 
 #game-screen #controls button {
     flex: 2;
+}
+
+@media screen and (min-width: 768px) {
+    #game-screen #controls {
+        padding-bottom: 20px;
+    }
 }

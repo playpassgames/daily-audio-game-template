@@ -1,21 +1,23 @@
 @import "https://cdn.jsdelivr.net/npm/water.css@2/out/light.min.css";
-
+@import "./loading.css";
 :root {
     --color-info: #cfcfcf;
     --color-primary: #1095c1;
     --color-danger: #e71f1f;
 }
 
+
 /* full screen the app view */
+
 body {
-  margin: 0 auto;
-  padding: 0;
-  display: flex;
-  width: 100vw;
-  max-width: 940px;
-  min-height: 100vh;
-  flex-direction: column;
-  box-sizing: border-box;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    width: 100vw;
+    max-width: 940px;
+    min-height: 100vh;
+    flex-direction: column;
+    box-sizing: border-box;
 }
 
 body.isLoggedIn .showIfLoggedOut {
@@ -41,6 +43,26 @@ button[color=danger] {
     color: white;
 }
 
+button[color=clear] {
+    background: transparent;
+    color: var(--text-bright);
+}
+
+button[outline] {
+    background: transparent;
+    border: 2px solid var(--color-info);
+}
+
+button[outline][color=primary] {
+    background: transparent;
+    border: 2px solid var(--color-primary);
+}
+
+button[outline][color=danger] {
+    background: transparent;
+    border: 2px solid var(--color-danger);
+}
+
 button:hover {
     filter: brightness(0.9);
 }
@@ -62,12 +84,12 @@ body:not([ready]) {
     overflow: hidden;
 }
 
-body[ready] > .splash {
+body[ready]>.splash {
     pointer-events: none;
     opacity: 0;
 }
 
-body > .splash {
+body>.splash {
     background-color: var(--background-body);
     display: flex;
     position: fixed;
@@ -87,4 +109,21 @@ game-controls {
 
 game-header {
     background: var(--background-body);
+}
+
+game-header *[slot=brand] {
+    font-size: 1.5rem;
+    vertical-align: middle;
+    align-items: center;
+}
+
+game-header *[slot=brand] img {
+    height: 1.5rem;
+}
+
+/* toggle handler */
+[toggleable]:not([open]),
+[toggle][open] *[open=false],
+[toggle]:not([open]) *[open=true] {
+    display: none !important;
 }

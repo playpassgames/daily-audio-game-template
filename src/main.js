@@ -1,7 +1,10 @@
 import * as playpass from "playpass";
+import { initGCInstant } from 'playpass/dist/esm/gcinstant';
 
 import "./boilerplate/header.js";
 import "./boilerplate/controls.js";
+import "./boilerplate/modal.js";
+import "./boilerplate/toggle.js";
 import "./components/audio-ext-element";
 import "./components/autocomplete-element";
 
@@ -33,14 +36,21 @@ function onSettingsClick () {
         gameId: "YOUR_GAME_ID", // Do not edit!
     });
 
-    await state.init();
-
-    await document.querySelector('audio-ext').setSong({
-        type: state.correctAnswer.type,
-        src: state.correctAnswer.src,
+    await initGCInstant({
+        amplitude: import.meta.env.VITE_AMPLITUDE_KEY,
     });
 
-    showScreen("#game-screen");
+    await initGCInstant({
+        amplitude: import.meta.env.VITE_AMPLITUDE_KEY,
+    });
+
+    await state.init();
+
+    if (state.isDone()) {
+        showScreen("#results-screen");
+    } else {
+        showScreen("#game-screen");
+    }
 
     // Set the login state for our UI
     if (playpass.account.isLoggedIn()) {
