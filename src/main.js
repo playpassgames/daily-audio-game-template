@@ -2,6 +2,8 @@ import * as playpass from "playpass";
 
 import "./boilerplate/header.js";
 import "./boilerplate/controls.js";
+import "./boilerplate/modal.js";
+import "./boilerplate/toggle.js";
 import "./components/audio-ext-element";
 import "./components/autocomplete-element";
 
@@ -35,12 +37,11 @@ function onSettingsClick () {
 
     await state.init();
 
-    await document.querySelector('audio-ext').setSong({
-        type: state.correctAnswer.type,
-        src: state.correctAnswer.src,
-    });
-
-    showScreen("#game-screen");
+    if (state.isDone()) {
+        showScreen("#results-screen");
+    } else {
+        showScreen("#game-screen");
+    }
 
     // Set the login state for our UI
     if (playpass.account.isLoggedIn()) {

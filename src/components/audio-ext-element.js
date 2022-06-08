@@ -9,7 +9,7 @@ export default class AudioExtElement extends HTMLElement {
         super();
         
         this.innerHTML = `
-           <iframe id="player" src=""></iframe>
+           <iframe src=""></iframe>
         `;
 
         this.play = () => {};
@@ -29,11 +29,13 @@ export default class AudioExtElement extends HTMLElement {
                 }
 
                 this.innerHTML = `
-                    <div id="player"></div>
+                    <div></div>
                 `;
 
+                const e = this.querySelector('div')
+
                 await new Promise((resolve) => {
-                    this._prepareYoutube(src, resolve);
+                    this._prepareYoutube(e, src, resolve);
                 });
                 break;
             }
@@ -53,15 +55,16 @@ export default class AudioExtElement extends HTMLElement {
         }
     }
 
-    _prepareYoutube(src, cb) {
+    _prepareYoutube(element, src, cb) {
         let duration, begin;
 
-        const player = new YT.Player('player', {
+        const player = new YT.Player(element, {
             width: 600,
             height: 400,
             videoId: src,
             playerVars: {
                 playsinline: 1,
+                autoplay: 1,
             },
             events: {
                 onReady: () => {
@@ -85,6 +88,9 @@ export default class AudioExtElement extends HTMLElement {
 
                         this.loading = false;
                     }
+                    if (e.data === YT.PlayerState.ENDED) {
+                        this.dispatchEvent(new CustomEvent("end"));
+                    }
                 }
             },
         });
@@ -99,6 +105,10 @@ export default class AudioExtElement extends HTMLElement {
             
             player.seekTo(begin, true);
             player.playVideo();
+        };
+
+        this.stop = () => {
+            player.destroy();
         };
 
         this.reset = (range = { begin: 0.0, end: 1.0 }) => {
@@ -141,20 +151,30 @@ export default class AudioExtElement extends HTMLElement {
             }, duration);
         });
 
-        this.play = () => {
-            if (this.timeout) {
-                clearTimeout(this.timeout);
-                this.timeout = null;
+        this.play = (range) => {
+            const { begin, end } = range ?? { begin: 0.0, end: 1.0 };
+
+            const duration = (end - begin) * 1000;
+
+            this.done = false;
+
+            this.ready = () => {
+                this.start = Date.now();
+                this.end = this.start + duration;
+    
+                this.timeout = setTimeout(() => {
+                    player.pause();
+                    // loop back
+                    player.seekTo(begin * 1000);
+                    this.done = true;
+                }, duration);
             }
             
             player.seekTo(begin * 1000); // seek is in ms
             player.play();
         };
 
-        this.reset = (range) => {
-            duration = (range.end - range.begin) * 1000;
-
-            begin = range.begin;
+        this.reset = (begin) => {
             player.pause();
             player.seekTo(begin * 1000);
 
@@ -162,13 +182,13 @@ export default class AudioExtElement extends HTMLElement {
         }
     }
 
-    clear(range = { begin: 0.0, end: 1.0 }) {
+    clear(begin) {
         if (this.timeout) {
             clearTimeout(this.timeout);
             this.timeout = null;
         }
 
-        this.reset?.(range)
+        this.reset?.(begin)
         this.start = null;
         this.end = null;
         this.done = false;

@@ -1,21 +1,28 @@
 @import "https://cdn.jsdelivr.net/npm/water.css@2/out/light.min.css";
+@import "./loading.css";
 
 :root {
     --color-info: #cfcfcf;
+    --color-info-text: #000;
     --color-primary: #1095c1;
+    --color-primary-text: #fff;
     --color-danger: #e71f1f;
+    --color-danger-text: #fff;
+    --input-border-radius: 6px;
+    --button-font: inherit;
 }
 
 /* full screen the app view */
+
 body {
-  margin: 0 auto;
-  padding: 0;
-  display: flex;
-  width: 100vw;
-  max-width: 940px;
-  min-height: 100vh;
-  flex-direction: column;
-  box-sizing: border-box;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    width: 100vw;
+    max-width: 940px;
+    min-height: 100vh;
+    flex-direction: column;
+    box-sizing: border-box;
 }
 
 body.isLoggedIn .showIfLoggedOut {
@@ -28,21 +35,49 @@ body:not(.isLoggedIn) .showIfLoggedIn {
 
 button {
     background: var(--color-info);
-    color: var(--text-bright);
+    color: var(--color-info-text);
+    transition: filter .2s;
+    font-weight: bold;
+    font-family: var(--button-font);
 }
 
 button[color=primary] {
     background: var(--color-primary);
-    color: white;
+    color: var(--color-primary-text);
 }
 
 button[color=danger] {
     background: var(--color-danger);
-    color: white;
+    color: var(--color-danger-text);
+}
+
+button[color=clear] {
+    background: transparent;
+    color: var(--text-main);
+}
+
+button[outline] {
+    background: transparent;
+    border: 2px solid var(--color-info);
+    color: var(--text-main);
+}
+
+button[outline][color=primary] {
+    background: transparent;
+    border: 2px solid var(--color-primary);
+}
+
+button[outline][color=danger] {
+    background: transparent;
+    border: 2px solid var(--color-danger);
 }
 
 button:hover {
-    filter: brightness(0.9);
+    filter: brightness(0.8);
+}
+
+button, input, select, textarea {
+    border-radius: var(--input-border-radius);
 }
 
 .fork-ribbon {
@@ -62,12 +97,12 @@ body:not([ready]) {
     overflow: hidden;
 }
 
-body[ready] > .splash {
+body[ready]>.splash {
     pointer-events: none;
     opacity: 0;
 }
 
-body > .splash {
+body>.splash {
     background-color: var(--background-body);
     display: flex;
     position: fixed;
@@ -83,8 +118,74 @@ body > .splash {
 
 game-controls {
     background: var(--background-body);
+    padding-bottom: 16px;
 }
 
 game-header {
     background: var(--background-body);
+}
+
+game-header *[slot=brand] {
+    font-size: 1.5rem;
+    vertical-align: middle;
+    align-items: center;
+}
+
+game-header *[slot=brand] img {
+    height: 1.5rem;
+}
+
+/* toggle handler */
+[toggleable]:not([open]),
+[toggle][open] *[open=false],
+[toggle]:not([open]) *[open=true] {
+    display: none !important;
+}
+
+.fieldset {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.fieldset label {
+    display: inline-block;
+}
+
+.fieldset select,
+.fieldset input,
+.fieldset textarea {
+    display: block;
+    flex: 1;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex.center {
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-spacer {
+    flex: 1;
+}
+
+@media only screen and (max-width: 600px) {
+    .fieldset {
+      flex-direction: column;
+      flex: 1;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .fieldset select,
+    .fieldset input,
+    .fieldset textarea {
+        width: 100%;
+    }
 }

@@ -1,6 +1,8 @@
 const template = document.createElement('template');
 template.innerHTML = `
 <style>
+    @import url('/src/vars.css');
+
     :host {
         display: flex;
         align-items: center;

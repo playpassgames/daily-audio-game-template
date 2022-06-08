@@ -1,24 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;700&display=swap');
+@import url('/src/vars.css');
+
+
 /* dice game looks nicest with some padding around the edges */
+
 body {
     padding: 0 1em;
+    font-family: 'Work Sans', sans-serif;
 }
 
-game-header .button[name="help"] {
-    background: url(./assets/help.svg);
-}
-
-game-header .button[name="settings"] {
-    background: url(./assets/settings.svg);
-}
-
-game-header .button[name="stats"]{
-    background: url(./assets/stats.svg);
+game-header .button:hover>img {
+    filter: invert(75%) sepia(88%) saturate(1619%) hue-rotate(162deg) brightness(95%) contrast(97%);
 }
 
 game-header .button {
     width: 24px;
     height: 24px;
     cursor: pointer;
+    filter: var(--text-main-filter);
 }
 
 game-header *[slot=brand] {
@@ -26,19 +25,20 @@ game-header *[slot=brand] {
     gap: .5em;
     margin: 0;
     justify-content: center;
+    color: var(--text-main);
 }
 
 /* prefer center text alignment in our game design */
-screen-router > * {
+
+screen-router>* {
     text-align: center;
 }
 
 .splash h1 {
-    border: 2px solid white;
     padding: 8px;
     display: inline-block;
-    width: 1.5em;
-    height: 1.5em;
+    width: 4em;
+    height: 4em;
     line-height: 1.5em;
     text-align: center;
     vertical-align: middle;
@@ -47,14 +47,93 @@ screen-router > * {
 audio-ext {
     display: none;
     width: 100%;
+    height: calc(100vw * 9 / 16);
     max-width: 600px;
+    max-height: calc(600px * 9 / 16);
+    aspect-ratio: 16 / 9;
     margin: 0 auto;
 }
 
 audio-ext iframe {
     width: 100%;
+    height: 100%;
 }
 
 screen-router[open="#results-screen"] audio-ext {
     display: block;
+}
+
+body[mode="free"] *[mode]:not([mode="free"]),
+body[mode="free-hard"] *[mode]:not([mode="free"]) {
+    display: none;
+}
+
+body[mode="timed"] *[mode]:not([mode="timed"]) {
+    display: none;
+}
+
+footer {
+    margin-top: 40px;
+    font-size: .8em;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 500px;
+    flex-grow: 1;
+}
+
+.results .result {
+    display: block;
+    border: 1px solid var(--text-main);
+    padding: 8px;
+    line-height: 1.2em;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.results .result {
+    opacity: 1.0;
+}
+
+.results .result[s] {
+    opacity: 0.6;
+}
+.results .result:not([s]) ~ .result:not([s]) {
+    opacity: 0.2;
+}
+
+.results .result::before {
+    content: '';
+    background-image: url(https://icons.getbootstrap.com/assets/icons/square.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: inline-block;
+    margin-right: .5em;
+    width: 1em;
+    height: 1em;
+    vertical-align: -.1em;
+    filter: var(--text-main-filter);
+}
+
+.results .result[s="c"]::before {
+    background-image: url(https://icons.getbootstrap.com/assets/icons/x-square-fill.svg);
+}
+
+.results .result[s="b"]::before {
+    background-image: url(https://icons.getbootstrap.com/assets/icons/check-square-fill.svg);
+}
+
+.results .result[s="_"]::before {
+    background-image: url(https://icons.getbootstrap.com/assets/icons/slash-square.svg);
+}
+
+.lds-ring div {
+    border-color: var(--brand-color) transparent transparent transparent;
 }

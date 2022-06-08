@@ -10,6 +10,7 @@ template.innerHTML = `
         left: 0;
         right: 0;
         position: sticky;
+        width: 100%;
     }
 </style>
 <slot>

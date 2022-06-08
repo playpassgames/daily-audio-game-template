@@ -7,6 +7,17 @@
         "Casual Listener",
         "Newbie"
     ],
+    "languages": [
+        {
+            "code": "en",
+            "label": "EN",
+            "default": true
+        },
+        {
+            "code": "jp",
+            "label": "日本語"
+        }
+    ],
     "hints": [
         {
             "begin": 0.0,
@@ -18,15 +29,15 @@
         },
         {
             "begin": 0.0,
-            "end": 10.0
+            "end": 8.0
+        },
+        {
+            "begin": 0.0,
+            "end": 12.0
         },
         {
             "begin": 0.0,
             "end": 20.0
-        },
-        {
-            "begin": 0.0,
-            "end": 30.0
         }
     ],
     "autocomplete": [
@@ -59,14 +70,12 @@
             "name": "Wash"
         },
         {
-            "src": "pdPN9q5_log",
+            "src": "I0JVRcJLea8",
             "type": "youtube",
-            "name": "Ride On Time"
-        },
-        {
-            "src": "276418827",
-            "type": "soundcloud",
-            "name": "Sparkle"
+            "name": "Telephone Number"
         }
+    ],
+    "challenge": [
+
     ]
 }
