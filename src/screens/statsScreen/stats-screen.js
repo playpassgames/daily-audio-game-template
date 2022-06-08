@@ -1,4 +1,3 @@
-import share from "../../share";
 import { showScreen } from "../../boilerplate/screens";
 import state from "../../state";
 
