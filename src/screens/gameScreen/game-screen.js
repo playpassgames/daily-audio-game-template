@@ -67,7 +67,7 @@ template.querySelector("button[name=skip]").onclick = (e) => {
 
 template.addEventListener(
     "active",
-    asyncHandler(async () => {
+    asyncHandler(async ({ detail: { previous } }) => {
         // Take new users to help screen first
         const sawTutorial = await playpass.storage.get("sawTutorial");
         if (!sawTutorial) {
@@ -115,7 +115,9 @@ template.addEventListener(
 
         updatePlayingScreen();
 
-        playSong();
+        if (previous) {
+            playSong();
+        }
     }),
 );
 

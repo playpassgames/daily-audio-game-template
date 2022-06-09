@@ -29,7 +29,7 @@ export default function share() {
         });
     } else if (state.gameMode === Mode.Free) {
         playpass.share({
-            text: `🎵 Daily Song : Free Play (Hard)\nScore ${state.score}\nGuessed ${state.wins} songs\n${link}`,
+            text: `🎵 Daily Song : Free Play\nScore ${state.score}\nGuessed ${state.wins} songs\n${link}`,
         });
     }
 }
