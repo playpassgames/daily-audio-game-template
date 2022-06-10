@@ -1,3 +1,5 @@
+import * as playpass from "playpass";
+
 const template = document.createElement('template');
 template.innerHTML = `
     <style>
@@ -35,11 +37,11 @@ template.innerHTML = `
 const routerTagName = "screen-router";
 
 window.customElements.define(
-    routerTagName, 
+    routerTagName,
     class extends HTMLElement {
         constructor() {
             super();
-    
+
             this.attachShadow({mode: 'open'});
             this.shadowRoot.appendChild(template.content.cloneNode(true));
         }
@@ -55,11 +57,11 @@ window.customElements.define(
                     prev.removeAttribute("active");
                     prev.dispatchEvent(new CustomEvent("inactive"));
                 }
-                
+
                 const next = this.querySelector(newValue);
                 next.setAttribute("active", "");
 
-                next.dispatchEvent(new CustomEvent("active", { 
+                next.dispatchEvent(new CustomEvent("active", {
                     detail: {
                         previous: oldValue,
                     }
@@ -69,7 +71,7 @@ window.customElements.define(
     }
 );
 
-export function asyncHandler(fn){
+export function asyncHandler(fn) {
     return async (e) => {
         document.querySelector(routerTagName).setAttribute("loading", "");
         await fn(e);
@@ -78,9 +80,11 @@ export function asyncHandler(fn){
 }
 
 export function showScreen(name) {
+    playpass.analytics.track('PageShow', {page: name})
     document.querySelector(routerTagName).setAttribute("open", name);
 }
 
 export function readyGame() {
+    playpass.analytics.track('GameReady')
     document.querySelector("body").setAttribute("ready", "");
 }
