@@ -1,7 +1,7 @@
 import * as playpass from "playpass";
 import { asyncHandler, showScreen } from "../../boilerplate/screens";
 import state, { Mode } from "../../state";
-import { songs, autocomplete } from "../../../content/songs.json";
+import { autocomplete } from "../../../content/songs.json";
 
 import "./game-screen.css";
 
@@ -26,7 +26,7 @@ template.querySelector("form").onsubmit = event => {
     event.preventDefault();
 
     const guess = guessInput.value?.trim();
-    
+
     // ignore empty forms
     if (!guess) {
         return;
@@ -48,7 +48,7 @@ const playSong = () => {
 
 template.querySelector("button[name=play]").onclick = (e) => {
     e.preventDefault();
-    
+
     playSong();
 };
 
@@ -81,14 +81,14 @@ template.addEventListener(
         }
 
         guessInput.clear();
-        
+
         guessInput.choices = [
             // pad with extra song names to make the game more challenging
             ...autocomplete,
             // always include the actual songs that you can guess
-            ...songs.map(({ name, titles, artist }) => {
+            ...state.songs.map(({ name, titles, artist }) => {
                 const title = titles?.[state.language] ?? name;
-                return { key: `${title} / ${artist}`, value: name }
+                return artist ? `${title} / ${artist}` : `${title}`
             }),
         ];
 
@@ -96,7 +96,7 @@ template.addEventListener(
         await document.querySelector('audio-ext').setSong({
             type: state.correctAnswer.type,
             src: state.correctAnswer.src,
-        });    
+        });
 
         if (state.gameMode !== Mode.Time) {
             template.querySelector("p[mode=free]").textContent = `Song #${state.wins + 1}`;
@@ -105,7 +105,7 @@ template.addEventListener(
         progressUpdateInterval = setInterval(() => {
             const { begin } = currentRange;
             const songDuration = player.duration;
-        
+
             progressBar.style.left = `${(begin / songDuration) * 100}%`;
             progressBar.style.right = `${(1 - ((begin + player.time) / songDuration)) * 100}%`;
 
@@ -144,7 +144,7 @@ function updatePlayingScreen () {
             } else {
                 guess.setAttribute("s", "c");
             }
-            
+
             guess.textContent = state.guesses[ii] ?? 'Skipped';
         }
         results.appendChild(guess);
@@ -162,7 +162,7 @@ function updatePlayingScreen () {
     currentRange = { begin, end };
 
     player.clear(currentRange);
-    
+
     durationLabel.textContent = formatTime(duration);
 
     timeline.style.left = `${(begin / songDuration) * 100}%`;

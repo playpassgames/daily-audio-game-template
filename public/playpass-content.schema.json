@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "src": {
+      "type": "string"
+    },
+    "type": {
+      "enum": ["youtube", "soundcloud"]
+    },
+    "name": {
+      "type": "string"
+    }
+  },
+  "required": [ "src", "type", "name" ]
+}

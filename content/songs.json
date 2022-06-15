@@ -1,5 +1,4 @@
 {
-    "startDate": "2022-05-19T12:00:00",
     "ranks": [
         "Obsessed",
         "Know it All",
@@ -57,23 +56,6 @@
        "Remember Summer Days",
        "Driving My Love",
        "Telephone Number"
-    ],
-    "songs": [
-        {
-            "src": "VEe_yIbW64w",
-            "type": "youtube",
-            "name": "Stay With Me"
-        },
-        {
-            "src": "h3xLPvFpIzw",
-            "type": "youtube",
-            "name": "Wash"
-        },
-        {
-            "src": "I0JVRcJLea8",
-            "type": "youtube",
-            "name": "Telephone Number"
-        }
     ],
     "challenge": [
 

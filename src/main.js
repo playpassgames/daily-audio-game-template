@@ -16,6 +16,7 @@ import "./screens/settingsScreen/settings-screen";
 
 import { readyGame, showScreen } from "./boilerplate/screens";
 import state from "./state";
+import { playpass_game_id_ } from "./constants";
 
 function onHelpClick () {
     showScreen("#help-screen");
@@ -32,7 +33,7 @@ function onSettingsClick () {
 (async function () {
     // Initialize the Playpass SDK
     await playpass.init({
-        gameId: "YOUR_GAME_ID", // Do not edit!
+        gameId: playpass_game_id_, // Do not edit!
     });
 
     await state.init();

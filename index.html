@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
-    <title>🎵 Daily Song</title>
+    <title>🎵 <%= title %></title>
 
     <script src="https://www.youtube.com/iframe_api" type="text/javascript"></script>
     <script src="https://w.soundcloud.com/player/api.js" type="text/javascript"></script>
@@ -34,7 +34,7 @@
             <img src="/src/assets/help.svg" />
         </div>
         <h2 slot="brand">
-            <h2 slot="brand">🎵 Daily Song</h2>
+            <h2 slot="brand">🎵 <%= title %></h2>
         </h2>
         <div class="button" name="stats" slot="buttons-right">
             <img src="/src/assets/stats.svg" />
@@ -141,7 +141,7 @@
         </div>
 
         <div id="help-screen" slot="screen">
-            <h2>Welcome to Daily Song!</h2>
+            <h2>Welcome to <%= title %>!</h2>
             <p>This is an example of how to use the Playpass SDK to build a simple daily audio guessing game.</p>
             <p>Each day, you have the opportunity to listen to samples from a song and try to figure out the name. Share
                 your results with a friend and see if they can solve it!</p>

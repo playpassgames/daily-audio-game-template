@@ -1,5 +1,6 @@
 import * as playpass from "playpass";
 import state, { Mode } from "./state";
+import {playpass_game_name_} from "./constants";
 
 export function getEmojis() {
     let emotes = '🔊';
@@ -25,11 +26,11 @@ export default function share() {
 
         // Share some text along with our link
         playpass.share({
-            text: `🎵 Daily Song #${(state.store.currentInterval + 1).toString()}\n🔊${emojis}\n${link}`,
+            text: `🎵 ${playpass_game_name_} #${(state.store.currentInterval + 1).toString()}\n🔊${emojis}\n${link}`,
         });
     } else if (state.gameMode === Mode.Free) {
         playpass.share({
-            text: `🎵 Daily Song : Free Play\nScore ${state.score}\nGuessed ${state.wins} songs\n${link}`,
+            text: `🎵 ${playpass_game_name_} : Free Play\nScore ${state.score}\nGuessed ${state.wins} songs\n${link}`,
         });
     }
 }
