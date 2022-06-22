@@ -3,13 +3,16 @@
   "properties": {
     "songLink": {
       "type": "string",
-      "description": "Link to your song. Your song links should be based off of the album versions of songs.",
-      "format": "uri",
-      "regex": "^((?:https?:)?\\/\\/)?((?:www|m)\\.)?((?:youtube\\.com|youtu.be))(\\/(?:[\\w\\-]+\\?v=|embed\\/|v\\/)?)([\\w\\-]+)(\\S+)?$"
+      "description": "Link to your song. Only Youtube supported at the moment. Your song links should be based off of the album versions of songs.",
+      "pattern": "^((?:https?:)?\\/\\/)?((?:www|m)\\.)?((?:youtube\\.com|youtu.be))(\\/(?:[\\w\\-]+\\?v=|embed\\/|v\\/)?)([\\w\\-]+)(\\S+)?$"
     },
     "songName": {
       "type": "string",
       "description": "Name of the song. This is what your users' guess will have to be."
+    },
+    "musicVideoLink": {
+      "type": "string",
+      "description": "Link to your song's music video, to be shown on the result screen."
     }
   },
   "required": [ "songLink", "songName" ]

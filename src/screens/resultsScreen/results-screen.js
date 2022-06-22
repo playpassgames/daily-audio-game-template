@@ -82,8 +82,8 @@ template.addEventListener("active", async({ detail: { previous } }) => {
     }
 
     await player.setSong({
-        type: state.correctAnswer.musicVideoLink ? 'youtube' : state.correctAnswer.type,
-        src: state.correctAnswer.musicVideoLink ?? state.correctAnswer.src,
+        type: state.correctAnswer.musicVideoSrc ? 'youtube' : state.correctAnswer.type,
+        src: state.correctAnswer.musicVideoSrc ?? state.correctAnswer.src,
     });
 
     player.clear({ begin: 0, end: 0 });

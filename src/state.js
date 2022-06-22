@@ -36,19 +36,27 @@ export default {
         const result = await fetch('playpass-content.json');
         const playpassContent = await result.json();
         this.songs = playpassContent.elements
-            .map(({songLink, songName}) => {
-                const result = YOUTUBE_REGEX.exec(songLink);
+            .map(({songLink, songName, musicVideoLink}) => {
+                const parsedMusicLink = YOUTUBE_REGEX.exec(songLink);
 
-                if (!result) {
+                if (!parsedMusicLink) {
                     return null;
                 }
 
-                return {
+                const song = {
                     songLink,
                     songName,
-                    src: result[5],
+                    src: parsedMusicLink[5],
                     type: 'youtube'
+                };
+
+                if (musicVideoLink) {
+                    const parsedVideoLink = YOUTUBE_REGEX.exec(musicVideoLink);
+                    song.musicVideoLink = musicVideoLink;
+                    song.musicVideoSrc = parsedVideoLink[5];
                 }
+
+                return song;
             })
             .filter(it => it !== null);
         this.interval = Daily(Date.parse(playpassContent.startDate) ?? new Date());
