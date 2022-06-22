@@ -7,7 +7,7 @@ export default class AudioExtElement extends HTMLElement {
 
     constructor() {
         super();
-        
+
         this.innerHTML = `
            <iframe src=""></iframe>
         `;
@@ -58,67 +58,69 @@ export default class AudioExtElement extends HTMLElement {
     _prepareYoutube(element, src, cb) {
         let duration, begin;
 
-        const player = new YT.Player(element, {
-            width: 600,
-            height: 400,
-            videoId: src,
-            playerVars: {
-                playsinline: 1,
-                autoplay: 1,
-            },
-            events: {
-                onReady: () => {
-                    this.duration = player.getDuration();
-                    cb();
+        YT.ready(() => {
+            const player = new YT.Player(element, {
+                width: 600,
+                height: 400,
+                videoId: src,
+                playerVars: {
+                    playsinline: 1,
+                    autoplay: 1,
                 },
-                onStateChange: (e) => {
-                    if (e.data === YT.PlayerState.PLAYING) {
-                        this.start = Date.now();
-                        this.end = this.start + duration;
-                        this.done = false;
-                        
-                        if (duration > 0) {
-                            this.timeout = setTimeout(() => {
-                                player.pauseVideo();
-                                // loop back
-                                player.seekTo(begin, true);
-                                this.done = true;
-                            }, duration);
+                events: {
+                    onReady: () => {
+                        this.duration = player.getDuration();
+                        cb();
+                    },
+                    onStateChange: (e) => {
+                        if (e.data === YT.PlayerState.PLAYING) {
+                            this.start = Date.now();
+                            this.end = this.start + duration;
+                            this.done = false;
+
+                            if (duration > 0) {
+                                this.timeout = setTimeout(() => {
+                                    player.pauseVideo();
+                                    // loop back
+                                    player.seekTo(begin, true);
+                                    this.done = true;
+                                }, duration);
+                            }
+
+                            this.loading = false;
                         }
+                        if (e.data === YT.PlayerState.ENDED) {
+                            this.dispatchEvent(new CustomEvent("end"));
+                        }
+                    }
+                },
+            });
 
-                        this.loading = false;
-                    }
-                    if (e.data === YT.PlayerState.ENDED) {
-                        this.dispatchEvent(new CustomEvent("end"));
-                    }
+            this.play = () => {
+                if (this.timeout) {
+                    clearTimeout(this.timeout);
+                    this.timeout = null;
                 }
-            },
-        });
 
-        this.play = () => {
-            if (this.timeout) {
-                clearTimeout(this.timeout);
-                this.timeout = null;
+                this.loading = true;
+
+                player.seekTo(begin, true);
+                player.playVideo();
+            };
+
+            this.stop = () => {
+                player.destroy();
+            };
+
+            this.reset = (range = { begin: 0.0, end: 1.0 }) => {
+                player.pauseVideo();
+
+                duration = (range.end - range.begin) * 1000;
+                begin = range.begin;
+
+                player.seekTo(begin, true);
             }
-
-            this.loading = true;
-            
-            player.seekTo(begin, true);
-            player.playVideo();
-        };
-
-        this.stop = () => {
-            player.destroy();
-        };
-
-        this.reset = (range = { begin: 0.0, end: 1.0 }) => {
-            player.pauseVideo();
-            
-            duration = (range.end - range.begin) * 1000;
-            begin = range.begin;
-
-            player.seekTo(begin, true);
-        }
+        });
     }
 
     async _prepareSoundcloud(src, cb) {
@@ -161,7 +163,7 @@ export default class AudioExtElement extends HTMLElement {
             this.ready = () => {
                 this.start = Date.now();
                 this.end = this.start + duration;
-    
+
                 this.timeout = setTimeout(() => {
                     player.pause();
                     // loop back
@@ -169,7 +171,7 @@ export default class AudioExtElement extends HTMLElement {
                     this.done = true;
                 }, duration);
             }
-            
+
             player.seekTo(begin * 1000); // seek is in ms
             player.play();
         };

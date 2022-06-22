@@ -86,12 +86,11 @@ template.addEventListener(
             // pad with extra song names to make the game more challenging
             ...autocomplete,
             // always include the actual songs that you can guess
-            ...state.songs.map(({ name, titles, artist }) => {
-                const title = titles?.[state.language] ?? name;
+            ...state.songs.map(({ songName, titles, artist }) => {
+                const title = titles?.[state.language] ?? songName;
                 return artist ? `${title} / ${artist}` : `${title}`
             }),
         ];
-
 
         await document.querySelector('audio-ext').setSong({
             type: state.correctAnswer.type,

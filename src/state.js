@@ -1,16 +1,18 @@
 import * as playpass from "playpass";
-import { State } from "./boilerplate/state";
+import {State} from "./boilerplate/state";
 import UserModel from "./models/userModel";
 import DailyModel from "./models/dailyModel";
 
-import { challenge, hints, languages } from "../content/songs.json";
-import { Daily } from "./boilerplate/interval";
+import {challenge, hints, languages} from "../content/songs.json";
+import {Daily} from "./boilerplate/interval";
 
 const MAX_ATTEMPTS = 6;
 
 let state;
 
 export const Mode = { Time: "timed", Free: "free" }
+
+const YOUTUBE_REGEX = /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/
 
 // The dice the player rolled today
 export default {
@@ -33,7 +35,22 @@ export default {
     async init() {
         const result = await fetch('playpass-content.json');
         const playpassContent = await result.json();
-        this.songs = playpassContent.elements;
+        this.songs = playpassContent.elements
+            .map(({songLink, songName}) => {
+                const result = YOUTUBE_REGEX.exec(songLink);
+
+                if (!result) {
+                    return null;
+                }
+
+                return {
+                    songLink,
+                    songName,
+                    src: result[5],
+                    type: 'youtube'
+                }
+            })
+            .filter(it => it !== null);
         this.interval = Daily(Date.parse(playpassContent.startDate) ?? new Date());
 
         state = new State(
@@ -66,9 +83,9 @@ export default {
     getCurrentAnswer() {
         const word = this.correctAnswer;
         if (!word) {
-            return this.songs[0].name;
+            return this.songs[0].songName;
         }
-        return word.name;
+        return word.songName;
     },
     getCurrentRange() {
         if (this.gameMode !== Mode.Time) {
@@ -102,7 +119,7 @@ export default {
             const today = challenge.find(({number}) => number === this.store.currentInterval);
             let answer;
             if (today) {
-                const song = this.songs.find((s) => s.name === today.name);
+                const song = this.songs.find((s) => s.songName === today.songName);
                 if (song) {
                     answer = Object.assign({}, song, today);
                 }

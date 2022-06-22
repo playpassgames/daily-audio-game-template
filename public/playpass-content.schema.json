@@ -1,15 +1,16 @@
 {
   "type": "object",
   "properties": {
-    "src": {
-      "type": "string"
+    "songLink": {
+      "type": "string",
+      "description": "Link to your song. Your song links should be based off of the album versions of songs.",
+      "format": "uri",
+      "regex": "^((?:https?:)?\\/\\/)?((?:www|m)\\.)?((?:youtube\\.com|youtu.be))(\\/(?:[\\w\\-]+\\?v=|embed\\/|v\\/)?)([\\w\\-]+)(\\S+)?$"
     },
-    "type": {
-      "enum": ["youtube", "soundcloud"]
-    },
-    "name": {
-      "type": "string"
+    "songName": {
+      "type": "string",
+      "description": "Name of the song. This is what your users' guess will have to be."
     }
   },
-  "required": [ "src", "type", "name" ]
+  "required": [ "songLink", "songName" ]
 }

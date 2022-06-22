@@ -2,19 +2,16 @@
   "startDate": 1652961600000,
   "elements": [
     {
-      "src": "VEe_yIbW64w",
-      "type": "youtube",
-      "name": "Stay With Me"
+      "songLink": "https://www.youtube.com/watch?v=VEe_yIbW64w",
+      "songName": "Stay With Me"
     },
     {
-      "src": "h3xLPvFpIzw",
-      "type": "youtube",
-      "name": "Wash"
+      "songLink": "https://www.youtube.com/watch?v=h3xLPvFpIzw",
+      "songName": "Wash"
     },
     {
-      "src": "I0JVRcJLea8",
-      "type": "youtube",
-      "name": "Telephone Number"
+      "songLink": "https://www.youtube.com/watch?v=I0JVRcJLea8",
+      "songName": "Telephone Number"
     }
   ]
 }
