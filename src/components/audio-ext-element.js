@@ -7,7 +7,7 @@ export default class AudioExtElement extends HTMLElement {
 
     constructor() {
         super();
-        
+
         this.innerHTML = `
            <iframe src=""></iframe>
         `;
@@ -46,7 +46,7 @@ export default class AudioExtElement extends HTMLElement {
 
                 await new Promise((resolve) => {
                     this._prepareSoundcloud(src, resolve);
-                })
+                });
                 break;
             }
             default: {
@@ -55,9 +55,10 @@ export default class AudioExtElement extends HTMLElement {
         }
     }
 
-    _prepareYoutube(element, src, cb) {
+    async _prepareYoutube(element, src, cb) {
         let duration, begin;
 
+        await new Promise((resolve) => YT.ready(resolve));
         const player = new YT.Player(element, {
             width: 600,
             height: 400,
@@ -76,7 +77,7 @@ export default class AudioExtElement extends HTMLElement {
                         this.start = Date.now();
                         this.end = this.start + duration;
                         this.done = false;
-                        
+
                         if (duration > 0) {
                             this.timeout = setTimeout(() => {
                                 player.pauseVideo();
@@ -102,7 +103,7 @@ export default class AudioExtElement extends HTMLElement {
             }
 
             this.loading = true;
-            
+
             player.seekTo(begin, true);
             player.playVideo();
         };
@@ -113,7 +114,7 @@ export default class AudioExtElement extends HTMLElement {
 
         this.reset = (range = { begin: 0.0, end: 1.0 }) => {
             player.pauseVideo();
-            
+
             duration = (range.end - range.begin) * 1000;
             begin = range.begin;
 
@@ -161,7 +162,7 @@ export default class AudioExtElement extends HTMLElement {
             this.ready = () => {
                 this.start = Date.now();
                 this.end = this.start + duration;
-    
+
                 this.timeout = setTimeout(() => {
                     player.pause();
                     // loop back
