@@ -127,7 +127,7 @@ export default class AudioExtElement extends HTMLElement {
 
     async _prepareSoundcloud(src, cb) {
         this.innerHTML = `
-            <iframe id="player" src="https://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/${src}&show_artwork=false&auto_play=false" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"></iframe>
+            <iframe id="player" src="https://w.soundcloud.com/player/?url=${src}&show_artwork=false&auto_play=false&cache=1" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"></iframe>
         `;
         const iframe = this.querySelector('#player');
         const player = SC.Widget(iframe);

@@ -5,6 +5,7 @@ import DailyModel from "./models/dailyModel";
 
 import {challenge, hints, languages} from "../content/songs.json";
 import {Daily} from "./boilerplate/interval";
+import normalizeUrl from 'normalize-url';
 
 const MAX_ATTEMPTS = 6;
 
@@ -12,7 +13,18 @@ let state;
 
 export const Mode = { Time: "timed", Free: "free" }
 
-const YOUTUBE_REGEX = /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/
+const YOUTUBE_REGEX = /^((?:https?:)?\/\/)?((?:www|m|music)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/
+
+const hostMap = {
+    'www.youtube.com': 'youtube',
+    'm.youtube.com': 'youtube',
+    'music.youtube.com': 'youtube',
+    'youtube.com': 'youtube',
+    'youtube.be': 'youtube',
+    'www.soundcloud.com': 'soundcloud',
+    'api.soundcloud.com': 'soundcloud',
+    'soundcloud.com': 'soundcloud'
+}
 
 // The dice the player rolled today
 export default {
@@ -32,23 +44,51 @@ export default {
     score: 0,
     songs: [],
 
+    handleYoutubeSong(songLink, songName) {
+        const parsedMusicLink = YOUTUBE_REGEX.exec(songLink);
+        if (!parsedMusicLink) {
+            return null;
+        }
+
+        return {
+            songLink,
+            songName,
+            src: parsedMusicLink[5],
+            type: 'youtube'
+        };
+    },
+
+    handleSoundcloudSong(songLink, songName) {
+        return {
+            songLink,
+            songName,
+            src: songLink,
+            type: 'soundcloud'
+        };
+    },
+
     async init() {
         const result = await fetch('playpass-content.json');
         const playpassContent = await result.json();
         this.songs = playpassContent.elements
             .map(({songLink, songName, musicVideoLink}) => {
-                const parsedMusicLink = YOUTUBE_REGEX.exec(songLink);
+                const normalizedSongLink = normalizeUrl(songLink, {forceHttps: true});
 
-                if (!parsedMusicLink) {
-                    return null;
+                const url = new URL(normalizedSongLink);
+
+                const type = hostMap[url.host];
+
+                let song;
+                switch (type) {
+                    case 'youtube':
+                        song = this.handleYoutubeSong(songLink, songName);
+                        break;
+                    case 'soundcloud':
+                        song = this.handleSoundcloudSong(songLink, songName, musicVideoLink);
+                        break;
+                    default:
+                        return null;
                 }
-
-                const song = {
-                    songLink,
-                    songName,
-                    src: parsedMusicLink[5],
-                    type: 'youtube'
-                };
 
                 if (musicVideoLink) {
                     const parsedVideoLink = YOUTUBE_REGEX.exec(musicVideoLink);

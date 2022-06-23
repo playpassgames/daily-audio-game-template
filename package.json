@@ -9,6 +9,7 @@
     "lint": "eslint --fix src"
   },
   "dependencies": {
+    "normalize-url": "^7.0.3",
     "playpass": "^1.4.4"
   },
   "devDependencies": {
