@@ -1,9 +1,10 @@
-import { showScreen } from "../../boilerplate/screens";
+import {showScreen} from "../../boilerplate/screens";
 import * as timer from "../../boilerplate/timer";
-import state, { Mode } from "../../state";
-import share, { getEmojis } from "../../share";
+import state, {Mode} from "../../state";
+import share, {getEmojis} from "../../share";
 
 import "./results-screen.css";
+import * as playpass from "playpass";
 
 let timerUpdate;
 
@@ -11,12 +12,16 @@ const template = document.querySelector("#results-screen");
 const player = template.querySelector("audio-ext");
 
 const modalReminder = () => {
-    template.querySelector("x-modal").show();
+    template.querySelector(".modal").show();
 };
 
-template.querySelector("button[name=share]").onclick = share;
+template.querySelectorAll("button[name=share]").forEach(e => e.addEventListener("click", () => share()));
+template.querySelectorAll("button[name=shareTwitter]").forEach(e => e.addEventListener("click", () => share("twitter")));
+template.querySelectorAll("button[name=shareReddit]").forEach(e => e.addEventListener("click", () => share("reddit")));
+
 Array.from(template.querySelectorAll("button[name=next]")).forEach(e => {
     e.onclick = () => {
+        playpass.analytics.track('FreePlayNextSongClicked', {gameMode: state.gameMode});
         state.resetGame();
         state.nextSong();
         showScreen("#game-screen");
@@ -24,12 +29,32 @@ Array.from(template.querySelectorAll("button[name=next]")).forEach(e => {
 });
 Array.from(template.querySelectorAll("button[name=restart]")).forEach(e => {
     e.onclick = () => {
+        playpass.analytics.track('FreePlayTryAgainClicked', {gameMode: state.gameMode});
         state.resetGame(true);
         state.nextSong();
         showScreen("#game-screen");
     };
 });
-template.addEventListener("active", async({ detail: { previous } }) => {
+
+Array.from(template.querySelectorAll("button[name=dailyAudio]")).forEach(e => {
+    e.onclick = () => {
+        playpass.analytics.track('DailyPlaySongClicked', {gameMode: state.gameMode});
+        state.setMode(Mode.Time);
+        state.nextSong();
+        showScreen("#game-screen");
+    }
+});
+
+Array.from(template.querySelectorAll("button[name=free]")).forEach(e => {
+    e.onclick = () => {
+        playpass.analytics.track('FreePlaySongClicked', {gameMode: state.gameMode});
+        state.setMode(Mode.Free);
+        state.nextSong();
+        showScreen("#game-screen");
+    }
+});
+
+template.addEventListener("active", async ({detail: {previous}}) => {
     // since free mode songs are non-deterministic, on page refresh we should
     // redirect to the mode select screen else we will end up with a song
     // that might not match what was last played
@@ -52,6 +77,15 @@ template.addEventListener("active", async({ detail: { previous } }) => {
     template.querySelector("#resultLine1").textContent = state.getCurrentAnswer();
     template.querySelector("#resultLine2").textContent = getEmojis();
     template.querySelector("#resultLine3").innerHTML = `Guessed ${state.wins} song(s) correctly<br>Score: ${state.score}`;
+    template.querySelector("#resultLineModal").innerHTML = `
+        ${state.getCurrentAnswer()}<br>
+        ${state.gameMode === Mode.Time ? 'Daily Audio' : ''}<br>
+        ${
+            state.gameMode === Mode.Free
+                ? `Guessed ${state.wins} song(s) correctly<br>Score: ${state.score}`
+                : getEmojis()
+        }
+    `;
 
     const results = template.querySelector(`.results`);
     results.replaceChildren([]);
@@ -81,18 +115,28 @@ template.addEventListener("active", async({ detail: { previous } }) => {
         }, 1000);
     }
 
+    // autoplay the video if we are aware of the user being actively within the game's context
     await player.setSong({
         type: state.correctAnswer.mv ? 'youtube' : state.correctAnswer.type,
         src: state.correctAnswer.mv ?? state.correctAnswer.src,
     });
 
-    player.clear({ begin: 0, end: 0 });
+    player.clear({begin: 0, end: 0});
+
+    if (previous) {
+        player.play();
+    }
 
     if (state.gameMode !== Mode.Time) {
         setTimeout(() => {
-            player.addEventListener("end", modalReminder, { once: true });
+            player.addEventListener("end", modalReminder, {once: true});
         }, 5000);
     }
+
+    playpass.analytics.track('ShareModalSeen', {
+        gameMode: state.gameMode,
+    });
+    template.querySelector("#share-prompt").show();
 });
 
 template.addEventListener("inactive", () => {

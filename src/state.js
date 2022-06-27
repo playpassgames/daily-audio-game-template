@@ -37,6 +37,13 @@ export default {
         );
         this.random = state.getModel('interval').randomInt();
         this.store = await state.loadObject();
+
+        if (this.store.currentInterval - this.lastPlayed > 1) {
+            this.store.winStreak = 0;
+        }
+
+        this.store.lastPlayed = this.store.currentInterval;
+
         this.setMode(this.gameMode);
     },
     get attempts() {
@@ -58,11 +65,8 @@ export default {
         return this.guesses.length >= this.attempts || this.isSolved();
     },
     getCurrentAnswer() {
-        const word = this.correctAnswer;
-        if (!word) {
-            return songs[0].name;
-        }
-        return word.name;
+        const word = this.correctAnswer ?? songs[0];
+        return `${word.artist} - ${word.name}`;
     },
     getCurrentRange() {
         if (this.gameMode !== Mode.Time) {
@@ -80,6 +84,8 @@ export default {
                 this.wins += 1;
             } else {
                 this.store.wins += 1;
+                this.store.winStreak += 1;
+                this.store.lastWin = this.store.currentInterval;
             }
 
             score /= this.attempts;
@@ -87,6 +93,13 @@ export default {
             score *= (this.attempts - this.guesses.length) + 1;
 
             this.score += score;
+        } else if (this.isDone()) {
+            if (this.gameMode === Mode.Free) {
+                this.store.freePlayHighScore = Math.max(this.score, this.store.freePlayHighScore);
+                this.store.freePlayHighStreak = Math.max(this.wins, this.store.freePlayHighStreak);
+            } else {
+                this.store.winStreak = 0;
+            }
         }
 
         this.save();
@@ -97,12 +110,8 @@ export default {
             let answer;
             if (today) {
                 const song = songs.find((s) => s.name === today.name);
-                if (song) {
-                    answer = Object.assign({}, song, today);
-                }
-            } 
-            
-            if (!answer) {
+                answer = Object.assign({}, song ?? {}, today ?? songs[0]);
+            } else {
                 answer = songs[this.random % songs.length];
             }
 
@@ -116,6 +125,7 @@ export default {
     },
     resetGame(full = false) {
         this.guesses.length = 0;
+        this.puzzleStarted = false;
 
         if (full) {
             this.score = 0;

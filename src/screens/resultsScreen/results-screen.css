@@ -11,3 +11,13 @@
 #results-screen[result="solved"] *[gameover] {
     display: none;
 }
+
+#results-screen button[name=shareTwitter] {
+    background: #1DA1F2;
+    color: white;
+}
+
+#results-screen button[name=shareReddit] {
+    background: #FF5700;
+    color: white;
+}

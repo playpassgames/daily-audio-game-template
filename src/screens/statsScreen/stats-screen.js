@@ -1,14 +1,9 @@
-import { showScreen } from "../../boilerplate/screens";
 import state from "../../state";
 
-function back() {
-    showScreen("#game-screen");
-}
+const template = document.querySelector("#stats");
 
-const template = document.querySelector("#stats-screen");
-
-template.querySelector("button[name=back]").onclick = back;
-template.addEventListener("active", () => {
-    const numWins = state.store.wins.reduce((cur, prev) => (cur + prev) || 0, 0);
-    template.querySelector("#winStats").textContent = `You won ${numWins} times.`;
+template.addEventListener("open", () => {
+    template.querySelector("[name=stat-audio]").textContent = `${state.store.winStreak} : ${state.store.wins}`;
+    template.querySelector("[name=stat-freeplay-score]").textContent = `${state.store.freePlayHighScore}`;
+    template.querySelector("[name=stat-freeplay-streak]").textContent = `${state.store.freePlayHighStreak}`;
 });

@@ -18,8 +18,8 @@
     <link rel="stylesheet" href="/src/main.css">
 
     <div class="splash">
-        <h1 class="flex center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor"
+        <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="black"
                 class="bi bi-music-note-beamed" viewBox="0 0 16 16">
                 <path
                     d="M6 13c0 1.105-1.12 2-2.5 2S1 14.105 1 13c0-1.104 1.12-2 2.5-2s2.5.896 2.5 2zm9-2c0 1.105-1.12 2-2.5 2s-2.5-.895-2.5-2 1.12-2 2.5-2 2.5.895 2.5 2z" />
@@ -30,11 +30,17 @@
     </div>
 
     <game-header>
-        <div class="button" name="help" slot="buttons-left">
-            <img src="/src/assets/help.svg" />
+        <div class="button" name="home" slot="buttons-left">
+            <img src="https://icons.getbootstrap.com/assets/icons/house.svg" height="30"/>
+        </div>
+        <div class="button" name="help" slot="buttons-left" screen="#game-screen">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+            </svg>
         </div>
         <h2 slot="brand">
-            <h2 slot="brand">🎵 Daily Song</h2>
+            🎵 Daily Song
         </h2>
         <div class="button" name="stats" slot="buttons-right">
             <img src="/src/assets/stats.svg" />
@@ -68,7 +74,7 @@
 
             <game-controls>
                 <div class="form">
-                    <div game-type="audio">
+                    <div>
                         <div id="progress" class="progress">
                             <div class="fill" name="range"></div>
                             <div class="fill" name="time"></div>
@@ -95,29 +101,75 @@
                                 Skip
                             </button>
                             <div class="flex-spacer"></div>
-                            <button name="submit" type="submit" color="primary">Submit</button>
+                            <button name="submit" type="submit" color="primary" disabled>Submit</button>
                         </div>
                     </form>
                 </div>
             </game-controls>
+
+            <div id="help-prompt" class="modal">
+                <div class="modal-fade"></div>
+                <div class="modal-body">
+                    <form >
+                        <h1>How to Play</h1>
+                        <p>
+                            You have 5 chances to guess the song name.
+                            <ul class="results">
+                                <li class="result" s="c">Lynyrd Skynyrd - Free Bird</li>
+                                <li class="result">Bon Jovi - Livin' On A Prayer</li>
+                                <li class="result"></li>
+                            </ul>
+                        </p>
+                        <p>
+                            Press the
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-play-circle" viewBox="0 0 16 16" style="vertical-align: middle">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z"/>
+                            </svg> button
+                            <br>
+                            to listen to each sample of the song.
+                        </p>
+                        <p>
+                            The more attempts it takes, the easier each clue gets.
+                        </p>
+                        <p game-mode="free">
+                            Guess the song name in less guesses to maximize your score!
+                        </p>
+                        <p>
+                            If you'd like a different kind of challenge,<br>try pressing the <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16" style="vertical-align: middle">
+                                <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                                <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+                              </svg> icon
+                        </p>
+                        <div class="modal-controls">
+                            <button type="submit" name="restart" slot="input" color="primary" gameover>Let's Go!</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
 
         <div id="results-screen" slot="screen">
-
             <h2 id="resultLine1">Song Title</h2>
             <audio-ext></audio-ext>
             <h2 id="resultLine2" mode="timed" gameover>Lucky!</h2>
             <h2 id="resultLine3" mode="free">Guessed 1 song(s) in a row correctly</h2>
-            <div>
+            <div gameover>
+                <p>
+                    Share with your friends!
+                </p>
                 <button name="share" color="primary">
                     Share
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16" style="vertical-align: middle;">
                         <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
                     </svg>
                 </button>
+            </div>
+            <span>
                 <button name="next" color="primary" mode="free" solved>Next Song</button>
                 <button name="restart" color="primary" mode="free" gameover>Try Again</button>
-            </div>
+            </span>
+
             <p mode="timed"><span id="timeLeft"></span></p>
 
             <button outline toggle="results" mode="timed">
@@ -132,53 +184,113 @@
                 <li class="result"></li>
             </ul>
 
-            <x-modal mode="free">
-                Would you like to play more?
-                <button type="submit" name="restart" slot="input" color="primary" gameover>Try Again</button>
-                <button type="submit" name="next" slot="input" color="primary" solved>Next Song</button>
-                <button type="submit" name="close" slot="input">No Thanks</button>
-            </x-modal>
-        </div>
+            <div id="replay-prompt" class="modal" mode="free">
+                <div class="modal-fade"></div>
+                <div class="modal-body">
+                    <form >
+                        <div class="modal-controls">
+                            <button type="submit" style="background: transparent; border: none;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" style="pointer-events: none">
+                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        Would you like to play more?
+                        <div class="modal-controls">
+                            <button type="submit" name="restart" slot="input" color="primary" gameover>Try Again</button>
+                            <button type="submit" name="next" slot="input" color="primary" solved>Next Song</button>
+                            <button type="submit" name="close" slot="input">No Thanks</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
-        <div id="help-screen" slot="screen">
-            <h2>Welcome to Daily Song!</h2>
-            <p>This is an example of how to use the Playpass SDK to build a simple daily audio guessing game.</p>
-            <p>Each day, you have the opportunity to listen to samples from a song and try to figure out the name. Share
-                your results with a friend and see if they can solve it!</p>
-            <button name="timedMode" color="primary">Daily Play</button>
-
-            <p>
-                You may also test your complete knowledge by seeing how many in a row you can guess correctly!
-                <br>The starting time for each hint is random.<br>Memorizing just the intros won't be enough!
-            </p>
-            <button name="freeMode" color="primary">Free Play</button>
-
-            <footer>
-            </footer>
-        </div>
-
-        <div id="stats-screen" slot="screen">
-            <h2>Stats</h2>
-            <p id="winStats"></p>
-            <button id="statsBackBtn" name="back">Back</button>
+            <div id="share-prompt" class="modal" gameover>
+                <div class="modal-fade"></div>
+                <div class="modal-body">
+                    <form >
+                        <p>
+                            Share with your friends!
+                        </p>
+                        <h3 id="resultLineModal">Guessed 1 song(s) in a row correctly</h3>
+                        <br>
+                        <button name="share" color="primary">
+                            Share
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16" style="vertical-align: middle;">
+                                <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
 
         <div id="settings-screen" slot="screen">
             <h2>Settings</h2>
-            <address>
-                Built with <a href="https://playpass.games" target="_blank">Playpass</a>
-            </address>
             <div class="showIfLoggedOut">
                 <div>Login to save or transfer your game progress.</div>
-                <button name="login" color="primary">📱 Login</button>
+                <p>
+                    <button name="login" color="primary">📱 Login</button>
+                </p>
             </div>
             <div class="showIfLoggedIn">
                 <div>You are logged in, your progress will be saved.</div>
-                <button name="logout">Logout</button>
+                <p>
+                    <button name="logout" color="danger">Logout</button>
+                </p>
             </div>
-            <button name="back">Back</button>
+            <p>
+                <button name="back">Back</button>
+            </p>
+            <div id="abDebug"></div>
         </div>
     </screen-router>
+
+    <div id="home-prompt" class="modal">
+        <div class="modal-fade"></div>
+        <div class="modal-body">
+            <form>
+                <h2>Welcome to 🎵 Daily Song Guesser!</h2>
+                <p>This is an example of how to use the Playpass SDK to build a simple daily audio guessing game.</p>
+                <p>Each day, you have the opportunity to listen to samples from a song and try to figure out the name. Share
+                    your results with a friend and see if they can solve it!</p>
+                <div class="flex center">
+                    <button name="timedMode" color="primary">Daily Play</button>
+                </div>
+
+                <p>
+                    You may also test your complete knowledge by seeing how many in a row you can guess correctly!
+                    <br>The starting time for each hint is random.<br>Memorizing just the intros won't be enough!
+                </p>
+                <button name="freeMode" color="primary">Free Play</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="stats" class="modal">
+        <div class="modal-fade"></div>
+        <div class="modal-body">
+            <div class="flex" style="gap: 24px; justify-content: space-evenly;">
+                <div>
+                    <h3>Audio</h3>
+                    <h2 name="stat-audio">0 : 1</h2>
+                </div>
+            </div>
+            <p>Current Streak : Total Wins</p>
+            <h2>Free Play</h2>
+            <div class="flex" style="gap: 24px; justify-content: space-evenly;">
+                <div>
+                    <h2 name="stat-freeplay-score">1000000</h2>
+                    <h3>Highest score</h3>
+                </div>
+                <div>
+                    <h2 name="stat-freeplay-streak">110</h2>
+                    <h3>Longest Streak</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>

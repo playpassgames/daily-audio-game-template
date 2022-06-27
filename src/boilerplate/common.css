@@ -41,6 +41,11 @@ button {
     font-family: var(--button-font);
 }
 
+button > svg,
+button > img {
+    vertical-align: middle;
+}
+
 button[color=primary] {
     background: var(--color-primary);
     color: var(--color-primary-text);
@@ -188,4 +193,8 @@ game-header *[slot=brand] img {
     .fieldset textarea {
         width: 100%;
     }
+}
+
+.hide {
+    display: none !important;
 }

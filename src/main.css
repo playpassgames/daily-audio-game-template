@@ -9,15 +9,24 @@ body {
     font-family: 'Work Sans', sans-serif;
 }
 
-game-header .button:hover>img {
-    filter: invert(75%) sepia(88%) saturate(1619%) hue-rotate(162deg) brightness(95%) contrast(97%);
-}
-
 game-header .button {
     width: 24px;
     height: 24px;
     cursor: pointer;
+    transition: opacity .2s;
+}
+
+game-header .button:hover {
+    opacity: .5;
+}
+
+game-header .button img {
     filter: var(--text-main-filter);
+}
+
+game-header .button img,
+game-header .button svg {
+    height: 100%;
 }
 
 game-header *[slot=brand] {
@@ -26,6 +35,10 @@ game-header *[slot=brand] {
     margin: 0;
     justify-content: center;
     color: var(--text-main);
+}
+
+game-header *[slot=brand] img {
+    filter: var(--text-main-filter);
 }
 
 /* prefer center text alignment in our game design */
@@ -42,6 +55,7 @@ screen-router>* {
     line-height: 1.5em;
     text-align: center;
     vertical-align: middle;
+    filter: var(--text-main-filter);
 }
 
 audio-ext {
@@ -64,12 +78,12 @@ screen-router[open="#results-screen"] audio-ext {
 }
 
 body[mode="free"] *[mode]:not([mode="free"]),
-body[mode="free-hard"] *[mode]:not([mode="free"]) {
-    display: none;
-}
-
-body[mode="timed"] *[mode]:not([mode="timed"]) {
-    display: none;
+body[mode="free-hard"] *[mode]:not([mode="free"]),
+body[mode="timed"] *[mode]:not([mode="timed"]),
+body[type="audio"] *[game-type]:not([game-type="audio"]),
+body[type="text"] *[game-type]:not([game-type="text"])
+{
+    display: none !important;
 }
 
 footer {
@@ -96,9 +110,6 @@ footer {
     margin-bottom: 8px;
     box-sizing: border-box;
     text-align: left;
-}
-
-.results .result {
     opacity: 1.0;
 }
 
@@ -136,4 +147,14 @@ footer {
 
 .lds-ring div {
     border-color: var(--brand-color) transparent transparent transparent;
+}
+
+.modal .modal-body {
+    color: var(--text-main);
+}
+
+.modal .modal-body {
+    background: var(--background-body);
+    border: inset 1px rgba(255,255,255,0.7);
+    text-align: center;
 }
