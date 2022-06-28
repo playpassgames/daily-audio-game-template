@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "lodash.uniqby": "^4.7.0",
-    "playpass": "^1.5.0"
+    "playpass": "^1.7.2"
   },
   "devDependencies": {
     "eslint": "^8.11.0",
