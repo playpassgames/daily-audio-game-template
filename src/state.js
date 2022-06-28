@@ -1,11 +1,12 @@
 import * as playpass from "playpass";
-import {State} from "./boilerplate/state";
+import { State } from "./boilerplate/state";
 import UserModel from "./models/userModel";
 import DailyModel from "./models/dailyModel";
 
 import {challenge, hints, languages} from "../content/songs.json";
 import {Daily} from "./boilerplate/interval";
 import normalizeUrl from 'normalize-url';
+import content from './content';
 
 const MAX_ATTEMPTS = 6;
 
@@ -68,9 +69,7 @@ export default {
     },
 
     async init() {
-        const result = await fetch('playpass-content.json');
-        const playpassContent = await result.json();
-        this.songs = playpassContent.elements
+        this.songs = content.getDailyContent()
             .map(({songLink, songName, musicVideoLink}) => {
                 const normalizedSongLink = normalizeUrl(songLink, {forceHttps: true});
 
@@ -99,7 +98,7 @@ export default {
                 return song;
             })
             .filter(it => it !== null);
-        this.interval = Daily(Date.parse(playpassContent.startDate) ?? new Date());
+        this.interval = Daily(Date.parse(content.getDailyContentStartDate()) ?? new Date());
 
         state = new State(
             "daily",
@@ -108,6 +107,13 @@ export default {
         );
         this.random = state.getModel('interval').randomInt();
         this.store = await state.loadObject();
+
+        if (this.store.currentInterval - this.lastPlayed > 1) {
+            this.store.winStreak = 0;
+        }
+
+        this.store.lastPlayed = this.store.currentInterval;
+
         this.setMode(this.gameMode);
     },
     get attempts() {
@@ -151,6 +157,8 @@ export default {
                 this.wins += 1;
             } else {
                 this.store.wins += 1;
+                this.store.winStreak += 1;
+                this.store.lastWin = this.store.currentInterval;
             }
 
             score /= this.attempts;
@@ -158,6 +166,13 @@ export default {
             score *= (this.attempts - this.guesses.length) + 1;
 
             this.score += score;
+        } else if (this.isDone()) {
+            if (this.gameMode === Mode.Free) {
+                this.store.freePlayHighScore = Math.max(this.score, this.store.freePlayHighScore);
+                this.store.freePlayHighStreak = Math.max(this.wins, this.store.freePlayHighStreak);
+            } else {
+                this.store.winStreak = 0;
+            }
         }
 
         this.save();
@@ -169,11 +184,9 @@ export default {
             if (today) {
                 const song = this.songs.find((s) => s.songName === today.songName);
                 if (song) {
-                    answer = Object.assign({}, song, today);
+                    answer = Object.assign({}, song ?? {}, today ?? this.songs[0]);
                 }
-            }
-
-            if (!answer) {
+            } else {
                 answer = this.songs[this.random % this.songs.length];
             }
 
@@ -187,6 +200,7 @@ export default {
     },
     resetGame(full = false) {
         this.guesses.length = 0;
+        this.puzzleStarted = false;
 
         if (full) {
             this.score = 0;

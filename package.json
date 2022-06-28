@@ -4,18 +4,18 @@
   "version": "0.0.0",
   "scripts": {
     "start": "vite --open --host",
-    "build": "vite build",
+    "build": "vite build --mode production",
     "test": "eslint src",
     "lint": "eslint --fix src"
   },
   "dependencies": {
     "normalize-url": "^7.0.3",
-    "playpass": "^1.4.4"
+    "lodash.uniqby": "^4.7.0",
+    "playpass": "^1.7.2"
   },
   "devDependencies": {
     "@iarna/toml": "^2.2.5",
     "eslint": "^8.11.0",
-    "vite": "^2.8.0",
-    "vite-plugin-html": "^3.2.0"
+    "vite": "^2.8.0"
   }
 }

@@ -1,4 +1,5 @@
 import * as playpass from "playpass";
+import state from "../state";
 
 const template = document.createElement('template');
 template.innerHTML = `
@@ -80,8 +81,10 @@ export function asyncHandler(fn) {
 }
 
 export function showScreen(name) {
-    playpass.analytics.track('PageShow', {page: name})
+    playpass.analytics.track('PageShow', {page: name, gameMode: state.gameMode});
     document.querySelector(routerTagName).setAttribute("open", name);
+    document.querySelectorAll("[screen]").forEach(e => e.classList.add('hide'));
+    document.querySelectorAll(`[screen="${name}"]`).forEach(e => e.classList.remove('hide'));
 }
 
 export function readyGame() {

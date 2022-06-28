@@ -1,6 +1,10 @@
 :root {
+    --autocomplete-option-color: #fff;
+    --autocomplete-text-color: #000;
     --autocomplete-hover-color: #e9e9e9;
+    --autocomplete-hover-text-color: #fff;
     --autocomplete-focus-color: DodgerBlue;
+    --autocomplete-focus-text-color: #fff;
 }
 
 auto-complete {
@@ -26,7 +30,7 @@ auto-complete .items {
     left: 0;
     right: 0;
     list-style: none;
-    text-align: center;
+    text-align: left;
     padding: 0;
     margin: 0;
 }
@@ -34,17 +38,41 @@ auto-complete .items {
 auto-complete .option {
     padding: 10px;
     cursor: pointer;
-    background-color: #fff;
+    background-color: var(--autocomplete-option-color);
     border-bottom: 1px solid #d4d4d4;
+    color: var(--autocomplete-text-color);
+    white-space: nowrap;
+}
+
+auto-complete .option strong {
+    color: var(--autocomplete-text-color);
 }
 
 auto-complete .option:hover {
     /*when hovering an item:*/
     background-color: var(--autocomplete-hover-color);
+    color: var(--autocomplete-hover-text-color);
+}
+
+auto-complete .option:hover strong {
+    color: var(--autocomplete-hover-text-color);
 }
 
 auto-complete .option:focus {
     /*when navigating through the items using the arrow keys:*/
     background-color: var(--autocomplete-focus-color);
-    color: #ffffff;
+    color: var(--autocomplete-focus-text-color);
+}
+
+auto-complete .option:focus strong {
+    color: var(--autocomplete-focus-text-color);
+}
+
+auto-complete .option p {
+    margin: 0;
+    margin-bottom: -4px;
+}
+
+auto-complete .option sub {
+    opacity: .5;
 }

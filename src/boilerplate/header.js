@@ -1,7 +1,10 @@
+import vars from '/src/vars.css';
+
 const template = document.createElement('template');
+
 template.innerHTML = `
 <style>
-    @import url('/src/vars.css');
+    ${ vars }
 
     :host {
         display: flex;

@@ -46,7 +46,7 @@ export default class AudioExtElement extends HTMLElement {
 
                 await new Promise((resolve) => {
                     this._prepareSoundcloud(src, resolve);
-                })
+                });
                 break;
             }
             default: {
@@ -58,8 +58,7 @@ export default class AudioExtElement extends HTMLElement {
     async _prepareYoutube(element, src, cb) {
         let duration, begin;
 
-        await new Promise(resolve => YT.ready(resolve))
-
+        await new Promise((resolve) => YT.ready(resolve));
         const player = new YT.Player(element, {
             width: 600,
             height: 400,
@@ -113,7 +112,7 @@ export default class AudioExtElement extends HTMLElement {
             player.destroy();
         };
 
-        this.reset = (range = {begin: 0.0, end: 1.0}) => {
+        this.reset = (range = { begin: 0.0, end: 1.0 }) => {
             player.pauseVideo();
 
             duration = (range.end - range.begin) * 1000;

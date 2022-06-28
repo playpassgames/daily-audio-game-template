@@ -5,7 +5,7 @@ template.innerHTML = `
         display: flex;
         align-items: center;
         margin-top: 10px;
-        padding-top: 10px;
+        padding: 10px 0px;
         bottom: 0;
         left: 0;
         right: 0;

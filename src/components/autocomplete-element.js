@@ -1,4 +1,5 @@
 import "./autocomplete-element.css";
+import uniqby from "lodash.uniqby";
 
 const template = `
   <input name="text" type="text" autocomplete="off"/>
@@ -13,20 +14,20 @@ export class Autocomplete extends HTMLElement {
 
     this.innerHTML = template;
 
-    const input = this.querySelector("input[name=text]");
-    input.placeholder = this.getAttribute("placeholder");
+    this.input = this.querySelector("input[name=text]");
+    this.input.placeholder = this.getAttribute("placeholder");
 
     const list = this.querySelector("ul");
 
     this._choices = [];
 
-    input.addEventListener("input", () => {
-      const val = input.value?.toUpperCase();
+    this.input.addEventListener("input", () => {
+      const val = this.input.value?.toUpperCase();
 
       /*close any already open lists of autocompleted values*/
       this.clearOptions();
 
-      if (!val) { 
+      if (!val) {
         return;
       }
 
@@ -48,16 +49,17 @@ export class Autocomplete extends HTMLElement {
       );
 
       setTimeout(() => {
-        if (input.getBoundingClientRect().bottom + list.getBoundingClientRect().height >= window.innerHeight) {
+        if (this.input.getBoundingClientRect().bottom + list.getBoundingClientRect().height >= window.innerHeight) {
           list.style.bottom = '100%';
           list.style.top = 'unset';
         } else {
           list.style.bottom = 'unset';
           list.style.top = '100%';
-        }  
+        }
       }, 0);
-      
-      this.value = input.value;
+
+      this.value = this.input.value;
+      this.input.dispatchEvent(new InputEvent("change"));
     });
 
     /*execute a function when someone clicks in the document:*/
@@ -77,17 +79,18 @@ export class Autocomplete extends HTMLElement {
     var start = text.toUpperCase().indexOf(matched.toUpperCase());
     if (start !== -1) {
       /*make the matching letters bold:*/
-      element.innerHTML += text.substr(0, start);
-      element.innerHTML += "<strong>" + text.substr(start, matched.length) + "</strong>";
-      element.innerHTML += text.substr(start + matched.length);
+      element.innerHTML = `
+        <p>${text.substr(0, start)}<strong>${text.substr(start, matched.length)}</strong>${text.substr(start + matched.length)}</p>
+        <sub>${word?.extra}</sub>
+      `;
 
       element.addEventListener("click", (e) => {
         e.stopPropagation();
 
-        const input = this.querySelector("input[name=text]");
+        this.input.value = element.getAttribute("value");
+        this.value = this.input.value;
 
-        input.value = element.getAttribute("value");
-        this.value = input.value;
+        this.input.dispatchEvent(new InputEvent("change"));
 
         this.clearOptions();
       });
@@ -102,12 +105,15 @@ export class Autocomplete extends HTMLElement {
   }
 
   clear() {
-    const input = this.querySelector("input[name=text]");
-    input.value = '';
+    this.input.value = '';
   }
 
   set choices(arr) {
-    this._choices = [...new Set(arr)];
+    this._choices = uniqby(arr, 'value');
+  }
+
+  isValidValue(choice) {
+    return this._choices.map(({ value }) => value).includes(choice);
   }
 }
 

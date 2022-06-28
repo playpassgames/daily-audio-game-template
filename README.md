@@ -28,6 +28,18 @@ Deploy the game by running:
 playpass deploy
 ```
 
+## Debug Mode
+
+You can put the game in debug mode by setting the flag in the browser's local storage.
+
+Open up the browser's Dev Tools (F12) and in the console enter
+
+```
+localStorage.setItem("debug", true)
+```
+
+Afterwards refresh your page and the game will now be in debug mode.  In debug mode you can access certain features such as the AB Test manual override for your user in the Settings view.
+
 ## Configuration (content/songs.json)
 
 ### Hints
