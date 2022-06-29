@@ -16,7 +16,7 @@ import "./screens/settingsScreen/settings-screen";
 
 import { readyGame, showScreen } from "./boilerplate/screens";
 import state from "./state";
-import content from "./content";
+import { init as initContent } from "./content";
 import { playpass_game_id_ } from "./constants";
 
 function onHomeClick () {
@@ -47,7 +47,7 @@ function onSettingsClick () {
         gameId: playpass_game_id_, // Do not edit!
     });
 
-    await content.init();
+    await initContent();
     await state.init();
 
     state.setMode(mode ?? state.gameMode);

@@ -6,11 +6,11 @@ export function getEmojis() {
     let emotes = '🔊';
     for (let i = 0; i < state.attempts; i++) {
         if (i === state.guesses.length - 1 && state.isSolved()) {
-            emotes += content.getGameContent('goodGuess');
+            emotes += content.emojis.goodGuess;
         } else if (i < state.guesses.length) {
-            emotes += content.getGameContent('badGuess');
+            emotes += content.emojis.badGuess;
         } else {
-            emotes += content.getGameContent('skipGuess');
+            emotes += content.emojis.skipGuess;
         }
     }
 

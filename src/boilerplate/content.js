@@ -24,15 +24,11 @@ export default {
     },
 
     getGameContent(key) {
-        return this._gameContent[key];
+        return this._gameContent?.[key];
     },
 
-    getDailyContent() {
-        return this._dailyContent.elements;
-    },
-
-    getDailyContentStartDate() {
-        return this._dailyContent.startDate;
+    getDailyContent(key) {
+        return this._dailyContent?.[key];
     },
 
     applyContent() {

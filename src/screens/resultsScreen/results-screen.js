@@ -117,8 +117,8 @@ template.addEventListener("active", async ({detail: {previous}}) => {
 
     // autoplay the video if we are aware of the user being actively within the game's context
     await player.setSong({
-        type: state.correctAnswer.musicVideoSrc ? 'youtube' : state.correctAnswer.type,
-        src: state.correctAnswer.musicVideoSrc ?? state.correctAnswer.src,
+        type: state.correctAnswer.mv ? 'youtube' : state.correctAnswer.type,
+        src: state.correctAnswer.mv ?? state.correctAnswer.src,
     });
 
     player.clear({begin: 0, end: 0});

@@ -3,10 +3,9 @@ import { State } from "./boilerplate/state";
 import UserModel from "./models/userModel";
 import DailyModel from "./models/dailyModel";
 
-import {challenge, hints, languages} from "../content/songs.json";
-import {Daily} from "./boilerplate/interval";
-import normalizeUrl from "normalize-url";
+import { challenge, hints, languages } from "../content/songs.json";
 import content from "./content";
+import { Daily } from "./boilerplate/interval";
 
 const MAX_ATTEMPTS = 6;
 
@@ -14,22 +13,9 @@ let state;
 
 export const Mode = { Time: "timed", Free: "free" }
 
-const YOUTUBE_REGEX = /^((?:https?:)?\/\/)?((?:www|m|music)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/
-
-const hostMap = {
-    'www.youtube.com': 'youtube',
-    'm.youtube.com': 'youtube',
-    'music.youtube.com': 'youtube',
-    'youtube.com': 'youtube',
-    'youtube.be': 'youtube',
-    'www.soundcloud.com': 'soundcloud',
-    'api.soundcloud.com': 'soundcloud',
-    'soundcloud.com': 'soundcloud'
-}
-
 // The dice the player rolled today
 export default {
-    interval: Daily(new Date()),
+    interval: null,
     store: null,
     currentGuess: "",
     correctAnswer: null,
@@ -43,62 +29,9 @@ export default {
     _guesses: [],
     wins: 0,
     score: 0,
-    songs: [],
-
-    handleYoutubeSong(songLink, songName) {
-        const parsedMusicLink = YOUTUBE_REGEX.exec(songLink);
-        if (!parsedMusicLink) {
-            return null;
-        }
-
-        return {
-            songLink,
-            songName,
-            src: parsedMusicLink[5],
-            type: 'youtube'
-        };
-    },
-
-    handleSoundcloudSong(songLink, songName) {
-        return {
-            songLink,
-            songName,
-            src: songLink,
-            type: 'soundcloud'
-        };
-    },
 
     async init() {
-        this.songs = content.getDailyContent()
-            .map(({songLink, songName, musicVideoLink}) => {
-                const normalizedSongLink = normalizeUrl(songLink, {forceHttps: true});
-
-                const url = new URL(normalizedSongLink);
-
-                const type = hostMap[url.host];
-
-                let song;
-                switch (type) {
-                    case 'youtube':
-                        song = this.handleYoutubeSong(songLink, songName);
-                        break;
-                    case 'soundcloud':
-                        song = this.handleSoundcloudSong(songLink, songName, musicVideoLink);
-                        break;
-                    default:
-                        return null;
-                }
-
-                if (musicVideoLink) {
-                    const parsedVideoLink = YOUTUBE_REGEX.exec(musicVideoLink);
-                    song.musicVideoLink = musicVideoLink;
-                    song.musicVideoSrc = parsedVideoLink[5];
-                }
-
-                return song;
-            })
-            .filter(it => it !== null);
-        this.interval = Daily(Date.parse(content.getDailyContentStartDate()) ?? new Date());
+        this.interval = Daily(content.startDate);
 
         state = new State(
             "daily",
@@ -135,11 +68,8 @@ export default {
         return this.guesses.length >= this.attempts || this.isSolved();
     },
     getCurrentAnswer() {
-        const word = this.correctAnswer;
-        if (!word) {
-            return this.songs[0].songName;
-        }
-        return word.songName;
+        const word = this.correctAnswer ?? content.songs[0];
+        return `${word.artist} - ${word.name}`;
     },
     getCurrentRange() {
         if (this.gameMode !== Mode.Time) {
@@ -182,20 +112,18 @@ export default {
             const today = challenge.find(({number}) => number === this.store.currentInterval);
             let answer;
             if (today) {
-                const song = this.songs.find((s) => s.songName === today.songName);
-                if (song) {
-                    answer = Object.assign({}, song ?? {}, today ?? this.songs[0]);
-                }
+                const song = content.songs.find((s) => s.name === today.name);
+                answer = Object.assign({}, song ?? {}, today ?? content.songs[0]);
             } else {
-                answer = this.songs[this.random % this.songs.length];
+                answer = content.songs[this.random % content.songs.length];
             }
 
             this.correctAnswer = Object.assign({ hints }, answer);
             return;
         }
 
-        const r = Math.floor(Math.random() * this.songs.length)
-        this.correctAnswer = this.songs[r];
+        const r = Math.floor(Math.random() * content.songs.length)
+        this.correctAnswer = content.songs[r];
         this.resetGame();
     },
     resetGame(full = false) {

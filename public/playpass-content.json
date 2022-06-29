@@ -1,17 +1,26 @@
 {
+  "startDate": null,
   "elements": [
     {
       "songLink": "https://www.youtube.com/watch?v=VEe_yIbW64w",
       "songName": "Stay With Me",
+      "songArtist": "Miki Matsubara",
       "musicVideoLink": "https://www.youtube.com/watch?v=QNYT9wVwQ8A"
     },
     {
       "songLink": "https://www.youtube.com/watch?v=h3xLPvFpIzw",
-      "songName": "Wash"
+      "songName": "Wash",
+      "songArtist": "Miki Matsubara"
     },
     {
       "songLink": "https://www.youtube.com/watch?v=I0JVRcJLea8",
-      "songName": "Telephone Number"
+      "songName": "Telephone Number",
+      "songArtist": "Junko Ohashi"
+    },
+    {
+      "songLink": "https://youtu.be/T_lC2O1oIew",
+      "songName": "Plastic Love",
+      "songArtist": "Mariya Takeuchi"
     }
   ]
 }

@@ -11,6 +11,10 @@
       "type": "string",
       "description": "Name of the song. This is what your users' guess will have to be."
     },
+    "songArtist": {
+      "type": "string",
+      "description": "Creator of the song.  This is used for enriching the metadata of the guesses, and allows for differentiating songs that have the same name."
+    },
     "musicVideoLink": {
       "type": "string",
       "description": "Link to your song's music video, to be shown on the result screen."

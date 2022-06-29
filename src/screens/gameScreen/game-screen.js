@@ -1,7 +1,8 @@
 import * as playpass from "playpass";
-import { asyncHandler, showScreen } from "../../boilerplate/screens";
-import state, { Mode } from "../../state";
-import { autocomplete } from "../../../content/songs.json";
+import {asyncHandler, showScreen} from "../../boilerplate/screens";
+import state, {Mode} from "../../state";
+import {autocomplete} from "../../../content/songs.json";
+import content from "../../content";
 
 import "./game-screen.css";
 
@@ -124,13 +125,7 @@ template.addEventListener(
                 return {key: name, value: `${artist} - ${name}`, extra: artist};
             }),
             // always include the actual songs that you can guess
-            ...state.songs.map(({ songName, songArtist }) => {
-                return {
-                    key: songName,
-                    value: songName,
-                    extra: songArtist
-                }
-            }),
+            ...content.songs.map(({name, artist}) => ({key: name, value: `${artist} - ${name}`, extra: artist})),
         ];
 
         if (state.gameMode !== Mode.Time) {
