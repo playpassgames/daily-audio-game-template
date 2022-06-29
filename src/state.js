@@ -5,8 +5,8 @@ import DailyModel from "./models/dailyModel";
 
 import {challenge, hints, languages} from "../content/songs.json";
 import {Daily} from "./boilerplate/interval";
-import normalizeUrl from 'normalize-url';
-import content from './content';
+import normalizeUrl from "normalize-url";
+import content from "./content";
 
 const MAX_ATTEMPTS = 6;
 

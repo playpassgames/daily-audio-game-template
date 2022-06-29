@@ -81,7 +81,7 @@ export class Autocomplete extends HTMLElement {
       /*make the matching letters bold:*/
       element.innerHTML = `
         <p>${text.substr(0, start)}<strong>${text.substr(start, matched.length)}</strong>${text.substr(start + matched.length)}</p>
-        <sub>${word?.extra}</sub>
+        <sub>${word?.extra ?? ""}</sub>
       `;
 
       element.addEventListener("click", (e) => {

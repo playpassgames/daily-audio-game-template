@@ -1,16 +1,16 @@
 import * as playpass from "playpass";
 import state, { Mode } from "./state";
-import {playpass_game_name_} from "./constants";
+import content from "./content";
 
 export function getEmojis() {
     let emotes = '🔊';
     for (let i = 0; i < state.attempts; i++) {
         if (i === state.guesses.length - 1 && state.isSolved()) {
-            emotes += '🟩';
+            emotes += content.getGameContent('goodGuess');
         } else if (i < state.guesses.length) {
-            emotes += '🟥'
+            emotes += content.getGameContent('badGuess');
         } else {
-            emotes += '⬜'
+            emotes += content.getGameContent('skipGuess');
         }
     }
 
@@ -26,11 +26,11 @@ export default function share() {
 
         // Share some text along with our link
         playpass.share({
-            text: `🎵 ${playpass_game_name_} #${(state.store.currentInterval + 1).toString()}\n🔊${emojis}\n${link}`,
+            text: `🎵 ${content.getGameContent('name')} #${(state.store.currentInterval + 1).toString()}\n🔊${emojis}\n${link}`,
         });
     } else if (state.gameMode === Mode.Free) {
         playpass.share({
-            text: `🎵 ${playpass_game_name_} : Free Play\nScore ${state.score}\nGuessed ${state.wins} songs\n${link}`,
+            text: `🎵 ${content.getGameContent('name')} : Free Play\nScore ${state.score}\nGuessed ${state.wins} songs\n${link}`,
         });
     }
 }

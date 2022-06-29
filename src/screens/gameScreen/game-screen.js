@@ -25,21 +25,6 @@ const submitButton = template.querySelector("game-controls form button[name=subm
 
 let puzzleStarted = false;
 
-guessInput.choices = [
-    // pad with extra song names to make the game more challenging
-    ...autocomplete.map(value => {
-        if (typeof value === "string") {
-            const artist = value.substring(value.lastIndexOf("/") + 1).trim();
-            const name = value.substring(0, value.lastIndexOf("/")).trim();
-            return { key: name, value: `${artist} - ${name}`, extra: artist };
-        }
-        const { name, artist } = value;
-        return {key: name, value: `${artist} - ${name}`, extra: artist};
-    }),
-    // always include the actual songs that you can guess
-    ...songs.map(({name, artist}) => ({key: name, value: `${artist} - ${name}`, extra: artist})),
-];
-
 guessInput.input.addEventListener("change", (e) => {
     var guess = e.target.value;
 
@@ -126,6 +111,27 @@ template.addEventListener(
         }
 
         guessInput.clear();
+
+        guessInput.choices = [
+            // pad with extra song names to make the game more challenging
+            ...autocomplete.map(value => {
+                if (typeof value === "string") {
+                    const artist = value.substring(value.lastIndexOf("/") + 1).trim();
+                    const name = value.substring(0, value.lastIndexOf("/")).trim();
+                    return { key: name, value: `${artist} - ${name}`, extra: artist };
+                }
+                const { name, artist } = value;
+                return {key: name, value: `${artist} - ${name}`, extra: artist};
+            }),
+            // always include the actual songs that you can guess
+            ...state.songs.map(({ songName, songArtist }) => {
+                return {
+                    key: songName,
+                    value: songName,
+                    extra: songArtist
+                }
+            }),
+        ];
 
         if (state.gameMode !== Mode.Time) {
             template.querySelector("p[mode=free]").textContent = `Song #${state.wins + 1}`;
