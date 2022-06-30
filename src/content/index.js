@@ -15,6 +15,7 @@ export async function init() {
 
     // update exported content module
     Object.assign(data, {
+        name: content.getGameContent('name'),
         songs: getSongList(),
         startDate: content.getDailyContent('startDate')
             ? Date.parse(content.getDailyContent('startDate'))
