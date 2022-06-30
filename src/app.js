@@ -1,3 +1,4 @@
+import * as playpass from "playpass";
 
 import "./boilerplate/header.js";
 import "./boilerplate/controls.js";

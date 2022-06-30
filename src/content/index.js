@@ -3,6 +3,7 @@ import { songs } from "./songs";
 
 export default {
     songs,
+    gameName: content.getGameContent('name'),
     startDate: content.getDailyContent('startDate')
     ? Date.parse(content.getDailyContent('startDate'))
     : new Date(),
