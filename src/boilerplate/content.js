@@ -14,7 +14,7 @@ export default {
         }
 
         if (!this._gameContent) {
-            this._gameContent = await this.loadJson('playpass-customisation.json');
+            this._gameContent = await this.loadJson('playpass.json');
         }
     },
 

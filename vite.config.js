@@ -9,7 +9,6 @@ export default defineConfig(async () => {
         return {
             define: {
                 playpass_game_id: JSON.stringify(playpass.game_id),
-                playpass_game_name: JSON.stringify(playpass.game_name)
             },
             build: {
                 rollupOptions: {

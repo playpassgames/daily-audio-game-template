@@ -8,14 +8,14 @@ const hostMap = {
     'm.youtube.com': 'youtube',
     'music.youtube.com': 'youtube',
     'youtube.com': 'youtube',
-    'youtube.be': 'youtube',
+    'youtu.be': 'youtube',
     'www.soundcloud.com': 'soundcloud',
     'api.soundcloud.com': 'soundcloud',
     'soundcloud.com': 'soundcloud'
 };
 
 const adapters = {
-    'youtube': function handleYoutubeSong({ songLink, songName, songArtist, musicVideoLink }) {
+    'youtube': function handleYoutubeSong({ songLink, songName, songArtist }) {
         const parsedMusicLink = YOUTUBE_REGEX.exec(songLink);
         if (!parsedMusicLink) {
             return null;

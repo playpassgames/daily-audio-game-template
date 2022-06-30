@@ -109,6 +109,7 @@ template.addEventListener(
         const sawTutorial = await playpass.storage.get("sawTutorial");
         if (!sawTutorial) {
             template.querySelector("#help-prompt").show();
+            playpass.storage.set("sawTutorial", true);
         }
 
         guessInput.clear();
