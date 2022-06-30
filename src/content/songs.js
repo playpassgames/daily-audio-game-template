@@ -43,38 +43,36 @@ const adapters = {
     },
 };
 
-export function getSongList() {
-    return content.getDailyContent('elements').reduce(
-        (songs, record) => {
-            const {songLink, musicVideoLink} = record;
+export const songs = content.getDailyContent('elements').reduce(
+    (songs, record) => {
+        const {songLink, musicVideoLink} = record;
 
-            const normalizedSongLink = normalizeUrl(songLink, {forceHttps: true});
+        const normalizedSongLink = normalizeUrl(songLink, {forceHttps: true});
 
-            const url = new URL(normalizedSongLink);
+        const url = new URL(normalizedSongLink);
 
-            const type = hostMap[url.host];
+        const type = hostMap[url.host];
 
-            if (!(type in adapters)) {
-                return songs;
-            }
-
-            const song = adapters[type](record);
-            if (!song) {
-                return songs;
-            }
-
-            if (musicVideoLink) {
-                const parsedVideoLink = YOUTUBE_REGEX.exec(musicVideoLink);
-                Object.assign(song, {
-                    musicVideoLink,
-                    mv: parsedVideoLink[5],
-                });
-            }
-
-            songs.push(song);
-
+        if (!(type in adapters)) {
             return songs;
-        },
-        [],
-    );
-}
+        }
+
+        const song = adapters[type](record);
+        if (!song) {
+            return songs;
+        }
+
+        if (musicVideoLink) {
+            const parsedVideoLink = YOUTUBE_REGEX.exec(musicVideoLink);
+            Object.assign(song, {
+                musicVideoLink,
+                mv: parsedVideoLink[5],
+            });
+        }
+
+        songs.push(song);
+
+        return songs;
+    },
+    [],
+);
