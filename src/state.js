@@ -69,7 +69,10 @@ export default {
     },
     getCurrentAnswer() {
         const word = this.correctAnswer ?? content.songs[0];
-        return `${word.artist} - ${word.name}`;
+        if (word.artist) {
+            return `${word.artist} - ${word.name}`;
+        }
+        return word.name;
     },
     getCurrentRange() {
         if (this.gameMode !== Mode.Time) {

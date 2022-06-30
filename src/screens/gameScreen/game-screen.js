@@ -120,14 +120,17 @@ template.addEventListener(
                 if (typeof value === "string") {
                     const artist = value.substring(value.lastIndexOf("/") + 1).trim();
                     const name = value.substring(0, value.lastIndexOf("/")).trim();
-                    return { key: name, value: `${artist} - ${name}`, extra: artist };
+                    return { name, artist };
                 }
-                const { name, artist } = value;
-                return {key: name, value: `${artist} - ${name}`, extra: artist};
+                return value;
             }),
             // always include the actual songs that you can guess
-            ...content.songs.map(({name, artist}) => ({key: name, value: `${artist} - ${name}`, extra: artist})),
-        ];
+            ...content.songs,
+        ].map(({ artist, name }) => {
+            const value = artist ? `${artist} - ${name}` : name;
+
+            return {key: name, value, extra: artist};
+        });
 
         if (state.gameMode !== Mode.Time) {
             template.querySelector("p[mode=free]").textContent = `Song #${state.wins + 1}`;
