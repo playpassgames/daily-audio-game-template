@@ -70,6 +70,11 @@ export default class AudioExtElement extends HTMLElement {
             events: {
                 onReady: () => {
                     this.duration = player.getDuration();
+                    player.setVolume(100);
+                    // make sure the player is not muted
+                    if (player.isMuted()) {
+                        player.unMute();
+                    }
                     cb();
                 },
                 onStateChange: (e) => {
@@ -100,6 +105,11 @@ export default class AudioExtElement extends HTMLElement {
             if (this.timeout) {
                 clearTimeout(this.timeout);
                 this.timeout = null;
+            }
+
+            player.setVolume(100);
+            if (player.isMuted()) {
+                player.unMute();
             }
 
             this.loading = true;

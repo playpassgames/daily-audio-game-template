@@ -26,11 +26,11 @@ export default function share() {
 
         // Share some text along with our link
         playpass.share({
-            text: `🎵 ${content.name} #${(state.store.currentInterval + 1).toString()}\n🔊${emojis}\n${link}`,
+            text: `🎵 ${content.gameName} #${(state.store.currentInterval + 1).toString()}\n🔊${emojis}\n${link}`,
         });
     } else if (state.gameMode === Mode.Free) {
         playpass.share({
-            text: `🎵 ${content.name} : Free Play\nScore ${state.score}\nGuessed ${state.wins} songs\n${link}`,
+            text: `🎵 ${content.gameName} : Free Play\nScore ${state.score}\nGuessed ${state.wins} songs\n${link}`,
         });
     }
 }
