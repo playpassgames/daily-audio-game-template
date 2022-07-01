@@ -1,6 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;700&display=swap');
-@import url('/src/vars.css');
 
+/* import base */
+@import url('./boilerplate/common.css');
+
+/* import components */
+@import url('./components/autocomplete-element.css');
+
+/* import screen css */
+@import url('./screens/gameScreen/game-screen.css');
+@import url('./screens/resultsScreen/results-screen.css');
+
+@import url('./vars.css');
 
 /* dice game looks nicest with some padding around the edges */
 
@@ -147,14 +157,4 @@ footer {
 
 .lds-ring div {
     border-color: var(--brand-color) transparent transparent transparent;
-}
-
-.modal .modal-body {
-    color: var(--text-main);
-}
-
-.modal .modal-body {
-    background: var(--background-body);
-    border: inset 1px rgba(255,255,255,0.7);
-    text-align: center;
 }

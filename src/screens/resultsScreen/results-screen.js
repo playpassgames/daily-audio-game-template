@@ -1,10 +1,10 @@
+import * as playpass from "playpass";
+
 import {showScreen} from "../../boilerplate/screens";
 import * as timer from "../../boilerplate/timer";
 import state, {Mode} from "../../state";
 import share, {getEmojis} from "../../share";
 
-import "./results-screen.css";
-import * as playpass from "playpass";
 
 let timerUpdate;
 

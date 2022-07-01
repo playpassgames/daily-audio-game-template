@@ -4,8 +4,6 @@ import state, {Mode} from "../../state";
 import {autocomplete} from "../../../content/songs.json";
 import content from "../../content";
 
-import "./game-screen.css";
-
 let progressUpdateInterval, currentRange;
 
 function formatTime(seconds) {

@@ -1,5 +1,3 @@
-import "./modal.css";
-
 Array.from(document.querySelectorAll('.modal')).forEach(
     (element) => {
         element.querySelector(".modal-fade").onclick = (e) => {
@@ -26,7 +24,7 @@ Array.from(document.querySelectorAll('.modal')).forEach(
             if (element.hasAttribute("open")) {
                 element.hide();
             } else {
-                element.show();   
+                element.show();
             }
         }
     }
