@@ -7,8 +7,17 @@
     "favicon": {
       "type": "object",
       "properties": {
-        "type": "string",
-        "enum": ["emoji", "base64", "url"]
+        "type": {
+          "type": "string",
+          "enum": [
+            "emoji",
+            "base64",
+            "url"
+          ]
+        },
+        "value": {
+          "type": "string"
+        }
       }
     },
     "brand": {
