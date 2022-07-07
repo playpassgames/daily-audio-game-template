@@ -27,7 +27,7 @@ export default function share() {
         // Share some text along with our link
         const currentInterval = (state.store.currentInterval === null ? 0 : state.store.currentInterval) + 1;
         playpass.share({
-            text: `🎵 ${content.gameName} #${currentInterval.toString()}\n🔊${emojis}\n${link}`,
+            text: `🎵 ${content.gameName} #${currentInterval.toString()}\n${emojis}\n${link}`,
         });
     } else if (state.gameMode === Mode.Free) {
         playpass.share({
