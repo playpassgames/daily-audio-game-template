@@ -10,6 +10,11 @@ export default defineConfig(async () => {
             define: {
                 playpass_game_id: JSON.stringify(playpass.game_id),
             },
+            server: {
+                watch: {
+                    usePolling: true,
+                },
+            },
             build: {
                 rollupOptions: {
                     output: {
