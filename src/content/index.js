@@ -4,9 +4,7 @@ import { songs } from "./songs";
 export default {
     songs,
     gameName: content.getGameContent('name'),
-    startDate: content.getDailyContent('startDate')
-    ? Date.parse(content.getDailyContent('startDate'))
-    : new Date(),
+    startDate: new Date(content.getDailyContent('startDate') || Date.now()),
     emojis: {
         goodGuess: content.getGameContent('goodGuess'),
         badGuess: content.getGameContent('badGuess'),
