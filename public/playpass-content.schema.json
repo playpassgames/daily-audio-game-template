@@ -1,4 +1,5 @@
 {
+  "$id": "daily-song",
   "type": "object",
   "description": "Song Selection / Schedule",
   "properties": {
