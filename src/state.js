@@ -3,7 +3,7 @@ import { State } from "./boilerplate/state";
 import UserModel from "./models/userModel";
 import DailyModel from "./models/dailyModel";
 
-import { challenge, hints, languages } from "../content/songs.json";
+import { hints, languages } from "../content/songs.json";
 import content from "./content";
 import { Daily } from "./boilerplate/interval";
 
@@ -112,14 +112,8 @@ export default {
     },
     nextSong() {
         if (this.gameMode === Mode.Time) {
-            const today = challenge.find(({number}) => number === this.store.currentInterval);
-            let answer;
-            if (today) {
-                const song = content.songs.find((s) => s.name === today.name);
-                answer = Object.assign({}, song ?? {}, today ?? content.songs[0]);
-            } else {
-                answer = content.songs[this.random % content.songs.length];
-            }
+            const idx = this.store.currentInterval;
+            const answer = content.songs[idx % content.songs.length];
 
             this.correctAnswer = Object.assign({ hints }, answer);
             return;
