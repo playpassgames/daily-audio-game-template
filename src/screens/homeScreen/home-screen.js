@@ -15,7 +15,3 @@ template.querySelector("button[name=freeMode]").addEventListener('click', () => 
     state.setMode(Mode.Free);
     showScreen("#game-screen");
 });
-
-template.addEventListener("active", () => {
-    playpass.storage.set("sawTutorial", true);
-});

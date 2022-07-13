@@ -1,0 +1,25 @@
+{
+  "$id": "daily-song",
+  "type": "object",
+  "description": "Song Selection / Schedule",
+  "properties": {
+    "songLink": {
+      "type": "string",
+      "description": "Link to your song. Youtube and Soundcloud are supported at the moment. Your song links should be based off of the album versions of songs for a better experience.",
+      "pattern": "^((?:https?:)?\\/\\/)?((?:www|m|music)\\.)?((?:youtube\\.com|youtu.be|soundcloud\\.com))(\\/(?:[\\w\\-]+\\?v=|embed\\/|v\\/)?)([\\w\\-]+)(\\S+)?$"
+    },
+    "songName": {
+      "type": "string",
+      "description": "Name of the song. This is what your users' guess will have to be."
+    },
+    "songArtist": {
+      "type": "string",
+      "description": "Creator of the song. This is used for enriching the metadata of the guesses, and allows for differentiating songs that have the same name."
+    },
+    "musicVideoLink": {
+      "type": "string",
+      "description": "Optional: Link to your song's music video, to be shown on the result screen. Your song will be used if it's a youtube link."
+    }
+  },
+  "required": [ "songLink", "songName" ]
+}

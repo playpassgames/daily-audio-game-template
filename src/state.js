@@ -3,7 +3,8 @@ import { State } from "./boilerplate/state";
 import UserModel from "./models/userModel";
 import DailyModel from "./models/dailyModel";
 
-import { songs, challenge, hints, startDate, languages } from "../content/songs.json";
+import { hints, languages } from "../content/songs.json";
+import content from "./content";
 import { Daily } from "./boilerplate/interval";
 
 const MAX_ATTEMPTS = 6;
@@ -14,7 +15,7 @@ export const Mode = { Time: "timed", Free: "free" }
 
 // The dice the player rolled today
 export default {
-    interval: Daily(Date.parse(startDate)),
+    interval: null,
     store: null,
     currentGuess: "",
     correctAnswer: null,
@@ -30,6 +31,8 @@ export default {
     score: 0,
 
     async init() {
+        this.interval = Daily(content.startDate);
+
         state = new State(
             "daily",
             new UserModel(MAX_ATTEMPTS),
@@ -65,8 +68,11 @@ export default {
         return this.guesses.length >= this.attempts || this.isSolved();
     },
     getCurrentAnswer() {
-        const word = this.correctAnswer ?? songs[0];
-        return `${word.artist} - ${word.name}`;
+        const word = this.correctAnswer ?? content.songs[0];
+        if (word.artist) {
+            return `${word.artist} - ${word.name}`;
+        }
+        return word.name;
     },
     getCurrentRange() {
         if (this.gameMode !== Mode.Time) {
@@ -106,21 +112,15 @@ export default {
     },
     nextSong() {
         if (this.gameMode === Mode.Time) {
-            const today = challenge.find(({number}) => number === this.store.currentInterval);
-            let answer;
-            if (today) {
-                const song = songs.find((s) => s.name === today.name);
-                answer = Object.assign({}, song ?? {}, today ?? songs[0]);
-            } else {
-                answer = songs[this.random % songs.length];
-            }
+            const idx = this.store.currentInterval;
+            const answer = content.songs[idx % content.songs.length];
 
             this.correctAnswer = Object.assign({ hints }, answer);
             return;
         }
 
-        const r = Math.floor(Math.random() * songs.length)
-        this.correctAnswer = songs[r];
+        const r = Math.floor(Math.random() * content.songs.length)
+        this.correctAnswer = content.songs[r];
         this.resetGame();
     },
     resetGame(full = false) {

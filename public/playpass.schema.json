@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "favicon": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "emoji",
+            "base64",
+            "url"
+          ]
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "brand": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "goodGuess": {
+      "type": "string"
+    },
+    "badGuess": {
+      "type": "string"
+    },
+    "skipGuess": {
+      "type": "string"
+    }
+  },
+  "required": [ "brand" ]
+}

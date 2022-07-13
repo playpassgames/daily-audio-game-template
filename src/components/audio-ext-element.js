@@ -70,6 +70,11 @@ export default class AudioExtElement extends HTMLElement {
             events: {
                 onReady: () => {
                     this.duration = player.getDuration();
+                    player.setVolume(100);
+                    // make sure the player is not muted
+                    if (player.isMuted()) {
+                        player.unMute();
+                    }
                     cb();
                 },
                 onStateChange: (e) => {
@@ -102,6 +107,11 @@ export default class AudioExtElement extends HTMLElement {
                 this.timeout = null;
             }
 
+            player.setVolume(100);
+            if (player.isMuted()) {
+                player.unMute();
+            }
+
             this.loading = true;
 
             player.seekTo(begin, true);
@@ -124,7 +134,7 @@ export default class AudioExtElement extends HTMLElement {
 
     async _prepareSoundcloud(src, cb) {
         this.innerHTML = `
-            <iframe id="player" src="https://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/${src}&show_artwork=false&auto_play=false" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"></iframe>
+            <iframe id="player" src="https://w.soundcloud.com/player/?url=${src}" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"></iframe>
         `;
         const iframe = this.querySelector('#player');
         const player = SC.Widget(iframe);
@@ -140,29 +150,11 @@ export default class AudioExtElement extends HTMLElement {
         });
 
         player.bind(SC.Widget.Events.PLAY, () => {
-            this.done = false;
             this.start = Date.now();
             this.end = this.start + duration;
-
-            this.timeout = setTimeout(() => {
-                player.pause();
-                // loop back
-                player.seekTo(begin * 1000);
-                this.done = true;
-            }, duration);
-        });
-
-        this.play = (range) => {
-            const { begin, end } = range ?? { begin: 0.0, end: 1.0 };
-
-            const duration = (end - begin) * 1000;
-
             this.done = false;
 
-            this.ready = () => {
-                this.start = Date.now();
-                this.end = this.start + duration;
-
+            if (duration > 0) {
                 this.timeout = setTimeout(() => {
                     player.pause();
                     // loop back
@@ -170,16 +162,30 @@ export default class AudioExtElement extends HTMLElement {
                     this.done = true;
                 }, duration);
             }
-            
+
+            this.loading = false;
+        });
+
+        this.play = () => {
+            if (this.timeout) {
+                clearTimeout(this.timeout);
+                this.timeout = null;
+            }
+
+            this.loading = true;
+
             player.seekTo(begin * 1000); // seek is in ms
             player.play();
         };
 
-        this.reset = (begin) => {
+        this.reset = (range = {begin: 0.0, end: 1.0}) => {
             player.pause();
-            player.seekTo(begin * 1000);
 
-            delete this.ready;
+            console.log(`Range: ${JSON.stringify(range)}`);
+            duration = (range.end - range.begin) * 1000;
+            begin = range.begin * 1000;
+
+            player.seekTo(begin);
         }
     }
 
@@ -212,7 +218,7 @@ export default class AudioExtElement extends HTMLElement {
             return 0.0;
         }
 
-        return Math.min( (this.end - this.start) / 1000.0, (Date.now() - this.start) / 1000.0 );
+        return Math.min((this.end - this.start) / 1000.0, (Date.now() - this.start) / 1000.0);
     }
 }
 

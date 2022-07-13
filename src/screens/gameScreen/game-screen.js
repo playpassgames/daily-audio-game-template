@@ -1,9 +1,8 @@
 import * as playpass from "playpass";
 import {asyncHandler, showScreen} from "../../boilerplate/screens";
 import state, {Mode} from "../../state";
-import {songs, autocomplete} from "../../../content/songs.json";
-
-import "./game-screen.css";
+import {autocomplete} from "../../../content/songs.json";
+import content from "../../content";
 
 let progressUpdateInterval, currentRange;
 
@@ -24,21 +23,6 @@ const guessInput = template.querySelector("auto-complete");
 const submitButton = template.querySelector("game-controls form button[name=submit]");
 
 let puzzleStarted = false;
-
-guessInput.choices = [
-    // pad with extra song names to make the game more challenging
-    ...autocomplete.map(value => {
-        if (typeof value === "string") {
-            const artist = value.substring(value.lastIndexOf("/") + 1).trim();
-            const name = value.substring(0, value.lastIndexOf("/")).trim();
-            return { key: name, value: `${artist} - ${name}`, extra: artist };
-        }
-        const { name, artist } = value;
-        return {key: name, value: `${artist} - ${name}`, extra: artist};
-    }),
-    // always include the actual songs that you can guess
-    ...songs.map(({name, artist}) => ({key: name, value: `${artist} - ${name}`, extra: artist})),
-];
 
 guessInput.input.addEventListener("change", (e) => {
     var guess = e.target.value;
@@ -123,9 +107,28 @@ template.addEventListener(
         const sawTutorial = await playpass.storage.get("sawTutorial");
         if (!sawTutorial) {
             template.querySelector("#help-prompt").show();
+            playpass.storage.set("sawTutorial", true);
         }
 
         guessInput.clear();
+
+        guessInput.choices = [
+            // pad with extra song names to make the game more challenging
+            ...autocomplete.map(value => {
+                if (typeof value === "string") {
+                    const artist = value.substring(value.lastIndexOf("/") + 1).trim();
+                    const name = value.substring(0, value.lastIndexOf("/")).trim();
+                    return { name, artist };
+                }
+                return value;
+            }),
+            // always include the actual songs that you can guess
+            ...content.songs,
+        ].map(({ artist, name }) => {
+            const value = artist ? `${artist} - ${name}` : name;
+
+            return {key: name, value, extra: artist};
+        });
 
         if (state.gameMode !== Mode.Time) {
             template.querySelector("p[mode=free]").textContent = `Song #${state.wins + 1}`;
