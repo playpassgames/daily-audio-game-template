@@ -4,10 +4,10 @@ export function Frequency(rate, start = new Date(0)) {
     return {
         current(time = Date.now(), startAt = start) {
             const relative = time - startAt;
-            return Math.floor(relative / rate);
+            return Math.max(0, Math.floor(relative / rate));
         },
         next(time = Date.now(), startAt = start) {
-            return Math.floor(this.nextTime(time, startAt) / rate);
+            return Math.max(0, Math.floor(this.nextTime(time, startAt) / rate));
         },
         nextTime(time = Date.now(), startAt = start) {
             const relative = time - startAt;
@@ -49,10 +49,10 @@ export class IntervalModel extends Model {
                 ...this.data(),
             };
         }
-        
+
         return state;
     }
-    
+
     /** Gets a random number between 0 and 1 unique to this day. */
     random () {
         return ((1103515245*this.current + 12345) >>> 0) / 0xffffffff;
