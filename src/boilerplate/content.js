@@ -6,6 +6,15 @@ export default {
         await this.loadContent();
         this.loadFavicon();
         this.applyContent();
+        this.eventListeners();
+    },
+
+    async eventListeners() {
+        window.addEventListener('message', (event) => {
+            this._gameContent = event.data;
+            this.loadFavicon();
+            this.applyContent();
+        });
     },
 
     async loadContent() {
@@ -36,8 +45,9 @@ export default {
 
         for (let key of keys) {
             const elements = document.getElementsByClassName(`playpass-cms-${key}`);
+            const styles = getComputedStyle(document.body).getPropertyValue(`--playpass-cms-${key}`);
 
-            if (!elements || elements.length === 0) {
+            if ((!elements || elements.length === 0) && styles === '') {
                 continue;
             }
 
@@ -55,6 +65,10 @@ export default {
 
             for (let ele of elements) {
                 ele.innerText = newValue;
+            }
+
+            if (styles) {
+                document.documentElement.style.setProperty(`--playpass-cms-${key}`, newValue);
             }
         }
     },

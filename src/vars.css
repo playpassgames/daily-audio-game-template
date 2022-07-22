@@ -1,15 +1,20 @@
-:root, :host {
-    --background: #ECEFF4;
-    --background-body: #2E3440;
-    --form-text: #2E3440;
-    --text-main: #fff;
-    --text-bright: #fff;
+:root {
+    --playpass-cms-primary-color: #2E3440;
+    --playpass-cms-secondary-color: #88C0D0;
+    --playpass-cms-tertiary-color: #A3BE8C;
+    --playpass-cms-text-color: #fff;
+    --playpass-cms-danger-color: #BF616A;
+    --playpass-cms-info-color: #D8DEE9;
+    --background-body: var(--playpass-cms-primary-color);
+    --form-text: var(--playpass-cms-primary-color);
+    --text-main: var(--playpass-cms-text-color);
+    --text-bright: var(--playpass-cms-text-color);
     --text-main-filter: invert(100%) sepia(45%) saturate(2%) hue-rotate(327deg) brightness(117%) contrast(100%);
-    --brand-color: #88C0D0;
-    --color-primary: #A3BE8C;
+    --brand-color: var(--playpass-cms-secondary-color);
+    --color-primary: var(--playpass-cms-tertiary-color);
     --color-primary-text: var(--form-text);
-    --color-danger: #BF616A;
-    --color-info: #D8DEE9;
+    --color-danger: var(--playpass-cms-danger-color);
+    --color-info: var(--playpass-cms-info-color);
     --color-info-text: var(--form-text);
     --input-border-radius: 0px;
     --button-font: sans-serif;
