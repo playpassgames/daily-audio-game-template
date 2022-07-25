@@ -35,22 +35,22 @@
     "skipGuess": {
       "type": "string"
     },
-    "primary-color": {
+    "primaryColor": {
       "type": "string"
     },
-    "secondary-color": {
+    "secondaryColor": {
       "type": "string"
     },
-    "tertiary-color": {
+    "tertiaryColor": {
       "type": "string"
     },
-    "text-color": {
+    "textColor": {
       "type": "string"
     },
-    "danger-color": {
+    "dangerColor": {
       "type": "string"
     },
-    "info-color": {
+    "infoColor": {
       "type": "string"
     }
   },

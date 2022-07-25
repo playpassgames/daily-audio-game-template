@@ -9,10 +9,10 @@
   "goodGuess": "🟩",
   "badGuess": "🟥",
   "skipGuess": "⬜️️",
-  "primary-color": "#2E3440",
-  "secondary-color": "#88C0D0",
-  "tertiary-color": "#A3BE8C",
-  "text-color": "#FFF",
-  "danger-color": "#BF616A",
-  "info-color": "#D8DEE9"
+  "primaryColor": "#2E3440",
+  "secondaryColor": "#88C0D0",
+  "tertiaryColor": "#A3BE8C",
+  "textColor": "#FFF",
+  "dangerColor": "#BF616A",
+  "infoColor": "#D8DEE9"
 }

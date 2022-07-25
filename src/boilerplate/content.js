@@ -11,7 +11,7 @@ export default {
 
     async eventListeners() {
         window.addEventListener('message', (event) => {
-            this._gameContent = event.data;
+            this._gameContent = JSON.parse(event.data);
             this.loadFavicon();
             this.applyContent();
         });
