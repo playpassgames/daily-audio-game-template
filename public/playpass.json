@@ -1,18 +1,7 @@
 {
-  "favicon": {
-    "value": "🎵",
-    "type": "emoji"
-  },
-  "name": "My Audio Game",
-  "title": "🎶 {{ name }}",
-  "brand": "🎼 {{ name }}",
+  "name": "🎵 Daily Audio Game",
   "goodGuess": "🟩",
   "badGuess": "🟥",
   "skipGuess": "⬜️️",
-  "primaryColor": "#2E3440",
-  "secondaryColor": "#88C0D0",
-  "tertiaryColor": "#A3BE8C",
-  "textColor": "#FFF",
-  "dangerColor": "#BF616A",
-  "infoColor": "#D8DEE9"
+  "theme": "default"
 }

@@ -1,9 +1,57 @@
 {
   "type": "object",
   "properties": {
-    "name": {
+    "favicon": {
+      "$ref": "#/definitions/favicon"
+    },
+    "title": {
+      "title": "Title",
+      "description": "What will essentially be the name of your game inside the template.",
       "type": "string"
     },
+    "goodGuess": {
+      "title": "Share emoji: correct",
+      "type": "string"
+    },
+    "badGuess": {
+      "title": "Share emoji: incorrect",
+      "type": "string"
+    },
+    "skipGuess": {
+      "title": "Share emoji: skip",
+      "type": "string"
+    },
+    "theme": {
+      "title": "Theme",
+      "type": "string",
+      "enum": ["default", "blackLime"]
+    },
+    "primaryColor": {
+      "title": "Primary Color",
+      "type": "string"
+    },
+    "secondaryColor": {
+      "title": "Secondary Color",
+      "type": "string"
+    },
+    "tertiaryColor": {
+      "title": "Tertiary Color",
+      "type": "string"
+    },
+    "textColor": {
+      "title": "Text Color",
+      "type": "string"
+    },
+    "dangerColor": {
+      "title": "Warning Color",
+      "type": "string"
+    },
+    "infoColor": {
+      "title": "Info Color",
+      "type": "string"
+    }
+  },
+  "definitions": {
     "favicon": {
       "type": "object",
       "properties": {
@@ -19,40 +67,38 @@
           "type": "string"
         }
       }
-    },
-    "brand": {
-      "type": "string"
-    },
-    "title": {
-      "type": "string"
-    },
-    "goodGuess": {
-      "type": "string"
-    },
-    "badGuess": {
-      "type": "string"
-    },
-    "skipGuess": {
-      "type": "string"
-    },
-    "primaryColor": {
-      "type": "string"
-    },
-    "secondaryColor": {
-      "type": "string"
-    },
-    "tertiaryColor": {
-      "type": "string"
-    },
-    "textColor": {
-      "type": "string"
-    },
-    "dangerColor": {
-      "type": "string"
-    },
-    "infoColor": {
-      "type": "string"
     }
   },
-  "required": [ "brand" ]
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "theme": { "const": "default" }
+        }
+      },
+      "then": {
+        "primaryColor": { "default": "#2E3440" },
+        "secondaryColor": { "default": "#88C0D0" },
+        "tertiaryColor": { "default": "#A3BE8C" },
+        "textColor": { "default": "#fff" },
+        "dangerColor": { "default": "#BF616A" },
+        "infoColor": { "default": "#D8DEE9" }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "theme": { "const": "blackLime" }
+        }
+      },
+      "then": {
+        "primaryColor": { "default": "#262626" },
+        "secondaryColor": { "default": "#6AB033" },
+        "tertiaryColor": { "default": "#A3BE8D" },
+        "textColor": { "default": "#6AB033" },
+        "dangerColor": { "default": "#BF616A" },
+        "infoColor": { "default": "#757575" }
+      }
+    }
+  ]
 }

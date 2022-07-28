@@ -11,7 +11,11 @@ export default {
 
     async eventListeners() {
         window.addEventListener('message', (event) => {
-            this._gameContent = JSON.parse(event.data);
+            const parsed = JSON.parse(event.data);
+            if (parsed.type !== 'playpass-style-cms') {
+                return;
+            }
+            this._gameContent = parsed.data;
             this.loadFavicon();
             this.applyContent();
         });
@@ -43,7 +47,16 @@ export default {
     applyContent() {
         const keys = Object.keys(this._gameContent);
 
+        const theme = this._gameContent.theme ?? 'default';
+        if (theme) {
+            document.documentElement.setAttribute('playpass-cms-theme', theme);
+        }
+
         for (let key of keys) {
+            if (key === 'theme') {
+                continue;
+            }
+
             const elements = document.getElementsByClassName(`playpass-cms-${key}`);
             const styles = getComputedStyle(document.body).getPropertyValue(`--playpass-cms-${key}`);
 

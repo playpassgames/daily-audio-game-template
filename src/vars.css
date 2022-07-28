@@ -1,15 +1,8 @@
 :root {
-    --playpass-cms-primaryColor: #2E3440;
-    --playpass-cms-secondaryColor: #88C0D0;
-    --playpass-cms-tertiaryColor: #A3BE8C;
-    --playpass-cms-textColor: #fff;
-    --playpass-cms-dangerColor: #BF616A;
-    --playpass-cms-infoColor: #D8DEE9;
     --background-body: var(--playpass-cms-primaryColor);
     --form-text: var(--playpass-cms-primaryColor);
     --text-main: var(--playpass-cms-textColor);
     --text-bright: var(--playpass-cms-textColor);
-    --text-main-filter: invert(100%) sepia(45%) saturate(2%) hue-rotate(327deg) brightness(117%) contrast(100%);
     --brand-color: var(--playpass-cms-secondaryColor);
     --color-primary: var(--playpass-cms-tertiaryColor);
     --color-primary-text: var(--form-text);
@@ -20,4 +13,22 @@
     --button-font: sans-serif;
     --autocomplete-hover-color: var(--color-primary);
     --autocomplete-focus-color: var(--color-primary);
+}
+
+[playpass-cms-theme="default"] {
+    --playpass-cms-primaryColor: #2E3440;
+    --playpass-cms-secondaryColor: #88C0D0;
+    --playpass-cms-tertiaryColor: #A3BE8C;
+    --playpass-cms-textColor: #fff;
+    --playpass-cms-dangerColor: #BF616A;
+    --playpass-cms-infoColor: #D8DEE9;
+}
+
+[playpass-cms-theme="blackLime"] {
+    --playpass-cms-primaryColor: #262626;
+    --playpass-cms-secondaryColor: #6AB033;
+    --playpass-cms-tertiaryColor: #A3BE8D;
+    --playpass-cms-textColor: #6AB033;
+    --playpass-cms-dangerColor: #BF616A;
+    --playpass-cms-infoColor: #757575;
 }
