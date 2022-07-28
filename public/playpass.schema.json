@@ -1,23 +1,20 @@
 {
   "type": "object",
   "properties": {
-    "favicon": {
-      "$ref": "#/definitions/favicon"
-    },
     "name": {
       "title": "Name",
       "type": "string"
     },
     "goodGuess": {
-      "title": "Share emoji: correct",
+      "title": "Share emoji correct",
       "type": "string"
     },
     "badGuess": {
-      "title": "Share emoji: incorrect",
+      "title": "Share emoji incorrect",
       "type": "string"
     },
     "skipGuess": {
-      "title": "Share emoji: skip",
+      "title": "Share emoji skip",
       "type": "string"
     },
     "theme": {
@@ -28,27 +25,51 @@
     },
     "primaryColor": {
       "title": "Primary Color",
-      "type": "string"
+      "$ref": "#/definitions/color",
+      "themeDefaults": {
+        "default": "#2E3440",
+        "blackLime": "#262626"
+      }
     },
     "secondaryColor": {
       "title": "Secondary Color",
-      "type": "string"
+      "$ref": "#/definitions/color",
+      "themeDefaults": {
+        "default": "#88C0D0",
+        "blackLime": "#6AB033"
+      }
     },
     "tertiaryColor": {
       "title": "Tertiary Color",
-      "type": "string"
+      "$ref": "#/definitions/color",
+      "themeDefaults": {
+        "default": "#A3BE8C",
+        "blackLime": "#A3BE8D"
+      }
     },
     "textColor": {
       "title": "Text Color",
-      "type": "string"
+      "$ref": "#/definitions/color",
+      "themeDefaults": {
+        "default": "#fff",
+        "blackLime": "#6AB033"
+      }
     },
     "dangerColor": {
       "title": "Warning Color",
-      "type": "string"
+      "$ref": "#/definitions/color",
+      "themeDefaults": {
+        "default": "#BF616A",
+        "blackLime": "#BF616A"
+      }
     },
     "infoColor": {
       "title": "Info Color",
-      "type": "string"
+      "$ref": "#/definitions/color",
+      "themeDefaults": {
+        "default": "#D8DEE9",
+        "blackLime": "#757575"
+      }
     }
   },
   "definitions": {
@@ -67,38 +88,9 @@
           "type": "string"
         }
       }
-    }
-  },
-  "allOf": [
-    {
-      "if": {
-        "properties": {
-          "theme": { "const": "default" }
-        }
-      },
-      "then": {
-        "primaryColor": { "default": "#2E3440" },
-        "secondaryColor": { "default": "#88C0D0" },
-        "tertiaryColor": { "default": "#A3BE8C" },
-        "textColor": { "default": "#fff" },
-        "dangerColor": { "default": "#BF616A" },
-        "infoColor": { "default": "#D8DEE9" }
-      }
     },
-    {
-      "if": {
-        "properties": {
-          "theme": { "const": "blackLime" }
-        }
-      },
-      "then": {
-        "primaryColor": { "default": "#262626" },
-        "secondaryColor": { "default": "#6AB033" },
-        "tertiaryColor": { "default": "#A3BE8D" },
-        "textColor": { "default": "#6AB033" },
-        "dangerColor": { "default": "#BF616A" },
-        "infoColor": { "default": "#757575" }
-      }
+    "color": {
+      "type": "string"
     }
-  ]
+  }
 }

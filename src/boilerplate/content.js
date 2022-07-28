@@ -37,7 +37,7 @@ export default {
     },
 
     getGameContent(key) {
-        return this._gameContent?.[key];
+        return () => this._gameContent?.[key];
     },
 
     getDailyContent(key) {
