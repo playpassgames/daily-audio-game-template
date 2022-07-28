@@ -4,9 +4,8 @@
     "favicon": {
       "$ref": "#/definitions/favicon"
     },
-    "title": {
-      "title": "Title",
-      "description": "What will essentially be the name of your game inside the template.",
+    "name": {
+      "title": "Name",
       "type": "string"
     },
     "goodGuess": {
@@ -24,6 +23,7 @@
     "theme": {
       "title": "Theme",
       "type": "string",
+      "default": "default",
       "enum": ["default", "blackLime"]
     },
     "primaryColor": {

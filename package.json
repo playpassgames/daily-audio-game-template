@@ -1,14 +1,14 @@
 {
   "name": "template",
   "private": true,
-  "version": "0.1.2",
+  "version": "0.1.4",
   "scripts": {
     "start": "vite --open --host",
     "build": "vite build --mode production",
     "test": "eslint src",
     "lint": "eslint --fix src",
-    "deploy:staging": "aws s3 sync . s3://template-bucket-staging/daily-music-game/$(jq -r .version ./package.json) --delete --exclude '.github/*' --exclude 'node_modules/*' --exclude '.git/*' --exclude '.idea/*'",
-    "deploy": "aws s3 sync . s3://playpass-template-bucket/daily-music-game/$(jq -r .version ./package.json) --delete --exclude '.github/*' --exclude 'node_modules/*' --exclude '.git/*' --exclude '.idea/*'"
+    "deploy:staging": "npm run build && aws s3 sync . s3://template-bucket-staging/daily-music-game/$(jq -r .version ./package.json) --delete --exclude '.github/*' --exclude 'node_modules/*' --exclude '.git/*' --exclude '.idea/*'",
+    "deploy": "npm run build && aws s3 sync . s3://playpass-template-bucket/daily-music-game/$(jq -r .version ./package.json) --delete --exclude '.github/*' --exclude 'node_modules/*' --exclude '.git/*' --exclude '.idea/*'"
   },
   "dependencies": {
     "normalize-url": "^7.0.3",
