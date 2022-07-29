@@ -1,12 +1,7 @@
 {
-  "favicon": {
-    "value": "🎵",
-    "type": "emoji"
-  },
-  "name": "My Audio Game",
-  "title": "🎶 {{ name }}",
-  "brand": "🎼 {{ name }}",
+  "name": "🎵 Daily Music Game",
   "goodGuess": "🟩",
   "badGuess": "🟥",
-  "skipGuess": "⬜️️"
+  "skipGuess": "⬜️️",
+  "theme": "default"
 }

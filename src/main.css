@@ -30,10 +30,6 @@ game-header .button:hover {
     opacity: .5;
 }
 
-game-header .button img {
-    filter: var(--text-main-filter);
-}
-
 game-header .button img,
 game-header .button svg {
     height: 100%;
@@ -44,11 +40,7 @@ game-header *[slot=brand] {
     gap: .5em;
     margin: 0;
     justify-content: center;
-    color: var(--text-main);
-}
-
-game-header *[slot=brand] img {
-    filter: var(--text-main-filter);
+    color: var(--brand-color);
 }
 
 /* prefer center text alignment in our game design */
@@ -65,7 +57,7 @@ screen-router>* {
     line-height: 1.5em;
     text-align: center;
     vertical-align: middle;
-    filter: var(--text-main-filter);
+    color: var(--text-main);
 }
 
 audio-ext {
@@ -140,7 +132,7 @@ footer {
     width: 1em;
     height: 1em;
     vertical-align: -.1em;
-    filter: var(--text-main-filter);
+    color: var(--text-main);
 }
 
 .results .result[s="c"]::before {

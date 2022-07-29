@@ -6,6 +6,19 @@ export default {
         await this.loadContent();
         this.loadFavicon();
         this.applyContent();
+        this.eventListeners();
+    },
+
+    async eventListeners() {
+        window.addEventListener('message', (event) => {
+            const parsed = JSON.parse(event.data);
+            if (parsed.type !== 'playpass-style-cms') {
+                return;
+            }
+            this._gameContent = parsed.data;
+            this.loadFavicon();
+            this.applyContent();
+        });
     },
 
     async loadContent() {
@@ -24,7 +37,7 @@ export default {
     },
 
     getGameContent(key) {
-        return this._gameContent?.[key];
+        return () => this._gameContent?.[key];
     },
 
     getDailyContent(key) {
@@ -34,10 +47,20 @@ export default {
     applyContent() {
         const keys = Object.keys(this._gameContent);
 
-        for (let key of keys) {
-            const elements = document.getElementsByClassName(`playpass-cms-${key}`);
+        const theme = this._gameContent.theme ?? 'default';
+        if (theme) {
+            document.documentElement.setAttribute('playpass-cms-theme', theme);
+        }
 
-            if (!elements || elements.length === 0) {
+        for (let key of keys) {
+            if (key === 'theme') {
+                continue;
+            }
+
+            const elements = document.getElementsByClassName(`playpass-cms-${key}`);
+            const styles = getComputedStyle(document.body).getPropertyValue(`--playpass-cms-${key}`);
+
+            if ((!elements || elements.length === 0) && styles === '') {
                 continue;
             }
 
@@ -55,6 +78,10 @@ export default {
 
             for (let ele of elements) {
                 ele.innerText = newValue;
+            }
+
+            if (styles) {
+                document.documentElement.style.setProperty(`--playpass-cms-${key}`, newValue);
             }
         }
     },

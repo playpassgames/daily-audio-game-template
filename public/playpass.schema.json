@@ -2,8 +2,102 @@
   "type": "object",
   "properties": {
     "name": {
+      "title": "Name",
       "type": "string"
     },
+    "goodGuess": {
+      "title": "Share emoji correct",
+      "type": "string"
+    },
+    "badGuess": {
+      "title": "Share emoji incorrect",
+      "type": "string"
+    },
+    "skipGuess": {
+      "title": "Share emoji skip",
+      "type": "string"
+    },
+    "theme": {
+      "title": "Theme",
+      "type": "string",
+      "default": "default",
+      "enum": [
+        "default",
+        "blackLime",
+        "blackBerry",
+        "blackCherry",
+        "pinkLemonade",
+        "vintagePop",
+        "grapeSoda"
+      ]
+    },
+    "primaryColor": {
+      "title": "Primary Color",
+      "$ref": "#/definitions/color",
+      "themeDefaults": {
+        "default": "#2E3440",
+        "blackLime": "#262626",
+        "blackBerry": "#262626",
+        "blackCherry": "#262626",
+        "pinkLemonade": "#FCF9ED",
+        "vintagePop": "#E9DFCB",
+        "grapeSoda": "#CEBCFF"
+      }
+    },
+    "secondaryColor": {
+      "title": "Secondary Color",
+      "$ref": "#/definitions/color",
+      "themeDefaults": {
+        "default": "#88C0D0",
+        "blackLime": "#6AB033",
+        "blackBerry": "#A67CFF",
+        "blackCherry": "#E24112",
+        "pinkLemonade": "#FAC91E",
+        "vintagePop": "#F29513",
+        "grapeSoda": "#6843D3"
+      }
+    },
+    "tertiaryColor": {
+      "title": "Tertiary Color",
+      "$ref": "#/definitions/color",
+      "themeDefaults": {
+        "default": "#A3BE8C",
+        "blackLime": "#A3BE8D",
+        "blackBerry": "#56D3C4",
+        "blackCherry": "#FF4C00",
+        "pinkLemonade": "#F5BE9F",
+        "vintagePop": "#697F33",
+        "grapeSoda": "#D5FF60"
+      }
+    },
+    "textColor": {
+      "title": "Text Color",
+      "$ref": "#/definitions/color",
+      "themeDefaults": {
+        "default": "#fff",
+        "blackLime": "#6AB033",
+        "blackBerry": "#56D3C4",
+        "blackCherry": "#FF4C00",
+        "pinkLemonade": "#FF8C8C",
+        "vintagePop": "#201E1C",
+        "grapeSoda": "#1C1C1E"
+      }
+    },
+    "titleColor": {
+      "title": "Title Color",
+      "$ref": "#/definitions/color",
+      "themeDefaults": {
+        "default": "#fff",
+        "blackLime": "#6AB033",
+        "blackBerry": "#56D3C4",
+        "blackCherry": "#FF4C00",
+        "pinkLemonade": "#FF8C8C",
+        "vintagePop": "#F55812",
+        "grapeSoda": "#FFFFFF"
+      }
+    }
+  },
+  "definitions": {
     "favicon": {
       "type": "object",
       "properties": {
@@ -20,21 +114,8 @@
         }
       }
     },
-    "brand": {
-      "type": "string"
-    },
-    "title": {
-      "type": "string"
-    },
-    "goodGuess": {
-      "type": "string"
-    },
-    "badGuess": {
-      "type": "string"
-    },
-    "skipGuess": {
+    "color": {
       "type": "string"
     }
-  },
-  "required": [ "brand" ]
+  }
 }
