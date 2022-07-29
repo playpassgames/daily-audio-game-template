@@ -1,7 +1,7 @@
 {
-  "name": "🎵 Daily Audio Game",
+  "name": "🎵 Daily Music Game",
   "goodGuess": "🟩",
   "badGuess": "🟥",
   "skipGuess": "⬜️️",
-  "theme": "default"
+  "theme": "grapeSoda"
 }

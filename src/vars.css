@@ -3,11 +3,11 @@
     --form-text: var(--playpass-cms-primaryColor);
     --text-main: var(--playpass-cms-textColor);
     --text-bright: var(--playpass-cms-textColor);
-    --brand-color: var(--playpass-cms-secondaryColor);
+    --brand-color: var(--playpass-cms-titleColor);
     --color-primary: var(--playpass-cms-tertiaryColor);
     --color-primary-text: var(--form-text);
-    --color-danger: var(--playpass-cms-dangerColor);
-    --color-info: var(--playpass-cms-infoColor);
+    --color-danger: #BF616A;
+    --color-info: var(--playpass-cms-secondaryColor);
     --color-info-text: var(--form-text);
     --input-border-radius: 0px;
     --button-font: sans-serif;
@@ -20,8 +20,7 @@
     --playpass-cms-secondaryColor: #88C0D0;
     --playpass-cms-tertiaryColor: #A3BE8C;
     --playpass-cms-textColor: #fff;
-    --playpass-cms-dangerColor: #BF616A;
-    --playpass-cms-infoColor: #D8DEE9;
+    --playpass-cms-titleColor: #fff;
 }
 
 [playpass-cms-theme="blackLime"] {
@@ -29,6 +28,45 @@
     --playpass-cms-secondaryColor: #6AB033;
     --playpass-cms-tertiaryColor: #A3BE8D;
     --playpass-cms-textColor: #6AB033;
-    --playpass-cms-dangerColor: #BF616A;
-    --playpass-cms-infoColor: #757575;
+    --playpass-cms-titleColor: #6AB033;
+}
+
+[playpass-cms-theme="blackBerry"] {
+    --playpass-cms-primaryColor: #262626;
+    --playpass-cms-secondaryColor: #A67CFF;
+    --playpass-cms-tertiaryColor: #56D3C4;
+    --playpass-cms-textColor: #56D3C4;
+    --playpass-cms-titleColor: #56D3C4;
+}
+
+[playpass-cms-theme="blackCherry"] {
+    --playpass-cms-primaryColor: #262626;
+    --playpass-cms-secondaryColor: #E24112;
+    --playpass-cms-tertiaryColor: #FF4C00;
+    --playpass-cms-textColor: #FF4C00;
+    --playpass-cms-titleColor: #FF4C00;
+}
+
+[playpass-cms-theme="pinkLemonade"] {
+    --playpass-cms-primaryColor: #FCF9ED;
+    --playpass-cms-secondaryColor: #FAC91E;
+    --playpass-cms-tertiaryColor: #F5BE9F;
+    --playpass-cms-textColor: #FF8C8C;
+    --playpass-cms-titleColor: #FF8C8C;
+}
+
+[playpass-cms-theme="vintagePop"] {
+    --playpass-cms-primaryColor: #E9DFCB;
+    --playpass-cms-secondaryColor: #F29513;
+    --playpass-cms-tertiaryColor: #697F33;
+    --playpass-cms-textColor: #201E1C;
+    --playpass-cms-titleColor: #F55812;
+}
+
+[playpass-cms-theme="grapeSoda"] {
+    --playpass-cms-primaryColor: #CEBCFF;
+    --playpass-cms-secondaryColor: #6843D3;
+    --playpass-cms-tertiaryColor: #D5FF60;
+    --playpass-cms-textColor: #1C1C1E;
+    --playpass-cms-titleColor: #FFFFFF;
 }
