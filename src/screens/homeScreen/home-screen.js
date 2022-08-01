@@ -2,7 +2,7 @@ import * as playpass from "playpass";
 import { showScreen } from "../../boilerplate/screens";
 import state, { Mode } from "../../state";
 
-const template = document.querySelector("#home-prompt");
+const template = document.querySelector("#about-screen");
 
 template.querySelector("button[name=timedMode]").addEventListener('click', () => {
     playpass.analytics.track('DailyPlaySongClicked', {gameMode: state.gameMode});

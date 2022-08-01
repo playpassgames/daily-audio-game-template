@@ -1,3 +1,5 @@
+import {setScreenVisibility} from "./screens";
+
 export default {
     _dailyContent: null,
     _gameContent: null,
@@ -6,18 +8,26 @@ export default {
         await this.loadContent();
         this.loadFavicon();
         this.applyContent();
-        this.eventListeners();
+        await this.eventListeners();
     },
 
     async eventListeners() {
         window.addEventListener('message', (event) => {
             const parsed = JSON.parse(event.data);
-            if (parsed.type !== 'playpass-style-cms') {
-                return;
+            switch (parsed.type) {
+                case 'playpass-style-cms':
+                    this._gameContent = parsed.data;
+                    this.loadFavicon();
+                    this.applyContent();
+                    break;
+
+                case 'playpass-style-cms-screen-visibility':
+                    setScreenVisibility(parsed.data['screenName'], parsed.data['visibilityState']);
+                    break;
+
+                default:
+                    return;
             }
-            this._gameContent = parsed.data;
-            this.loadFavicon();
-            this.applyContent();
         });
     },
 
