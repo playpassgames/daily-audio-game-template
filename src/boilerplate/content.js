@@ -1,8 +1,10 @@
-import {setScreenVisibility} from "./screens";
-
 export default {
     _dailyContent: null,
     _gameContent: null,
+
+    setScreenVisibility(name, state) {
+        document.querySelector("screen-router").setAttribute(state, name);
+    },
 
     async init() {
         await this.loadContent();
@@ -22,7 +24,7 @@ export default {
                     break;
 
                 case 'playpass-style-cms-screen-visibility':
-                    setScreenVisibility(parsed.data['screenName'], parsed.data['visibilityState']);
+                    this.setScreenVisibility(parsed.data['screenName'], parsed.data['visibilityState']);
                     break;
 
                 default:
