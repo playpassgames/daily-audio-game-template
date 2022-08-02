@@ -87,6 +87,10 @@ export function showScreen(name) {
     document.querySelectorAll(`[screen="${name}"]`).forEach(e => e.classList.remove('hide'));
 }
 
+export function setScreenVisibility(name, state) {
+    document.querySelector(routerTagName).setAttribute(state, name);
+}
+
 export function readyGame() {
     playpass.analytics.track('GameReady')
     document.querySelector("body").setAttribute("ready", "");

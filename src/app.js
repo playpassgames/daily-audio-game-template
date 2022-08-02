@@ -18,8 +18,8 @@ import { readyGame, showScreen } from "./boilerplate/screens";
 import state from "./state";
 
 function onHomeClick () {
-    playpass.analytics.track('PageShow', {page: "#home-prompt", gameMode: state.gameMode});
-    document.querySelector("#home-prompt").show();
+    playpass.analytics.track('PageShow', {page: "#about-screen", gameMode: state.gameMode});
+    document.querySelector("#about-screen").show();
 }
 
 function onHelpClick () {

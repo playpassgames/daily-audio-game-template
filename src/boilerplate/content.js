@@ -2,22 +2,34 @@ export default {
     _dailyContent: null,
     _gameContent: null,
 
+    setScreenVisibility(name, state) {
+        document.querySelector("screen-router").setAttribute(state, name);
+    },
+
     async init() {
         await this.loadContent();
         this.loadFavicon();
         this.applyContent();
-        this.eventListeners();
+        await this.eventListeners();
     },
 
     async eventListeners() {
         window.addEventListener('message', (event) => {
             const parsed = JSON.parse(event.data);
-            if (parsed.type !== 'playpass-style-cms') {
-                return;
+            switch (parsed.type) {
+                case 'playpass-style-cms':
+                    this._gameContent = parsed.data;
+                    this.loadFavicon();
+                    this.applyContent();
+                    break;
+
+                case 'playpass-style-cms-screen-visibility':
+                    this.setScreenVisibility(parsed.data['screenName'], parsed.data['visibilityState']);
+                    break;
+
+                default:
+                    return;
             }
-            this._gameContent = parsed.data;
-            this.loadFavicon();
-            this.applyContent();
         });
     },
 
