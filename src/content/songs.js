@@ -43,7 +43,7 @@ const adapters = {
     },
 };
 
-export const songs = content.getDailyContent('elements').reduce(
+export const songs = () => content.getDailyContent('elements').reduce(
     (songs, record) => {
         const {songLink, musicVideoLink} = record;
 

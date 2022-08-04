@@ -1,10 +1,7 @@
 export default {
     _dailyContent: null,
     _gameContent: null,
-
-    setScreenVisibility(name, state) {
-        document.querySelector("screen-router").setAttribute(state, name);
-    },
+    _eventHandlers: {},
 
     async init() {
         await this.loadContent();
@@ -13,22 +10,36 @@ export default {
         await this.eventListeners();
     },
 
+    eventHandler(event, eventHandler) {
+        this._eventHandlers[event] = eventHandler;
+    },
+
     async eventListeners() {
         window.addEventListener('message', (event) => {
             const parsed = JSON.parse(event.data);
+            let handler;
             switch (parsed.type) {
+                case 'playpass-content-cms':
+                    this._dailyContent = parsed.data;
+                    handler = this._eventHandlers['playpass-content-cms'];
+                    break;
+
                 case 'playpass-style-cms':
                     this._gameContent = parsed.data;
                     this.loadFavicon();
                     this.applyContent();
+                    handler = this._eventHandlers['playpass-style-cms'];
                     break;
 
-                case 'playpass-style-cms-screen-visibility':
-                    this.setScreenVisibility(parsed.data['screenName'], parsed.data['visibilityState']);
+                case 'playpass-style-cms-screen':
+                    handler = this._eventHandlers['playpass-style-cms-screen'];
                     break;
 
                 default:
                     return;
+            }
+            if (handler) {
+                handler(parsed);
             }
         });
     },
@@ -49,11 +60,23 @@ export default {
     },
 
     getGameContent(key) {
-        return () => this._gameContent?.[key];
+        let gameContentElement = this._gameContent[key];
+
+        if (gameContentElement) {
+            return Object.assign(gameContentElement);
+        }
+
+        return gameContentElement;
     },
 
     getDailyContent(key) {
-        return this._dailyContent?.[key];
+        let dailyContentElement = this._dailyContent[key];
+
+        if (dailyContentElement) {
+            return Object.assign(dailyContentElement);
+        }
+
+        return dailyContentElement;
     },
 
     applyContent() {
