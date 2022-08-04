@@ -27,11 +27,6 @@ function hide(screens) {
     screens.forEach(screen => document.querySelector(screen).hide())
 }
 
-function showShare() {
-    share();
-    hide(["#stats", "#about-screen", "#help-prompt"]);
-}
-
 function hideShare() {
     let elements = document.getElementsByTagName("playpass-share");
     if (elements && elements.length > 0) {
@@ -39,43 +34,47 @@ function hideShare() {
     }
 }
 
-function onHomeClick () {
-    playpass.analytics.track('PageShow', {page: "#about-screen", gameMode: state.gameMode});
-    show(["#about-screen"]);
-    hide(["#help-prompt", "#stats"]);
+function hideAll() {
+    hide(["#stats", "#about-screen", "#help-prompt"]);
     hideShare();
+}
+
+function showShare() {
+    hideAll();
+    share();
+}
+
+function onHomeClick() {
+    playpass.analytics.track('PageShow', {page: "#about-screen", gameMode: state.gameMode});
+    hideAll();
+    show(["#about-screen"]);
 }
 
 function onHelpClick () {
     playpass.analytics.track('PageShow', {page: "#help-prompt", gameMode: state.gameMode});
+    hideAll();
     show(["#help-prompt"]);
-    hide(["#about-screen", "#stats"]);
-    hideShare();
 }
 
 function onStatsClick () {
     playpass.analytics.track('PageShow', {page: "#stats", gameMode: state.gameMode});
+    hideAll();
     show(["#stats"]);
-    hide(["#about-screen", "#help-prompt"]);
-    hideShare();
 }
 
 function showGame() {
+    hideAll();
     showScreen("#game-screen");
-    hide(["#stats", "#about-screen", "#help-prompt"]);
-    hideShare();
 }
 
 function showResults() {
+    hideAll();
     showScreen("#results-screen");
-    hide(["#stats", "#about-screen", "#help-prompt"]);
-    hideShare();
 }
 
 function onSettingsClick () {
+    hideAll();
     showScreen("#settings-screen");
-    hide(["#stats", "#about-screen", "#help-prompt"]);
-    hideShare();
 }
 
 const screens = {
