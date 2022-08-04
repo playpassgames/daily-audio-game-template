@@ -32,7 +32,7 @@ export default {
     songs: [],
 
     async init() {
-        this.interval = Daily(content.startDate);
+        this.interval = Daily(content.startDate());
         this.songs = content.songs();
 
         state = new State(

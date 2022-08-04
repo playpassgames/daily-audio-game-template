@@ -1,5 +1,6 @@
 import * as playpass from "playpass";
 import state from "../state";
+import share from "../share";
 
 const template = document.createElement('template');
 template.innerHTML = `
@@ -90,4 +91,67 @@ export function showScreen(name) {
 export function readyGame() {
     playpass.analytics.track('GameReady')
     document.querySelector("body").setAttribute("ready", "");
+}
+
+function show(screens) {
+    screens.forEach(screen => document.querySelector(screen).show())
+}
+
+function hide(screens) {
+    screens.forEach(screen => document.querySelector(screen).hide())
+}
+
+function hideShare() {
+    let elements = document.getElementsByTagName("playpass-share");
+    if (elements && elements.length > 0) {
+        elements.item(0).remove();
+    }
+}
+
+function hideAll() {
+    hide(["#stats", "#about-screen", "#help-prompt"]);
+    hideShare();
+}
+
+function showShare() {
+    hideAll();
+    share();
+}
+
+export function onHomeClick() {
+    playpass.analytics.track('PageShow', {page: "#about-screen", gameMode: state.gameMode});
+    hideAll();
+    show(["#about-screen"]);
+}
+
+export function onHelpClick () {
+    playpass.analytics.track('PageShow', {page: "#help-prompt", gameMode: state.gameMode});
+    hideAll();
+    show(["#help-prompt"]);
+}
+
+export function onStatsClick () {
+    playpass.analytics.track('PageShow', {page: "#stats", gameMode: state.gameMode});
+    hideAll();
+    show(["#stats"]);
+}
+
+export function onSettingsClick () {
+    hideAll();
+    showScreen("#settings-screen");
+}
+
+export const screenHandlers = {
+    share: {
+        show: showShare,
+        hide: hideAll
+    },
+    home: {
+        show: onHomeClick,
+        hide: hideAll
+    },
+    help: {
+        show: onHelpClick,
+        hide: hideAll
+    }
 }

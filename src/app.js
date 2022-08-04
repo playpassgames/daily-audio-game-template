@@ -1,6 +1,5 @@
 import * as playpass from "playpass";
 import content from "./boilerplate/content";
-import share from "./share";
 
 import "./boilerplate/header.js";
 import "./boilerplate/controls.js";
@@ -16,76 +15,16 @@ import "./screens/homeScreen/home-screen";
 import "./screens/statsScreen/stats-screen";
 import "./screens/settingsScreen/settings-screen";
 
-import { readyGame, showScreen } from "./boilerplate/screens";
+import {
+    onHelpClick,
+    onHomeClick,
+    onSettingsClick,
+    onStatsClick,
+    readyGame,
+    screenHandlers,
+    showScreen
+} from "./boilerplate/screens";
 import state from "./state";
-
-function show(screens) {
-    screens.forEach(screen => document.querySelector(screen).show())
-}
-
-function hide(screens) {
-    screens.forEach(screen => document.querySelector(screen).hide())
-}
-
-function hideShare() {
-    let elements = document.getElementsByTagName("playpass-share");
-    if (elements && elements.length > 0) {
-        elements.item(0).remove();
-    }
-}
-
-function hideAll() {
-    hide(["#stats", "#about-screen", "#help-prompt"]);
-    hideShare();
-}
-
-function showShare() {
-    hideAll();
-    share();
-}
-
-function onHomeClick() {
-    playpass.analytics.track('PageShow', {page: "#about-screen", gameMode: state.gameMode});
-    hideAll();
-    show(["#about-screen"]);
-}
-
-function onHelpClick () {
-    playpass.analytics.track('PageShow', {page: "#help-prompt", gameMode: state.gameMode});
-    hideAll();
-    show(["#help-prompt"]);
-}
-
-function onStatsClick () {
-    playpass.analytics.track('PageShow', {page: "#stats", gameMode: state.gameMode});
-    hideAll();
-    show(["#stats"]);
-}
-
-function showGame() {
-    hideAll();
-    showScreen("#game-screen");
-}
-
-function showResults() {
-    hideAll();
-    showScreen("#results-screen");
-}
-
-function onSettingsClick () {
-    hideAll();
-    showScreen("#settings-screen");
-}
-
-const screens = {
-    home: onHomeClick,
-    help: onHelpClick,
-    stats: onStatsClick,
-    settings: onSettingsClick,
-    game: showGame,
-    results: showResults,
-    share: showShare
-}
 
 // Add UI event listeners
 document.querySelector("game-header .button[name=home]").onclick = onHomeClick;
@@ -95,7 +34,6 @@ document.querySelector("game-header .button[name=settings]").onclick = onSetting
 
 const bootstrap = async () => {
     await state.init();
-    console.log(state.getCurrentAnswer());
 
     // get mode and type from share link
     const { mode } = playpass.getLinkData() ?? {};
@@ -124,7 +62,8 @@ const bootstrap = async () => {
 
     content.eventHandler('playpass-style-cms-screen', async (event) => {
         const screenName = event.data.screenName;
-        const handler = screens[screenName];
+        const action = event.data.action;
+        const handler = screenHandlers[screenName][action];
         if (handler) {
             handler();
         }

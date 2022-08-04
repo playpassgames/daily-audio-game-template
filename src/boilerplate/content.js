@@ -60,23 +60,11 @@ export default {
     },
 
     getGameContent(key) {
-        let gameContentElement = this._gameContent[key];
-
-        if (gameContentElement) {
-            return Object.assign(gameContentElement);
-        }
-
-        return gameContentElement;
+        return () => this._gameContent[key];
     },
 
     getDailyContent(key) {
-        let dailyContentElement = this._dailyContent[key];
-
-        if (dailyContentElement) {
-            return Object.assign(dailyContentElement);
-        }
-
-        return dailyContentElement;
+        return () => this._dailyContent[key];
     },
 
     applyContent() {

@@ -3,27 +3,25 @@
   "properties": {
     "name": {
       "title": "Name",
-      "showScreen": "game",
       "type": "string"
     },
     "goodGuess": {
       "title": "Share emoji correct",
-      "showScreen": "share",
+      "screen": "share",
       "$ref": "#/definitions/emoji"
     },
     "badGuess": {
       "title": "Share emoji incorrect",
-      "showScreen": "share",
+      "screen": "share",
       "$ref": "#/definitions/emoji"
     },
     "skipGuess": {
       "title": "Share emoji skip",
-      "showScreen": "share",
+      "screen": "share",
       "$ref": "#/definitions/emoji"
     },
     "theme": {
       "title": "Theme",
-      "showScreen": "game",
       "type": "string",
       "default": "default",
       "enum": [
@@ -38,7 +36,6 @@
     },
     "primaryColor": {
       "title": "Primary Color",
-      "showScreen": "game",
       "$ref": "#/definitions/color",
       "themeDefaults": {
         "default": "#2E3440",
@@ -52,7 +49,6 @@
     },
     "secondaryColor": {
       "title": "Secondary Color",
-      "showScreen": "game",
       "$ref": "#/definitions/color",
       "themeDefaults": {
         "default": "#88C0D0",
@@ -66,7 +62,6 @@
     },
     "tertiaryColor": {
       "title": "Tertiary Color",
-      "showScreen": "game",
       "$ref": "#/definitions/color",
       "themeDefaults": {
         "default": "#A3BE8C",
@@ -80,7 +75,6 @@
     },
     "textColor": {
       "title": "Text Color",
-      "showScreen": "game",
       "$ref": "#/definitions/color",
       "themeDefaults": {
         "default": "#fff",
@@ -94,7 +88,6 @@
     },
     "titleColor": {
       "title": "Title Color",
-      "showScreen": "game",
       "$ref": "#/definitions/color",
       "themeDefaults": {
         "default": "#fff",
