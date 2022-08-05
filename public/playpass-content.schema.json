@@ -6,7 +6,8 @@
     "songLink": {
       "type": "string",
       "description": "Link to your song. Youtube and Soundcloud are supported at the moment. Your song links should be based off of the album versions of songs for a better experience.",
-      "pattern": "^((?:https?:)?\\/\\/)?((?:www|m|music)\\.)?((?:youtube\\.com|youtu.be|soundcloud\\.com))(\\/(?:[\\w\\-]+\\?v=|embed\\/|v\\/)?)([\\w\\-]+)(\\S+)?$"
+      "pattern": "^((?:https?:)?\\/\\/)?((?:www|m|music)\\.)?((?:youtube\\.com|youtu.be|soundcloud\\.com))(\\/(?:[\\w\\-]+\\?v=|embed\\/|v\\/)?)([\\w\\-]+)(\\S+)?$",
+      "validationMessage": "Should be a valid youtube or soundcloud link."
     },
     "songName": {
       "type": "string",
