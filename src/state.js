@@ -29,9 +29,11 @@ export default {
     _guesses: [],
     wins: 0,
     score: 0,
+    songs: [],
 
     async init() {
-        this.interval = Daily(content.startDate);
+        this.interval = Daily(content.startDate());
+        this.songs = content.songs();
 
         state = new State(
             "daily",
@@ -68,7 +70,7 @@ export default {
         return this.guesses.length >= this.attempts || this.isSolved();
     },
     getCurrentAnswer() {
-        const word = this.correctAnswer ?? content.songs[0];
+        const word = this.correctAnswer ?? this.songs[0];
         if (word.artist) {
             return `${word.artist} - ${word.name}`;
         }
@@ -113,14 +115,14 @@ export default {
     nextSong() {
         if (this.gameMode === Mode.Time) {
             const idx = this.store.currentInterval;
-            const answer = content.songs[idx % content.songs.length];
+            const answer = this.songs[idx % this.songs.length];
 
             this.correctAnswer = Object.assign({ hints }, answer);
             return;
         }
 
-        const r = Math.floor(Math.random() * content.songs.length)
-        this.correctAnswer = content.songs[r];
+        const r = Math.floor(Math.random() * this.songs.length)
+        this.correctAnswer = this.songs[r];
         this.resetGame();
     },
     resetGame(full = false) {
