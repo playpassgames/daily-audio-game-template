@@ -12,7 +12,7 @@ Array.from(document.querySelectorAll('.modal')).forEach(
         });
 
         element.show = () => {
-            element.dispatchEvent(new CustomEvent("open"))
+            element.dispatchEvent(new CustomEvent("open"));
             element.setAttribute("open", "");
         }
 

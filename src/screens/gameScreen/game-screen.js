@@ -123,7 +123,7 @@ template.addEventListener(
                 return value;
             }),
             // always include the actual songs that you can guess
-            ...content.songs,
+            ...state.songs,
         ].map(({ artist, name }) => {
             const value = artist ? `${artist} - ${name}` : name;
 

@@ -1,4 +1,5 @@
 import * as playpass from "playpass";
+import content from "./boilerplate/content";
 
 import "./boilerplate/header.js";
 import "./boilerplate/controls.js";
@@ -14,27 +15,16 @@ import "./screens/homeScreen/home-screen";
 import "./screens/statsScreen/stats-screen";
 import "./screens/settingsScreen/settings-screen";
 
-import { readyGame, showScreen } from "./boilerplate/screens";
+import {
+    onHelpClick,
+    onHomeClick,
+    onSettingsClick,
+    onStatsClick,
+    readyGame,
+    screenHandlers,
+    showScreen
+} from "./boilerplate/screens";
 import state from "./state";
-
-function onHomeClick () {
-    playpass.analytics.track('PageShow', {page: "#about-screen", gameMode: state.gameMode});
-    document.querySelector("#about-screen").show();
-}
-
-function onHelpClick () {
-    playpass.analytics.track('PageShow', {page: "#help-prompt", gameMode: state.gameMode});
-    document.querySelector("#help-prompt").show();
-}
-
-function onStatsClick () {
-    playpass.analytics.track('PageShow', {page: "#stats", gameMode: state.gameMode});
-    document.querySelector("#stats").show();
-}
-
-function onSettingsClick () {
-    showScreen("#settings-screen");
-}
 
 // Add UI event listeners
 document.querySelector("game-header .button[name=home]").onclick = onHomeClick;
@@ -42,7 +32,7 @@ document.querySelector("game-header .button[name=help]").onclick = onHelpClick;
 document.querySelector("game-header .button[name=stats]").onclick = onStatsClick;
 document.querySelector("game-header .button[name=settings]").onclick = onSettingsClick;
 
-(async function () {
+const bootstrap = async () => {
     await state.init();
 
     // get mode and type from share link
@@ -61,4 +51,23 @@ document.querySelector("game-header .button[name=settings]").onclick = onSetting
     }
 
     readyGame();
+}
+
+(async function () {
+    content.eventHandler('playpass-content-cms', async () => {
+        await state.init();
+        showScreen("#game-screen");
+        readyGame();
+    });
+
+    content.eventHandler('playpass-style-cms-screen', async (event) => {
+        const screenName = event.data.screenName;
+        const action = event.data.action;
+        const handler = screenHandlers[screenName][action];
+        if (handler) {
+            handler();
+        }
+    });
+
+    await bootstrap();
 })();
