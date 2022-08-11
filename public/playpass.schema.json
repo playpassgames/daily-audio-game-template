@@ -1,4 +1,6 @@
 {
+  "$id": "daily-music-game",
+  "description": "Guess the songs with a new challenge every day!",
   "type": "object",
   "properties": {
     "name": {
